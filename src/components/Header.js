@@ -10,7 +10,7 @@ export default function Header({ logo }) {
         <header
             css={css`
                 background-color: #282c34;
-                min-height: 100vh;
+                height: 100vh;
                 display: flex;
                 flex-direction: column;
                 align-items: center;

@@ -1,12 +1,23 @@
 /** @jsx jsx */
 
 import { jsx, css, Global } from "@emotion/core";
-import logo from "./assets/logo.svg";
-import { Fragment } from "react";
+import logo from "assets/logo.svg";
+import { Fragment, useContext, useEffect } from "react";
 import Header from "components/Header";
 import JssProvider from "components/JssProvider";
+import { observer } from "mobx-react-lite";
+import { StoreContext } from "index";
+import { SET_CURRENT_USER } from "actions/user";
+import { getUserPayload } from "utils";
 
-export default function App() {
+function App() {
+    const store = useContext(StoreContext);
+
+    useEffect(() => {
+        store.user[SET_CURRENT_USER](getUserPayload());
+        console.log("%cCurrentUser:", "color: green", store.user.current.toJSON());
+    });
+
     return (
         <JssProvider>
             <Fragment>
@@ -41,3 +52,5 @@ export default function App() {
         </JssProvider>
     );
 }
+
+export default observer(App);

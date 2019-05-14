@@ -1,7 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "./App";
-import * as ServiceWorker from "./ServiceWorker";
+import App from "containers/App";
+import * as ServiceWorker from "./serviceWorker";
+import { connectReduxDevtools } from "mst-middlewares";
+import { types } from "mobx-state-tree";
+import UserStore from "./models/User";
+
+const model = types.model({
+    user: UserStore,
+});
+const store = model.create({
+    user: {
+        current: undefined,
+    },
+});
+
+if (process.env.NODE_ENV === "development") {
+    connectReduxDevtools(require("remotedev"), store);
+}
+
+export const StoreContext = React.createContext(store);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

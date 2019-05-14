@@ -5,12 +5,17 @@
     "dependencies": {
         "@emotion/core": "^10.0.10",
         "@material-ui/core": "^3.9.3",
-        "lodash-es": "^4.17.11",
+        "lodash": "^4.17.11",
+        "mobx": "^5.9.4",
+        "mobx-react-lite": "^1.3.2",
+        "mobx-state-tree": "^3.14.0",
+        "mst-middlewares": "^3.14.0",
         "prop-types": "^15.7.2",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-jss": "^8.6.1",
-        "react-scripts": "3.0.1"
+        "react-scripts": "3.0.1",
+        "shortid": "^2.2.14"
     },
     "scripts": {
         "commit": "git-cz",
@@ -34,12 +39,16 @@
     "devDependencies": {
         "@commitlint/cli": "^7.6.1",
         "@commitlint/config-conventional": "^7.6.0",
+        "chai": "^4.2.0",
         "commitizen": "^3.1.1",
+        "cross-env": "^5.2.0",
         "cz-conventional-changelog": "^2.1.0",
+        "faker": "^4.1.0",
         "husky": "^2.2.0",
         "lint-staged": "^8.1.6",
         "prettier": "^1.17.1",
-        "pretty-quick": "^1.10.0"
+        "pretty-quick": "^1.10.0",
+        "remotedev": "^0.2.9"
     },
     "config": {
         "commitizen": {
