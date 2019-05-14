@@ -54,7 +54,6 @@ export default function SignUp() {
     function onDocumentTypeChange(event) {
         setIdDocument({ ...idDocument, documentType: event.target.value });
         console.log("%cSignIn ID document type change", "color: #3F51B5", event.target.value);
-        console.log({ idDocument });
     }
 
     function onDocumentIdChange(event) {
