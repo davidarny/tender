@@ -6,7 +6,7 @@ import _ from "lodash";
 export function getUserPayload() {
     return {
         appeal: faker.random.uuid(),
-        fullName: `${faker.name.firstName()} ${faker.name.lastName(0)}`,
+        fullName: `${faker.name.firstName()} ${faker.name.lastName()}`,
         birthDate: faker.date.past(),
         preferredCommunicationMethod: "email",
         idDocument: {
