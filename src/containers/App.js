@@ -3,13 +3,12 @@
 import { jsx, css, Global } from "@emotion/core";
 import { Fragment } from "react";
 import JssProvider from "components/JssProvider";
-import { observer } from "mobx-react-lite";
 import { Router } from "@reach/router";
 import SignUp from "containers/SignUp";
 import SignIn from "containers/SignIn";
 import Header from "components/Header";
 
-function App() {
+export default function App() {
     return (
         <JssProvider>
             <Fragment>
@@ -42,5 +41,3 @@ function App() {
         </JssProvider>
     );
 }
-
-export default observer(App);
