@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "containers/App";
-import * as ServiceWorker from "./serviceWorker";
+import * as ServiceWorker from "./ServiceWorker";
 import { connectReduxDevtools } from "mst-middlewares";
 import { types } from "mobx-state-tree";
 import UserStore from "./models/User";

@@ -1,53 +1,43 @@
 /** @jsx jsx */
 
 import { jsx, css, Global } from "@emotion/core";
-import logo from "assets/logo.svg";
-import { Fragment, useContext, useEffect } from "react";
-import Header from "components/Header";
+import { Fragment } from "react";
 import JssProvider from "components/JssProvider";
 import { observer } from "mobx-react-lite";
-import { StoreContext } from "index";
-import { SET_CURRENT_USER } from "actions/user";
-import { getUserPayload } from "utils";
+import { Router } from "@reach/router";
+import SignUp from "containers/SignUp";
+import SignIn from "containers/SignIn";
+import Header from "components/Header";
 
 function App() {
-    const store = useContext(StoreContext);
-
-    useEffect(() => {
-        store.user[SET_CURRENT_USER](getUserPayload());
-        console.log("%cCurrentUser:", "color: green", store.user.current.toJSON());
-    });
-
     return (
         <JssProvider>
             <Fragment>
                 <Global
                     styles={css`
                         body {
+                            font-family: "Roboto", sans-serif;
+                        }
+
+                        html,
+                        body,
+                        #root,
+                        div[role="group"] {
                             margin: 0;
-                            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-                                "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-                                "Helvetica Neue", sans-serif;
-                            -webkit-font-smoothing: antialiased;
-                            -moz-osx-font-smoothing: grayscale;
+                            width: 100%;
+                            height: 100%;
                         }
 
-                        code {
-                            font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-                                monospace;
-                        }
-
-                        @keyframes logo-spin {
-                            from {
-                                transform: rotate(0deg);
-                            }
-                            to {
-                                transform: rotate(360deg);
-                            }
+                        body {
+                            background: #eeeeee;
                         }
                     `}
                 />
-                <Header logo={logo} />
+                <Header />
+                <Router>
+                    <SignUp path="/register" />
+                    <SignIn path="/login" />
+                </Router>
             </Fragment>
         </JssProvider>
     );

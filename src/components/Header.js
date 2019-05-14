@@ -1,47 +1,67 @@
 /** @jsx jsx */
 
 import { jsx, css } from "@emotion/core";
-import PropTypes from "prop-types";
-import Link from "./Link";
-import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
 
-export default function Header({ logo }) {
+import Avatar from "@material-ui/core/Avatar";
+import Chip from "@material-ui/core/Chip";
+import { Link } from "@reach/router";
+import { StoreContext } from "index";
+import { useContext } from "react";
+import { observer } from "mobx-react-lite";
+import _ from "lodash";
+
+function Header() {
+    const store = useContext(StoreContext);
+
     return (
         <header
             css={css`
-                background-color: #282c34;
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                font-size: calc(10px + 2vmin);
-                color: white;
-                text-align: center;
+                background-color: #37474f;
+                position: fixed;
+                width: 100%;
+
+                a {
+                    margin: 0 15px 0 0;
+                    color: white;
+                    text-decoration: none;
+                    font-weight: 300;
+                }
             `}
         >
-            <img
-                src={logo}
+            <Grid
+                container
+                direction="row"
+                justify="space-between"
+                alignItems="center"
                 css={css`
-                    animation: logo-spin infinite 20s linear;
-                    height: 40vmin;
-                    pointer-events: none;
+                    padding: 15px;
                 `}
-                alt="logo"
-            />
-            <Typography
-                css={css`
-                    color: white;
-                `}
-                variant="h5"
             >
-                Edit <code>src/App.js</code> and save to reload.
-            </Typography>
-            <Link color="#61dafb" href="https://reactjs.org" value="Learn React" />
+                <Grid item>
+                    <Link to="/register">Sign Up</Link>
+                    <Link to="/login">Sign In</Link>
+                </Grid>
+                <Grid item>
+                    {store.user.current ? (
+                        <Chip
+                            avatar={
+                                <Avatar>
+                                    {_.get(store.user, "current.fullName", "Not Logged")
+                                        .split(" ")
+                                        .map(word => _.first(word))
+                                        .join("")}
+                                </Avatar>
+                            }
+                            label={_.get(store.user, "current.fullName", "Not Logged")}
+                        />
+                    ) : (
+                        <Chip label={"Not Logged"} />
+                    )}
+                </Grid>
+            </Grid>
         </header>
     );
 }
 
-Header.propTypes = {
-    logo: PropTypes.string.isRequired,
-};
+export default observer(Header);
