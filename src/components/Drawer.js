@@ -52,7 +52,7 @@ function Drawer() {
             >
                 <div
                     css={css`
-                        height: 78px;
+                        height: 58px;
                     `}
                 />
                 <Divider />

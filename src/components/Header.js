@@ -44,7 +44,7 @@ function Header() {
                 justify="space-between"
                 alignItems="center"
                 css={css`
-                    padding: 15px;
+                    padding: 5px 10px;
                 `}
             >
                 <Grid item>
