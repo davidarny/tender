@@ -6,6 +6,7 @@ import { connectReduxDevtools } from "mst-middlewares";
 import { types } from "mobx-state-tree";
 import UserStore from "./models/User";
 import UiStore from "models/UI";
+import { setStoreContext } from "context";
 
 const model = types.model({
     user: UserStore,
@@ -16,11 +17,12 @@ const store = model.create({
     ui: {},
 });
 
+const StoreContext = React.createContext(store);
+setStoreContext(StoreContext);
+
 if (process.env.NODE_ENV === "development") {
     connectReduxDevtools(require("remotedev"), store);
 }
-
-export const StoreContext = React.createContext(store);
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

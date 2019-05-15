@@ -9,7 +9,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import SignForm from "components/SignForm";
 import { Fragment, useState, useContext } from "react";
-import { StoreContext } from "index";
+import { StoreContext } from "context";
 import { SET_CURRENT_USER } from "actions/user";
 import { getUserPayload } from "utils";
 import { LOG_IN } from "actions/ui";

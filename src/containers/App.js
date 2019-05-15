@@ -8,7 +8,7 @@ import SignUp from "containers/SignUp";
 import SignIn from "containers/SignIn";
 import Header from "components/Header";
 import Drawer from "components/Drawer";
-import { StoreContext } from "index";
+import { StoreContext, BASE_PATH } from "context";
 import Partners from "./Partners";
 import { TOGGLE_DRAWER } from "actions/ui";
 import { observer } from "mobx-react-lite";
@@ -64,10 +64,11 @@ function App() {
                         height: 100%;
                         display: flex;
                     `}
+                    basepath={BASE_PATH === "" ? "/" : BASE_PATH}
                 >
-                    <Partners path="/partners" />
-                    <SignUp path="/register" />
-                    <SignIn path="/login" />
+                    <Partners path="partners" />
+                    <SignUp path="register" />
+                    <SignIn path="login" />
                 </Router>
             </Fragment>
         </JssProvider>

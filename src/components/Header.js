@@ -12,6 +12,7 @@ import { Link } from "@reach/router";
 import { observer } from "mobx-react-lite";
 import _ from "lodash";
 import PropTypes from "prop-types";
+import { BASE_PATH } from "context";
 
 function Header({ user, isLoggedIn = false, onDrawerToggle = _.noop }) {
     return (
@@ -51,14 +52,14 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = _.noop }) {
                             margin-right: 10px;
                         `}
                     >
-                        <Link to="/register">Регистрация</Link>
+                        <Link to={BASE_PATH + "/register"}>Регистрация</Link>
                     </Button>
                     <Button
                         css={css`
                             text-transform: none;
                         `}
                     >
-                        <Link to="/login">Вход в личный кабинет</Link>
+                        <Link to={BASE_PATH + "/login"}>Вход в личный кабинет</Link>
                     </Button>
                     <div
                         css={css`
