@@ -187,6 +187,7 @@ export default function SignUp() {
                                                 label="Birth Date"
                                                 value={form.birthDate}
                                                 onChange={onBirthDateChange}
+                                                format="DD MMM YYYY"
                                             />
                                         </MuiPickersUtilsProvider>
                                     </FormControl>
