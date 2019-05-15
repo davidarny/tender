@@ -7,6 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Button from "@material-ui/core/Button";
 import { Link } from "@reach/router";
 import { StoreContext } from "index";
 import { useContext } from "react";
@@ -31,7 +32,6 @@ function Header() {
                 z-index: 1100;
 
                 a {
-                    margin: 0 15px 0 0;
                     color: white;
                     text-decoration: none;
                     font-weight: 300;
@@ -48,18 +48,23 @@ function Header() {
                 `}
             >
                 <Grid item>
-                    <IconButton
-                        color="inherit"
-                        aria-label="Open drawer"
-                        onClick={onDrawerToggle}
-                        css={css`
-                            margin-right: 10px;
-                        `}
-                    >
+                    <IconButton color="inherit" aria-label="Open drawer" onClick={onDrawerToggle}>
                         <MenuIcon />
                     </IconButton>
-                    <Link to="/register">Sign Up</Link>
-                    <Link to="/login">Sign In</Link>
+                    <Button
+                        css={css`
+                            text-transform: none;
+                        `}
+                    >
+                        <Link to="/register">Sign Up</Link>
+                    </Button>
+                    <Button
+                        css={css`
+                            text-transform: none;
+                        `}
+                    >
+                        <Link to="/login">Sign In</Link>
+                    </Button>
                 </Grid>
                 <Grid item>
                     {store.ui.isLoggedIn ? (
