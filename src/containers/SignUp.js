@@ -11,6 +11,14 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import InputLabel from "@material-ui/core/InputLabel";
 import SignForm from "components/SignForm";
+import Snackbar from "@material-ui/core/Snackbar";
+import SnackbarContent from "@material-ui/core/SnackbarContent";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import MomentUtils from "@date-io/moment";
 import { Fragment, useState, useContext, useReducer } from "react";
@@ -22,11 +30,6 @@ import faker from "faker";
 import { LOG_IN } from "actions/ui";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 
 const actions = {
     INITIAL: "INITIAL",
@@ -51,6 +54,9 @@ function reducer(state, action) {
 export default function SignUp() {
     const [form, setFormValues] = useState({
         fullName: undefined,
+        email: undefined,
+        phone: undefined,
+        password: undefined,
         birthDate: moment(),
         preferredCommunicationMethod: "email",
         idDocument: {
@@ -60,12 +66,28 @@ export default function SignUp() {
         consentToCommunication: false,
     });
     const [isSnackbarOpen, setSnackbarState] = useState(false);
+    const [isPasswordShown, setPasswordShowState] = useState(false);
     const [state, dispatch] = useReducer(reducer, { step: actions.INITIAL });
     const store = useContext(StoreContext);
 
     function onFullNameChange(event) {
         setFormValues({ ...form, fullName: event.target.value });
-        console.log("%cSignIn full name change", "color: #3F51B5", event.target.value);
+        console.log("%cSignUp full name change", "color: #3F51B5", event.target.value);
+    }
+
+    function onEmailChange(event) {
+        setFormValues({ ...form, phone: event.target.value });
+        console.log("%cSignUp email change", "color #3F51B5", event.target.value);
+    }
+
+    function onPhoneChange(event) {
+        setFormValues({ ...form, phone: event.target.value });
+        console.log("%cSignUp phone change", "color #3F51B5", event.target.value);
+    }
+
+    function onPasswordChange(event) {
+        setFormValues({ ...form, password: event.target.value });
+        console.log("%cSignUp password change", "color #3F51B5", event.target.value);
     }
 
     function onBirthDateChange(date) {
@@ -131,6 +153,10 @@ export default function SignUp() {
         setSnackbarState(true);
     }
 
+    function togglePasswordVisibility() {
+        setPasswordShowState(!isPasswordShown);
+    }
+
     function endUpRegistration() {
         console.log("%cSignIn submit", "color: #3F51B5", form);
         store.user[SET_CURRENT_USER]({
@@ -156,7 +182,7 @@ export default function SignUp() {
             <Grid
                 item
                 css={css`
-                    max-width: 500px;
+                    max-width: 600px;
                 `}
             >
                 <FormContextSwitcher
@@ -175,8 +201,26 @@ export default function SignUp() {
                                             id="fullName"
                                             name="fullName"
                                             autoComplete="fullName"
-                                            autoFocus
                                             onChange={onFullNameChange}
+                                        />
+                                    </FormControl>
+                                    <FormControl margin="normal" required fullWidth>
+                                        <InputLabel htmlFor="email">Email</InputLabel>
+                                        <Input
+                                            id="email"
+                                            name="email"
+                                            autoComplete="email"
+                                            autoFocus
+                                            onChange={onEmailChange}
+                                        />
+                                    </FormControl>
+                                    <FormControl margin="normal" required fullWidth>
+                                        <InputLabel htmlFor="phoneNumber">Phone Number</InputLabel>
+                                        <Input
+                                            id="phoneNumber"
+                                            name="phoneNumber"
+                                            autoComplete="phoneNumber"
+                                            onChange={onPhoneChange}
                                         />
                                     </FormControl>
                                     <FormControl margin="normal" required fullWidth>
@@ -200,6 +244,9 @@ export default function SignUp() {
                                             name="preferredCommunicationMethod"
                                             value={form.preferredCommunicationMethod}
                                             onChange={onPreferredCommunicationMethodChange}
+                                            css={css`
+                                                flex-direction: row;
+                                            `}
                                         >
                                             <FormControlLabel
                                                 value="email"
@@ -249,6 +296,29 @@ export default function SignUp() {
                                         }
                                         label="Consent To Communication"
                                     />
+                                    <FormControl margin="normal" required fullWidth>
+                                        <Input
+                                            id="password"
+                                            name="password"
+                                            autoComplete="current-password"
+                                            type={isPasswordShown ? "text" : "password"}
+                                            onChange={onPasswordChange}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        aria-label="Toggle password visibility"
+                                                        onClick={togglePasswordVisibility}
+                                                    >
+                                                        {isPasswordShown ? (
+                                                            <Visibility />
+                                                        ) : (
+                                                            <VisibilityOff />
+                                                        )}
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                        />
+                                    </FormControl>
                                 </Fragment>
                             )}
                         />

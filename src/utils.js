@@ -7,6 +7,9 @@ import UiStore from "models/UI";
 export function getUserPayload() {
     return {
         appeal: faker.random.uuid(),
+        email: faker.internet.email(),
+        phone: faker.phone.phoneNumber(),
+        password: faker.internet.password(),
         fullName: `${faker.name.firstName()} ${faker.name.lastName()}`,
         birthDate: faker.date.past(),
         preferredCommunicationMethod: "email",

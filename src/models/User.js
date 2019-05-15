@@ -7,6 +7,12 @@ const User = types.model({
     // ID
     id: types.string,
 
+    email: types.maybe(types.string),
+
+    phone: types.maybe(types.string),
+
+    password: types.maybe(types.string),
+
     // Обращение
     appeal: types.string,
 

@@ -20,6 +20,7 @@ function Header() {
                 background-color: #37474f;
                 position: fixed;
                 width: 100%;
+                z-index: 1000;
 
                 a {
                     margin: 0 15px 0 0;
