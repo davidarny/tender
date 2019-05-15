@@ -12,12 +12,8 @@ const model = types.model({
     ui: UiStore,
 });
 const store = model.create({
-    user: {
-        current: undefined,
-    },
-    ui: {
-        isLoggedIn: false,
-    },
+    user: {},
+    ui: {},
 });
 
 if (process.env.NODE_ENV === "development") {

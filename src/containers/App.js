@@ -7,6 +7,7 @@ import { Router, navigate } from "@reach/router";
 import SignUp from "containers/SignUp";
 import SignIn from "containers/SignIn";
 import Header from "components/Header";
+import Drawer from "components/Drawer";
 import { StoreContext } from "index";
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
                         }
                     `}
                 />
+                <Drawer />
                 <Header />
                 <Router>
                     <SignUp path="/register" />

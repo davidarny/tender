@@ -30,7 +30,7 @@ export function getUserStoreSnapshot(state, action) {
 }
 
 export function getUiStoreSnapshot(state, action) {
-    const store = UiStore.create({ isLoggedIn: state });
+    const store = UiStore.create(state);
     if (action.type) {
         store[action.type](_.omit(action, "type"));
     }
