@@ -20,6 +20,7 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-jss": "^8.6.1",
+        "react-loadable": "^5.5.0",
         "react-scripts": "3.0.1",
         "shortid": "^2.2.14",
         "source-map-explorer": "^1.8.0"

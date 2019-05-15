@@ -4,14 +4,26 @@ import { jsx, css, Global } from "@emotion/core";
 import { Fragment, useEffect, useContext } from "react";
 import JssProvider from "components/JssProvider";
 import { Router, navigate } from "@reach/router";
-import SignUp from "containers/SignUp";
-import SignIn from "containers/SignIn";
-import Partners from "containers/Partners";
 import Header from "components/Header";
 import Drawer from "components/Drawer";
 import { StoreContext, BASE_PATH } from "context";
 import { TOGGLE_DRAWER } from "actions/ui";
 import { observer } from "mobx-react-lite";
+import Loadable from "react-loadable";
+import Loading from "components/Loading";
+
+const AsyncPartners = Loadable({
+    loader: () => import("containers/Partners"),
+    loading: Loading,
+});
+const AsyncSignUp = Loadable({
+    loader: () => import("containers/SignUp"),
+    loading: Loading,
+});
+const AsyncSignIn = Loadable({
+    loader: () => import("containers/SignIn"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
@@ -66,9 +78,9 @@ function App() {
                     `}
                     basepath={BASE_PATH === "" ? "/" : BASE_PATH}
                 >
-                    <Partners path="partners" />
-                    <SignUp path="register" />
-                    <SignIn path="login" />
+                    <AsyncPartners path="partners" />
+                    <AsyncSignUp path="register" />
+                    <AsyncSignIn path="login" />
                 </Router>
             </Fragment>
         </JssProvider>
