@@ -35,7 +35,6 @@ const actions = {
     INITIAL: "INITIAL",
     SUBMIT: "SUBMIT",
     SUBMIT_SUCCESS: "SUBMIT_SUCCESS",
-    REDIRECT_TO_LOGIN: "REDIRECT_TO_LOGIN",
 };
 
 function reducer(state, action) {
@@ -157,8 +156,8 @@ export default function SignUp() {
         setPasswordShowState(!isPasswordShown);
     }
 
-    function endUpRegistration() {
-        console.log("%cSignIn submit", "color: #3F51B5", form);
+    function onFormSuccess() {
+        console.log("%cSignUp submit", "color: #3F51B5", form);
         store.user[SET_CURRENT_USER]({
             ...form,
             birthDate: form.birthDate.toDate(),
@@ -360,7 +359,7 @@ export default function SignUp() {
                             open={isSnackbarOpen}
                             autoHideDuration={2000}
                             onClose={onSnackbarClose}
-                            onExited={endUpRegistration}
+                            onExited={onFormSuccess}
                         >
                             <SnackbarContent
                                 aria-describedby="client-snackbar"

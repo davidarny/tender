@@ -8,11 +8,17 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import SignForm from "components/SignForm";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useContext } from "react";
+import { StoreContext } from "index";
+import { SET_CURRENT_USER } from "actions/user";
+import { getUserPayload } from "utils";
+import { LOG_IN } from "actions/ui";
+import { navigate } from "@reach/router";
 
 export default function SignIn() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+    const store = useContext(StoreContext);
 
     function onEmailChange(event) {
         setEmail(event.target.value);
@@ -27,6 +33,9 @@ export default function SignIn() {
     function onFormSubmit(event) {
         console.log("%cSignIn submit", "color: #3F51B5", { email, password });
         event.preventDefault();
+        store.user[SET_CURRENT_USER]({ ...getUserPayload(), email, password });
+        store.ui[LOG_IN]();
+        navigate("/");
     }
 
     return (
