@@ -10,8 +10,10 @@ import Header from "components/Header";
 import Drawer from "components/Drawer";
 import { StoreContext } from "index";
 import Partners from "./Partners";
+import { TOGGLE_DRAWER } from "actions/ui";
+import { observer } from "mobx-react-lite";
 
-export default function App() {
+function App() {
     const store = useContext(StoreContext);
 
     useEffect(() => {
@@ -19,6 +21,10 @@ export default function App() {
             navigate("/login");
         }
     });
+
+    function onDrawerToggle() {
+        store.ui[TOGGLE_DRAWER]();
+    }
 
     return (
         <JssProvider>
@@ -42,8 +48,16 @@ export default function App() {
                         }
                     `}
                 />
-                <Drawer />
-                <Header />
+                <Drawer
+                    items={store.ui.drawer}
+                    isOpen={store.ui.isDrawerOpen}
+                    onToggle={onDrawerToggle}
+                />
+                <Header
+                    user={store.user.current}
+                    isLoggedIn={store.ui.isLoggedIn}
+                    onDrawerToggle={onDrawerToggle}
+                />
                 <Router
                     css={css`
                         width: 100%;
@@ -59,3 +73,5 @@ export default function App() {
         </JssProvider>
     );
 }
+
+export default observer(App);

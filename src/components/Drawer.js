@@ -14,20 +14,13 @@ import ParticipantsIcon from "@material-ui/icons/List";
 import TicketIcon from "@material-ui/icons/Receipt";
 import StatisticIcon from "@material-ui/icons/Poll";
 import DealIcon from "@material-ui/icons/LocalOffer";
-import { useContext, Fragment } from "react";
-import { StoreContext } from "index";
-import { TOGGLE_DRAWER } from "actions/ui";
+import { Fragment } from "react";
 import { observer } from "mobx-react-lite";
 import _ from "lodash";
 import { navigate } from "@reach/router";
+import PropTypes from "prop-types";
 
-function Drawer() {
-    const store = useContext(StoreContext);
-
-    function onDrawerToggle() {
-        store.ui[TOGGLE_DRAWER]();
-    }
-
+function Drawer({ items, isOpen = false, onToggle = _.noop }) {
     const icons = [
         <HomeIcon />,
         <PeopleIcon />,
@@ -41,15 +34,15 @@ function Drawer() {
     return (
         <Fragment>
             <MaterialDrawer
-                open={store.ui.isDrawerOpen}
+                open={isOpen}
                 anchor="left"
                 PaperProps={{
                     style: {
                         width: "300px",
                     },
                 }}
-                onClick={onDrawerToggle}
-                onKeyDown={onDrawerToggle}
+                onClick={onToggle}
+                onKeyDown={onToggle}
             >
                 <div
                     css={css`
@@ -58,7 +51,7 @@ function Drawer() {
                 />
                 <Divider />
                 <List>
-                    {store.ui.drawer.map((item, index) => (
+                    {items.map((item, index) => (
                         <ListItem
                             button
                             css={css`
@@ -77,5 +70,16 @@ function Drawer() {
         </Fragment>
     );
 }
+
+Drawer.propTypes = {
+    items: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string.isRequired,
+            url: PropTypes.string.isRequired,
+        })
+    ).isRequired,
+    isOpen: PropTypes.bool,
+    onToggle: PropTypes.func,
+};
 
 export default observer(Drawer);

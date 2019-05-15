@@ -9,19 +9,11 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
 import { Link } from "@reach/router";
-import { StoreContext } from "index";
-import { useContext } from "react";
 import { observer } from "mobx-react-lite";
 import _ from "lodash";
-import { TOGGLE_DRAWER } from "actions/ui";
+import PropTypes from "prop-types";
 
-function Header() {
-    const store = useContext(StoreContext);
-
-    function onDrawerToggle() {
-        store.ui[TOGGLE_DRAWER]();
-    }
-
+function Header({ user, isLoggedIn = false, onDrawerToggle = _.noop }) {
     return (
         <AppBar
             position="fixed"
@@ -74,17 +66,17 @@ function Header() {
                             display: inline-block;
                         `}
                     >
-                        {store.ui.isLoggedIn ? (
+                        {isLoggedIn ? (
                             <Chip
                                 avatar={
                                     <Avatar>
-                                        {_.get(store.user, "current.fullName", "Не авторизован")
+                                        {_.get(user, "fullName", "Не авторизован")
                                             .split(" ")
                                             .map(word => _.first(word))
                                             .join("")}
                                     </Avatar>
                                 }
-                                label={_.get(store.user, "current.fullName", "Не авторизован")}
+                                label={_.get(user, "fullName", "Не авторизован")}
                             />
                         ) : (
                             <Chip label={"Не авторизован"} />
@@ -95,5 +87,13 @@ function Header() {
         </AppBar>
     );
 }
+
+Header.propTypes = {
+    user: PropTypes.shape({
+        fullName: PropTypes.string,
+    }),
+    isLoggedIn: PropTypes.bool,
+    onDrawerToggle: PropTypes.func,
+};
 
 export default observer(Header);
