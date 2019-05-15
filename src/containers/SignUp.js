@@ -26,10 +26,10 @@ import moment from "moment";
 import { SET_CURRENT_USER } from "actions/user";
 import { StoreContext, BASE_PATH } from "context";
 import { navigate } from "@reach/router";
-import faker from "faker";
+import faker from "faker/locale/en";
 import { LOG_IN } from "actions/ui";
 import PropTypes from "prop-types";
-import _ from "lodash";
+import isArray from "lodash/isArray";
 
 const actions = {
     INITIAL: "INITIAL",
@@ -397,7 +397,7 @@ export default function SignUp() {
 }
 
 function FormContextSwitcher({ on, current, render }) {
-    if (_.isArray(on) && on.includes(current)) {
+    if (isArray(on) && on.includes(current)) {
         return render();
     } else if (on === current) {
         return render();

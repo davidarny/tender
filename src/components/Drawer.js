@@ -16,12 +16,13 @@ import StatisticIcon from "@material-ui/icons/Poll";
 import DealIcon from "@material-ui/icons/LocalOffer";
 import { Fragment } from "react";
 import { observer } from "mobx-react-lite";
-import _ from "lodash";
+import get from "lodash/get";
+import noop from "lodash/noop";
 import { navigate } from "@reach/router";
 import PropTypes from "prop-types";
 import { BASE_PATH } from "context";
 
-function Drawer({ items, isOpen = false, onToggle = _.noop }) {
+function Drawer({ items, isOpen = false, onToggle = noop }) {
     const icons = [
         <HomeIcon />,
         <PeopleIcon />,
@@ -62,7 +63,7 @@ function Drawer({ items, isOpen = false, onToggle = _.noop }) {
                             key={index}
                             onClick={() => navigate(BASE_PATH + item.url)}
                         >
-                            <ListItemIcon>{_.get(icons, `[${index}]`)}</ListItemIcon>
+                            <ListItemIcon>{get(icons, `[${index}]`)}</ListItemIcon>
                             <ListItemText primary={item.title} />
                         </ListItem>
                     ))}

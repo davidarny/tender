@@ -10,11 +10,13 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Button from "@material-ui/core/Button";
 import { Link } from "@reach/router";
 import { observer } from "mobx-react-lite";
-import _ from "lodash";
+import noop from "lodash/noop";
+import get from "lodash/get";
+import first from "lodash/first";
 import PropTypes from "prop-types";
 import { BASE_PATH } from "context";
 
-function Header({ user, isLoggedIn = false, onDrawerToggle = _.noop }) {
+function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
     return (
         <AppBar
             position="fixed"
@@ -71,13 +73,13 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = _.noop }) {
                             <Chip
                                 avatar={
                                     <Avatar>
-                                        {_.get(user, "fullName", "Не авторизован")
+                                        {get(user, "fullName", "Не авторизован")
                                             .split(" ")
-                                            .map(word => _.first(word))
+                                            .map(word => first(word))
                                             .join("")}
                                     </Avatar>
                                 }
-                                label={_.get(user, "fullName", "Не авторизован")}
+                                label={get(user, "fullName", "Не авторизован")}
                             />
                         ) : (
                             <Chip label={"Не авторизован"} />

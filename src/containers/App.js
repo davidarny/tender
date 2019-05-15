@@ -6,10 +6,10 @@ import JssProvider from "components/JssProvider";
 import { Router, navigate } from "@reach/router";
 import SignUp from "containers/SignUp";
 import SignIn from "containers/SignIn";
+import Partners from "containers/Partners";
 import Header from "components/Header";
 import Drawer from "components/Drawer";
 import { StoreContext, BASE_PATH } from "context";
-import Partners from "./Partners";
 import { TOGGLE_DRAWER } from "actions/ui";
 import { observer } from "mobx-react-lite";
 
