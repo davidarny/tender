@@ -26,10 +26,10 @@ import moment from "moment";
 import { SET_CURRENT_USER } from "actions/user";
 import { StoreContext, BASE_PATH } from "context";
 import { navigate } from "@reach/router";
-import faker from "faker/locale/en";
 import { LOG_IN } from "actions/ui";
 import PropTypes from "prop-types";
 import isArray from "lodash/isArray";
+import shortid from "shortid";
 
 const actions = {
     INITIAL: "INITIAL",
@@ -161,7 +161,7 @@ export default function SignUp() {
         store.user[SET_CURRENT_USER]({
             ...form,
             birthDate: form.birthDate.toDate(),
-            appeal: faker.random.uuid(),
+            appeal: shortid(),
         });
         store.ui[LOG_IN]();
         navigate(BASE_PATH);

@@ -1,21 +1,21 @@
 import { getSnapshot } from "mobx-state-tree";
-import faker from "faker/locale/en";
+import shortid from "shortid";
 import UserStore from "models/User";
 import omit from "lodash/omit";
 import UiStore from "models/UI";
 
 export function getUserPayload() {
     return {
-        appeal: faker.random.uuid(),
-        email: faker.internet.email(),
-        phone: faker.phone.phoneNumber(),
-        password: faker.internet.password(),
-        fullName: `${faker.name.firstName()} ${faker.name.lastName()}`,
-        birthDate: faker.date.past(),
+        appeal: shortid(),
+        email: "john.doe@mail.com",
+        phone: "+12345678910",
+        password: shortid(),
+        fullName: "John Doe",
+        birthDate: new Date(),
         preferredCommunicationMethod: "email",
         idDocument: {
             documentType: "passport",
-            documentId: faker.random.uuid(),
+            documentId: shortid(),
         },
         consentToCommunication: true,
     };
