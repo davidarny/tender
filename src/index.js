@@ -5,13 +5,18 @@ import * as ServiceWorker from "./ServiceWorker";
 import { connectReduxDevtools } from "mst-middlewares";
 import { types } from "mobx-state-tree";
 import UserStore from "./models/User";
+import UiStore from "models/UI";
 
 const model = types.model({
     user: UserStore,
+    ui: UiStore,
 });
 const store = model.create({
     user: {
         current: undefined,
+    },
+    ui: {
+        isLoggedIn: false,
     },
 });
 

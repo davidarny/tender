@@ -19,6 +19,7 @@ import { SET_CURRENT_USER } from "actions/user";
 import { StoreContext } from "index";
 import { navigate } from "@reach/router";
 import faker from "faker";
+import { LOG_IN } from "actions/ui";
 
 export default function SignUp() {
     const [fullName, setFullName] = useState();
@@ -84,6 +85,7 @@ export default function SignUp() {
             ...payload,
             appeal: faker.random.uuid(),
         });
+        store.ui[LOG_IN]();
         navigate("/");
     }
 

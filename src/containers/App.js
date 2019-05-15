@@ -1,14 +1,23 @@
 /** @jsx jsx */
 
 import { jsx, css, Global } from "@emotion/core";
-import { Fragment } from "react";
+import { Fragment, useEffect, useContext } from "react";
 import JssProvider from "components/JssProvider";
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 import SignUp from "containers/SignUp";
 import SignIn from "containers/SignIn";
 import Header from "components/Header";
+import { StoreContext } from "index";
 
 export default function App() {
+    const store = useContext(StoreContext);
+
+    useEffect(() => {
+        if (!store.ui.isLoggedIn) {
+            navigate("/login");
+        }
+    });
+
     return (
         <JssProvider>
             <Fragment>

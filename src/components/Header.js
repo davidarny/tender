@@ -43,7 +43,7 @@ function Header() {
                     <Link to="/login">Sign In</Link>
                 </Grid>
                 <Grid item>
-                    {store.user.current ? (
+                    {store.ui.isLoggedIn ? (
                         <Chip
                             avatar={
                                 <Avatar>

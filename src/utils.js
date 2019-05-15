@@ -2,6 +2,7 @@ import { getSnapshot } from "mobx-state-tree";
 import faker from "faker";
 import UserStore from "models/User";
 import _ from "lodash";
+import UiStore from "models/UI";
 
 export function getUserPayload() {
     return {
@@ -19,6 +20,14 @@ export function getUserPayload() {
 
 export function getUserStoreSnapshot(state, action) {
     const store = UserStore.create({ current: state });
+    if (action.type) {
+        store[action.type](_.omit(action, "type"));
+    }
+    return getSnapshot(store);
+}
+
+export function getUiStoreSnapshot(state, action) {
+    const store = UiStore.create({ isLoggedIn: state });
     if (action.type) {
         store[action.type](_.omit(action, "type"));
     }
