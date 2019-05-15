@@ -18,7 +18,7 @@ function App() {
 
     useEffect(() => {
         if (!store.ui.isLoggedIn && process.env.NODE_ENV !== "development") {
-            navigate("/login");
+            navigate(BASE_PATH + "/login");
         }
     });
 
