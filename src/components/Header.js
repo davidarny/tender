@@ -51,9 +51,12 @@ function Header() {
                     <IconButton color="inherit" aria-label="Open drawer" onClick={onDrawerToggle}>
                         <MenuIcon />
                     </IconButton>
+                </Grid>
+                <Grid item>
                     <Button
                         css={css`
                             text-transform: none;
+                            margin-right: 10px;
                         `}
                     >
                         <Link to="/register">Sign Up</Link>
@@ -65,23 +68,28 @@ function Header() {
                     >
                         <Link to="/login">Sign In</Link>
                     </Button>
-                </Grid>
-                <Grid item>
-                    {store.ui.isLoggedIn ? (
-                        <Chip
-                            avatar={
-                                <Avatar>
-                                    {_.get(store.user, "current.fullName", "Not Logged")
-                                        .split(" ")
-                                        .map(word => _.first(word))
-                                        .join("")}
-                                </Avatar>
-                            }
-                            label={_.get(store.user, "current.fullName", "Not Logged")}
-                        />
-                    ) : (
-                        <Chip label={"Not Logged"} />
-                    )}
+                    <div
+                        css={css`
+                            margin-left: 18px;
+                            display: inline-block;
+                        `}
+                    >
+                        {store.ui.isLoggedIn ? (
+                            <Chip
+                                avatar={
+                                    <Avatar>
+                                        {_.get(store.user, "current.fullName", "Not Logged")
+                                            .split(" ")
+                                            .map(word => _.first(word))
+                                            .join("")}
+                                    </Avatar>
+                                }
+                                label={_.get(store.user, "current.fullName", "Not Logged")}
+                            />
+                        ) : (
+                            <Chip label={"Not Logged"} />
+                        )}
+                    </div>
                 </Grid>
             </Grid>
         </AppBar>
