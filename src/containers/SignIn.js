@@ -9,7 +9,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import SignForm from "components/SignForm";
 import { Fragment, useState, useContext } from "react";
-import { StoreContext } from "context";
+import { StoreContext, BASE_PATH } from "context";
 import { SET_CURRENT_USER } from "actions/user";
 import { getUserPayload } from "utils";
 import { LOG_IN } from "actions/ui";
@@ -35,7 +35,7 @@ export default function SignIn() {
         event.preventDefault();
         store.user[SET_CURRENT_USER]({ ...getUserPayload(), email, password });
         store.ui[LOG_IN]();
-        navigate("/");
+        navigate(BASE_PATH);
     }
 
     return (

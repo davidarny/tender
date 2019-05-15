@@ -19,6 +19,7 @@ import { observer } from "mobx-react-lite";
 import _ from "lodash";
 import { navigate } from "@reach/router";
 import PropTypes from "prop-types";
+import { BASE_PATH } from "context";
 
 function Drawer({ items, isOpen = false, onToggle = _.noop }) {
     const icons = [
@@ -59,7 +60,7 @@ function Drawer({ items, isOpen = false, onToggle = _.noop }) {
                                 padding-bottom: 17px;
                             `}
                             key={index}
-                            onClick={() => navigate(item.url)}
+                            onClick={() => navigate(BASE_PATH + item.url)}
                         >
                             <ListItemIcon>{_.get(icons, `[${index}]`)}</ListItemIcon>
                             <ListItemText primary={item.title} />

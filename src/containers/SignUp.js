@@ -24,7 +24,7 @@ import MomentUtils from "@date-io/moment";
 import { Fragment, useState, useContext, useReducer } from "react";
 import moment from "moment";
 import { SET_CURRENT_USER } from "actions/user";
-import { StoreContext } from "context";
+import { StoreContext, BASE_PATH } from "context";
 import { navigate } from "@reach/router";
 import faker from "faker";
 import { LOG_IN } from "actions/ui";
@@ -164,7 +164,7 @@ export default function SignUp() {
             appeal: faker.random.uuid(),
         });
         store.ui[LOG_IN]();
-        navigate("/");
+        navigate(BASE_PATH);
     }
 
     return (
