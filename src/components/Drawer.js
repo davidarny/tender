@@ -58,7 +58,14 @@ function Drawer() {
                 <Divider />
                 <List>
                     {store.ui.drawer.map((text, index) => (
-                        <ListItem button key={index}>
+                        <ListItem
+                            button
+                            css={css`
+                                padding-top: 17px;
+                                padding-bottom: 17px;
+                            `}
+                            key={index}
+                        >
                             <ListItemIcon>{_.get(icons, `[${index}]`)}</ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
