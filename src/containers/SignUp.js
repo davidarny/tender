@@ -189,13 +189,13 @@ export default function SignUp() {
                     current={state.step}
                     render={() => (
                         <SignForm
-                            title="Sign Up"
-                            button="SIGN UP"
+                            title="Регистрация"
+                            button="РЕГИСТРАЦИЯ"
                             onSubmit={onFormSubmit}
                             controls={() => (
                                 <Fragment>
                                     <FormControl margin="normal" required fullWidth>
-                                        <InputLabel htmlFor="fullName">Full Name</InputLabel>
+                                        <InputLabel htmlFor="fullName">Полное имя</InputLabel>
                                         <Input
                                             id="fullName"
                                             name="fullName"
@@ -204,7 +204,7 @@ export default function SignUp() {
                                         />
                                     </FormControl>
                                     <FormControl margin="normal" required fullWidth>
-                                        <InputLabel htmlFor="email">Email</InputLabel>
+                                        <InputLabel htmlFor="email">Эл. адрес</InputLabel>
                                         <Input
                                             id="email"
                                             name="email"
@@ -214,7 +214,7 @@ export default function SignUp() {
                                         />
                                     </FormControl>
                                     <FormControl margin="normal" required fullWidth>
-                                        <InputLabel htmlFor="phoneNumber">Phone Number</InputLabel>
+                                        <InputLabel htmlFor="phoneNumber">Телефон</InputLabel>
                                         <Input
                                             id="phoneNumber"
                                             name="phoneNumber"
@@ -227,7 +227,7 @@ export default function SignUp() {
                                             <DatePicker
                                                 id="birthDate"
                                                 margin="normal"
-                                                label="Birth Date"
+                                                label="Дата рождения"
                                                 value={form.birthDate}
                                                 onChange={onBirthDateChange}
                                                 format="DD MMM YYYY"
@@ -236,10 +236,10 @@ export default function SignUp() {
                                     </FormControl>
                                     <FormControl margin="normal" required fullWidth>
                                         <FormLabel component="legend">
-                                            Preferred Communication Method
+                                            Предпочтительный способ связи
                                         </FormLabel>
                                         <RadioGroup
-                                            aria-label="Preferred Communication Method"
+                                            aria-label="Предпочтительный способ связи"
                                             name="preferredCommunicationMethod"
                                             value={form.preferredCommunicationMethod}
                                             onChange={onPreferredCommunicationMethodChange}
@@ -250,20 +250,22 @@ export default function SignUp() {
                                             <FormControlLabel
                                                 value="email"
                                                 control={<Radio />}
-                                                label="Email"
+                                                label="Эл. адрес"
                                             />
                                             <FormControlLabel
                                                 value="phone"
                                                 control={<Radio />}
-                                                label="Phone"
+                                                label="Телефон"
                                             />
                                         </RadioGroup>
                                     </FormControl>
                                     <FormControl margin="normal" required fullWidth>
-                                        <FormLabel component="legend">ID document</FormLabel>
+                                        <FormLabel component="legend">
+                                            Документы удостоверяющие личность
+                                        </FormLabel>
                                         <FormControl required fullWidth>
                                             <InputLabel htmlFor="documentType">
-                                                Document Type
+                                                Тип документа
                                             </InputLabel>
                                             <Input
                                                 id="documentType"
@@ -274,7 +276,7 @@ export default function SignUp() {
                                         </FormControl>
                                         <FormControl required fullWidth>
                                             <InputLabel htmlFor="documentNumber">
-                                                Document Number
+                                                Номер документа
                                             </InputLabel>
                                             <Input
                                                 id="documentNumber"
@@ -293,9 +295,10 @@ export default function SignUp() {
                                                 onChange={onConsentToCommunicationChange}
                                             />
                                         }
-                                        label="Consent To Communication"
+                                        label="Согласие на коммуникации"
                                     />
                                     <FormControl margin="normal" required fullWidth>
+                                        <InputLabel htmlFor="password">Пароль</InputLabel>
                                         <Input
                                             id="password"
                                             name="password"
@@ -305,7 +308,7 @@ export default function SignUp() {
                                             endAdornment={
                                                 <InputAdornment position="end">
                                                     <IconButton
-                                                        aria-label="Toggle password visibility"
+                                                        aria-label="Переключить видимость пароля"
                                                         onClick={togglePasswordVisibility}
                                                     >
                                                         {isPasswordShown ? (

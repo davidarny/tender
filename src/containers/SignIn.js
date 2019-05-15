@@ -56,13 +56,13 @@ export default function SignIn() {
                 `}
             >
                 <SignForm
-                    title="Sign In"
-                    button="SIGN IN"
+                    title="Вход в личный кабинет"
+                    button="ВХОД"
                     onSubmit={onFormSubmit}
                     controls={() => (
                         <Fragment>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <InputLabel htmlFor="email">Эл. адрес</InputLabel>
                                 <Input
                                     id="email"
                                     name="email"
@@ -72,7 +72,7 @@ export default function SignIn() {
                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <InputLabel htmlFor="password">Пароль</InputLabel>
                                 <Input
                                     name="password"
                                     type="password"
@@ -83,7 +83,7 @@ export default function SignIn() {
                             </FormControl>
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
+                                label="Запомнить меня"
                             />
                         </Fragment>
                     )}

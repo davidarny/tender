@@ -59,14 +59,14 @@ function Header() {
                             margin-right: 10px;
                         `}
                     >
-                        <Link to="/register">Sign Up</Link>
+                        <Link to="/register">Регистрация</Link>
                     </Button>
                     <Button
                         css={css`
                             text-transform: none;
                         `}
                     >
-                        <Link to="/login">Sign In</Link>
+                        <Link to="/login">Вход в личный кабинет</Link>
                     </Button>
                     <div
                         css={css`
@@ -78,16 +78,16 @@ function Header() {
                             <Chip
                                 avatar={
                                     <Avatar>
-                                        {_.get(store.user, "current.fullName", "Not Logged")
+                                        {_.get(store.user, "current.fullName", "Не авторизован")
                                             .split(" ")
                                             .map(word => _.first(word))
                                             .join("")}
                                     </Avatar>
                                 }
-                                label={_.get(store.user, "current.fullName", "Not Logged")}
+                                label={_.get(store.user, "current.fullName", "Не авторизован")}
                             />
                         ) : (
-                            <Chip label={"Not Logged"} />
+                            <Chip label={"Не авторизован"} />
                         )}
                     </div>
                 </Grid>

@@ -45,7 +45,7 @@ function Drawer() {
                 anchor="left"
                 PaperProps={{
                     style: {
-                        width: "240px",
+                        width: "300px",
                     },
                 }}
                 onClick={onDrawerToggle}
@@ -58,7 +58,7 @@ function Drawer() {
                 />
                 <Divider />
                 <List>
-                    {store.ui.drawer.map((text, index) => (
+                    {store.ui.drawer.map((item, index) => (
                         <ListItem
                             button
                             css={css`
@@ -66,10 +66,10 @@ function Drawer() {
                                 padding-bottom: 17px;
                             `}
                             key={index}
-                            onClick={() => navigate(_.toLower(text))}
+                            onClick={() => navigate(item.url)}
                         >
                             <ListItemIcon>{_.get(icons, `[${index}]`)}</ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={item.title} />
                         </ListItem>
                     ))}
                 </List>
