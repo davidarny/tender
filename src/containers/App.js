@@ -9,12 +9,13 @@ import SignIn from "containers/SignIn";
 import Header from "components/Header";
 import Drawer from "components/Drawer";
 import { StoreContext } from "index";
+import Partners from "./Partners";
 
 export default function App() {
     const store = useContext(StoreContext);
 
     useEffect(() => {
-        if (!store.ui.isLoggedIn) {
+        if (!store.ui.isLoggedIn && process.env.NODE_ENV !== "development") {
             navigate("/login");
         }
     });
@@ -30,8 +31,7 @@ export default function App() {
 
                         html,
                         body,
-                        #root,
-                        div[role="group"] {
+                        #root {
                             margin: 0;
                             width: 100%;
                             height: 100%;
@@ -44,7 +44,14 @@ export default function App() {
                 />
                 <Drawer />
                 <Header />
-                <Router>
+                <Router
+                    css={css`
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                    `}
+                >
+                    <Partners path="/partners" />
                     <SignUp path="/register" />
                     <SignIn path="/login" />
                 </Router>

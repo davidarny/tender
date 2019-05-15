@@ -19,6 +19,7 @@ import { StoreContext } from "index";
 import { TOGGLE_DRAWER } from "actions/ui";
 import { observer } from "mobx-react-lite";
 import _ from "lodash";
+import { navigate } from "@reach/router";
 
 function Drawer() {
     const store = useContext(StoreContext);
@@ -65,6 +66,7 @@ function Drawer() {
                                 padding-bottom: 17px;
                             `}
                             key={index}
+                            onClick={() => navigate(_.toLower(text))}
                         >
                             <ListItemIcon>{_.get(icons, `[${index}]`)}</ListItemIcon>
                             <ListItemText primary={text} />
