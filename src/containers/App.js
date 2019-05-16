@@ -86,6 +86,7 @@ function App() {
                         item
                         css={css`
                             flex-shrink: 0;
+                            height: 100%;
                         `}
                     >
                         {store.ui.isLoggedIn && (

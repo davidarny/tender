@@ -22,8 +22,25 @@ import { navigate } from "@reach/router";
 import PropTypes from "prop-types";
 import { BASE_PATH } from "context";
 import Hidden from "@material-ui/core/Hidden";
+import { useEffect, useRef } from "react";
 
 function Drawer({ items, isOpen = false, onToggle = noop }) {
+    const id = useRef(0);
+
+    // sorry for this 😭
+    useEffect(() => {
+        const drawer = document.getElementById("drawer");
+
+        function onAnimationFrame() {
+            drawer.style.transform = `translateY(${document.documentElement.scrollTop}px)`;
+            id.current = requestAnimationFrame(onAnimationFrame);
+        }
+
+        id.current = requestAnimationFrame(onAnimationFrame);
+
+        return () => cancelAnimationFrame(id);
+    });
+
     const icons = [
         <HomeIcon />,
         <PeopleIcon />,
@@ -96,7 +113,9 @@ function Drawer({ items, isOpen = false, onToggle = noop }) {
                     }}
                     css={css`
                         height: 100%;
+                        will-change: transform;
                     `}
+                    id="drawer"
                 >
                     <div
                         css={css`
@@ -113,7 +132,10 @@ function Drawer({ items, isOpen = false, onToggle = noop }) {
                                     padding-bottom: 17px;
                                 `}
                                 key={index}
-                                onClick={() => navigate(BASE_PATH + item.url)}
+                                onClick={() => {
+                                    window.scrollTo(0, 0);
+                                    navigate(BASE_PATH + item.url);
+                                }}
                             >
                                 <ListItemIcon>{get(icons, `[${index}]`)}</ListItemIcon>
                                 <ListItemText primary={item.title} />
