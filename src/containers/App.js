@@ -16,6 +16,10 @@ const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
     loading: Loading,
 });
+const AsyncParticipants = Loadable({
+    loader: () => import("containers/Participants"),
+    loading: Loading,
+});
 const AsyncSignUp = Loadable({
     loader: () => import("containers/SignUp"),
     loading: Loading,
@@ -79,6 +83,7 @@ function App() {
                     basepath={BASE_PATH === "" ? "/" : BASE_PATH}
                 >
                     <AsyncPartners path="partners" />
+                    <AsyncParticipants path="participants" />
                     <AsyncSignUp path="register" />
                     <AsyncSignIn path="login" />
                 </Router>
