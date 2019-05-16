@@ -1,6 +1,5 @@
-/* eslint-disable no-unused-expressions */
 import chai from "chai";
-import _ from "lodash";
+import omit from "lodash/omit";
 import { SET_CURRENT_USER, REMOVE_CURRENT_USER } from "actions/user";
 import shortid from "shortid";
 import { getUserStoreSnapshot, getUserPayload } from "utils";
@@ -17,7 +16,7 @@ describe("user model", () => {
         const payload = getUserPayload();
         const user = getUserStoreSnapshot(undefined, { type: SET_CURRENT_USER, ...payload })
             .current;
-        expect(user).to.deep.include(_.omit(payload, "birthDate"));
+        expect(user).to.deep.include(omit(payload, "birthDate"));
         expect(user.birthDate).to.be.a("number");
     });
 

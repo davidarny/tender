@@ -20,10 +20,13 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-jss": "^8.6.1",
+        "react-loadable": "^5.5.0",
         "react-scripts": "3.0.1",
-        "shortid": "^2.2.14"
+        "shortid": "^2.2.14",
+        "source-map-explorer": "^1.8.0"
     },
     "scripts": {
+        "analyze": "source-map-explorer build/static/js/*.js",
         "predeploy": "yarn build",
         "deploy": "gh-pages -d build",
         "commit": "git-cz",
@@ -51,7 +54,6 @@
         "commitizen": "^3.1.1",
         "cross-env": "^5.2.0",
         "cz-conventional-changelog": "^2.1.0",
-        "faker": "^4.1.0",
         "husky": "^2.2.0",
         "lint-staged": "^8.1.6",
         "prettier": "^1.17.1",

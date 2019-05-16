@@ -9,7 +9,7 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import SignForm from "components/SignForm";
 import { Fragment, useState, useContext } from "react";
-import { StoreContext } from "index";
+import { StoreContext, BASE_PATH } from "context";
 import { SET_CURRENT_USER } from "actions/user";
 import { getUserPayload } from "utils";
 import { LOG_IN } from "actions/ui";
@@ -35,7 +35,7 @@ export default function SignIn() {
         event.preventDefault();
         store.user[SET_CURRENT_USER]({ ...getUserPayload(), email, password });
         store.ui[LOG_IN]();
-        navigate("/");
+        navigate(BASE_PATH);
     }
 
     return (
@@ -56,13 +56,13 @@ export default function SignIn() {
                 `}
             >
                 <SignForm
-                    title="Sign In"
-                    button="SIGN IN"
+                    title="Вход в личный кабинет"
+                    button="ВХОД"
                     onSubmit={onFormSubmit}
                     controls={() => (
                         <Fragment>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <InputLabel htmlFor="email">Эл. адрес</InputLabel>
                                 <Input
                                     id="email"
                                     name="email"
@@ -72,7 +72,7 @@ export default function SignIn() {
                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="password">Password</InputLabel>
+                                <InputLabel htmlFor="password">Пароль</InputLabel>
                                 <Input
                                     name="password"
                                     type="password"
@@ -83,7 +83,7 @@ export default function SignIn() {
                             </FormControl>
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
+                                label="Запомнить меня"
                             />
                         </Fragment>
                     )}
