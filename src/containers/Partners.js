@@ -2,7 +2,6 @@
 
 import { jsx, css } from "@emotion/core";
 import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
 import IconButton from "@material-ui/core/IconButton";
@@ -27,14 +26,12 @@ function Partners() {
                         variant="h2"
                         css={css`
                             font-weight: 500;
-                            padding-left: 20px;
                             padding-top: 20px;
                             padding-bottom: 50px;
                         `}
                     >
                         Список партнеров
                     </Typography>
-                    <Divider />
                 </Grid>
                 <Grid item xs={12}>
                     <Paper>

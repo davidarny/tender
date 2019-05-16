@@ -15,58 +15,52 @@ import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import { Link } from "@reach/router";
-import React from "react";
+import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 
 function Participants() {
-    let status = "Premium";
-    let totalPoints = 778;
+    const [tabIndex, setTabIndex] = useState(0);
 
-    const [value, setValue] = React.useState(0);
-    function handleChange(event, newValue) {
-        setValue(newValue);
+    function onTabChange(event, index) {
+        setTabIndex(index);
     }
 
     return (
         <Layout>
-            <Grid
-                container
-                css={css`
-                    padding: 20px;
-                `}
-            >
-                <Grid item xs={3}>
-                    <span>РосГосСтрах</span>
-                </Grid>
-                <Grid item xs={5}>
-                    <span>Статус: {status}</span>
-                </Grid>
-                <Grid item xs={4}>
-                    <span>Количество баллов: {totalPoints}</span>
-                </Grid>
+            <Grid container>
+                <Typography
+                    variant="h2"
+                    css={css`
+                        font-weight: 500;
+                        padding-top: 20px;
+                        padding-bottom: 50px;
+                    `}
+                >
+                    Список участников ПЛ
+                </Typography>
             </Grid>
 
             <AppBar position="static">
-                <Tabs value={value} onChange={handleChange}>
+                <Tabs value={tabIndex} onChange={onTabChange}>
                     <Tab label="Участники ПЛ" />
                     <Tab label="Поездки" />
                     <Tab label="Тикеты" />
                 </Tabs>
             </AppBar>
-            {value === 0 && (
+            {tabIndex === 0 && (
                 <TabContainer>
                     <ParticipantsPL />
                 </TabContainer>
             )}
-            {value === 1 && (
+            {tabIndex === 1 && (
                 <TabContainer>
                     <Trips />
                 </TabContainer>
             )}
-            {value === 2 && (
+            {tabIndex === 2 && (
                 <TabContainer>
                     <Tickets />
                 </TabContainer>
