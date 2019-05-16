@@ -45,13 +45,15 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
             >
                 <Grid item>
                     <Hidden mdUp implementation="css">
-                        <IconButton
-                            color="inherit"
-                            aria-label="Open drawer"
-                            onClick={onDrawerToggle}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        {isLoggedIn && (
+                            <IconButton
+                                color="inherit"
+                                aria-label="Open drawer"
+                                onClick={onDrawerToggle}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        )}
                     </Hidden>
                 </Grid>
                 <Grid item>

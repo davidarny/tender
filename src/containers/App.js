@@ -102,17 +102,15 @@ function App() {
                             flex-grow: 1;
                         `}
                     >
-                        {store.ui.isLoggedIn && (
-                            <Header
-                                user={store.user.current}
-                                isLoggedIn={store.ui.isLoggedIn}
-                                onDrawerToggle={onDrawerToggle}
-                            />
-                        )}
+                        <Header
+                            user={store.user.current}
+                            isLoggedIn={store.ui.isLoggedIn}
+                            onDrawerToggle={onDrawerToggle}
+                        />
                         <Router
                             css={css`
                                 width: ${store.ui.isLoggedIn ? "calc(100% - 60px)" : "100%"};
-                                height: ${store.ui.isLoggedIn ? "calc(100% - 58px)" : "100%"};
+                                height: calc(100% - 58px);
                                 padding: ${store.ui.isLoggedIn ? "0 40px 0 20px" : "0"};
                                 display: flex;
                             `}
