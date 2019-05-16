@@ -1,16 +1,18 @@
 /** @jsx jsx */
 
 import { jsx, css, Global } from "@emotion/core";
-import { Fragment, useEffect, useContext } from "react";
+import { Fragment, useContext } from "react";
 import JssProvider from "components/JssProvider";
-import { Router, navigate } from "@reach/router";
+import { Router, Match } from "@reach/router";
 import Header from "components/Header";
 import Drawer from "components/Drawer";
+import PrivateRoute from "components/PrivateRoute";
 import { StoreContext, BASE_PATH } from "context";
-import { TOGGLE_DRAWER } from "actions/ui";
+import { TOGGLE_DRAWER, LOG_OUT } from "actions/ui";
 import { observer } from "mobx-react-lite";
 import Loadable from "react-loadable";
 import Loading from "components/Loading";
+import Grid from "@material-ui/core/Grid";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -32,12 +34,6 @@ const AsyncSignIn = Loadable({
 function App() {
     const store = useContext(StoreContext);
 
-    useEffect(() => {
-        if (!store.ui.isLoggedIn && process.env.NODE_ENV !== "development") {
-            navigate(BASE_PATH + "/login");
-        }
-    });
-
     function onDrawerToggle() {
         store.ui[TOGGLE_DRAWER]();
     }
@@ -52,11 +48,10 @@ function App() {
                         }
 
                         html,
-                        body,
-                        #root {
+                        body {
                             margin: 0;
-                            width: 100%;
                             height: 100%;
+                            width: 100%;
                         }
 
                         body {
@@ -64,29 +59,85 @@ function App() {
                         }
                     `}
                 />
-                <Drawer
-                    items={store.ui.drawer}
-                    isOpen={store.ui.isDrawerOpen}
-                    onToggle={onDrawerToggle}
-                />
-                <Header
-                    user={store.user.current}
+                <PrivateRoute
                     isLoggedIn={store.ui.isLoggedIn}
-                    onDrawerToggle={onDrawerToggle}
+                    noRedirect
+                    render={() => (
+                        <Fragment>
+                            <Match path="/login">
+                                {props => props.match && store.ui[LOG_OUT]()}
+                            </Match>
+                            <Match path="/register">
+                                {props => props.match && store.ui[LOG_OUT]()}
+                            </Match>
+                        </Fragment>
+                    )}
                 />
-                <Router
+                <Grid
+                    container
+                    direction="row"
                     css={css`
                         width: 100%;
                         height: 100%;
-                        display: flex;
+                        flex-wrap: nowrap;
                     `}
-                    basepath={BASE_PATH === "" ? "/" : BASE_PATH}
                 >
-                    <AsyncPartners path="partners" />
-                    <AsyncParticipants path="participants" />
-                    <AsyncSignUp path="register" />
-                    <AsyncSignIn path="login" />
-                </Router>
+                    <Grid
+                        item
+                        css={css`
+                            flex-shrink: 0;
+                        `}
+                    >
+                        {store.ui.isLoggedIn && (
+                            <Drawer
+                                items={store.ui.drawer}
+                                isOpen={store.ui.isDrawerOpen}
+                                onToggle={onDrawerToggle}
+                            />
+                        )}
+                    </Grid>
+                    <Grid
+                        item
+                        css={css`
+                            flex-grow: 1;
+                        `}
+                    >
+                        {store.ui.isLoggedIn && (
+                            <Header
+                                user={store.user.current}
+                                isLoggedIn={store.ui.isLoggedIn}
+                                onDrawerToggle={onDrawerToggle}
+                            />
+                        )}
+                        <Router
+                            css={css`
+                                width: ${store.ui.isLoggedIn ? "calc(100% - 60px)" : "100%"};
+                                height: ${store.ui.isLoggedIn ? "calc(100% - 58px)" : "100%"};
+                                padding: ${store.ui.isLoggedIn ? "0 40px 0 20px" : "0"};
+                                display: flex;
+                            `}
+                            basepath={BASE_PATH === "" ? "/" : BASE_PATH}
+                        >
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="/"
+                                render={() => <Fragment />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="partners"
+                                render={() => <AsyncPartners />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="participants"
+                                render={() => <AsyncParticipants />}
+                            />
+                            <AsyncSignUp path="register" />
+                            <AsyncSignIn path="login" />
+                        </Router>
+                    </Grid>
+                </Grid>
             </Fragment>
         </JssProvider>
     );

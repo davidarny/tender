@@ -21,6 +21,7 @@ import noop from "lodash/noop";
 import { navigate } from "@reach/router";
 import PropTypes from "prop-types";
 import { BASE_PATH } from "context";
+import Hidden from "@material-ui/core/Hidden";
 
 function Drawer({ items, isOpen = false, onToggle = noop }) {
     const icons = [
@@ -35,40 +36,92 @@ function Drawer({ items, isOpen = false, onToggle = noop }) {
 
     return (
         <Fragment>
-            <MaterialDrawer
-                open={isOpen}
-                anchor="left"
-                PaperProps={{
-                    style: {
-                        width: "300px",
-                    },
-                }}
-                onClick={onToggle}
-                onKeyDown={onToggle}
+            <Hidden
+                mdUp
+                implementation="css"
+                css={css`
+                    height: 100%;
+                `}
             >
-                <div
+                <MaterialDrawer
+                    open={isOpen}
+                    anchor="left"
+                    PaperProps={{
+                        style: {
+                            width: "300px",
+                        },
+                    }}
+                    onClick={onToggle}
+                    onKeyDown={onToggle}
+                >
+                    <div
+                        css={css`
+                            height: calc(58px - 1px);
+                        `}
+                    />
+                    <Divider />
+                    <List>
+                        {items.map((item, index) => (
+                            <ListItem
+                                button
+                                css={css`
+                                    padding-top: 17px;
+                                    padding-bottom: 17px;
+                                `}
+                                key={index}
+                                onClick={() => navigate(BASE_PATH + item.url)}
+                            >
+                                <ListItemIcon>{get(icons, `[${index}]`)}</ListItemIcon>
+                                <ListItemText primary={item.title} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </MaterialDrawer>
+            </Hidden>
+            <Hidden
+                smDown
+                implementation="css"
+                css={css`
+                    height: 100%;
+                `}
+            >
+                <MaterialDrawer
+                    anchor="left"
+                    variant="permanent"
+                    PaperProps={{
+                        style: {
+                            width: "100%",
+                            position: "relative",
+                        },
+                    }}
                     css={css`
-                        height: 58px;
+                        height: 100%;
                     `}
-                />
-                <Divider />
-                <List>
-                    {items.map((item, index) => (
-                        <ListItem
-                            button
-                            css={css`
-                                padding-top: 17px;
-                                padding-bottom: 17px;
-                            `}
-                            key={index}
-                            onClick={() => navigate(BASE_PATH + item.url)}
-                        >
-                            <ListItemIcon>{get(icons, `[${index}]`)}</ListItemIcon>
-                            <ListItemText primary={item.title} />
-                        </ListItem>
-                    ))}
-                </List>
-            </MaterialDrawer>
+                >
+                    <div
+                        css={css`
+                            height: calc(58px - 1px);
+                        `}
+                    />
+                    <Divider />
+                    <List>
+                        {items.map((item, index) => (
+                            <ListItem
+                                button
+                                css={css`
+                                    padding-top: 17px;
+                                    padding-bottom: 17px;
+                                `}
+                                key={index}
+                                onClick={() => navigate(BASE_PATH + item.url)}
+                            >
+                                <ListItemIcon>{get(icons, `[${index}]`)}</ListItemIcon>
+                                <ListItemText primary={item.title} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </MaterialDrawer>
+            </Hidden>
         </Fragment>
     );
 }

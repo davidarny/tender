@@ -35,7 +35,7 @@ export default function SignIn() {
         event.preventDefault();
         store.user[SET_CURRENT_USER]({ ...getUserPayload(), email, password });
         store.ui[LOG_IN]();
-        navigate(BASE_PATH);
+        navigate(BASE_PATH === "" ? "/" : BASE_PATH);
     }
 
     return (

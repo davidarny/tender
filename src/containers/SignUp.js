@@ -164,7 +164,7 @@ export default function SignUp() {
             appeal: shortid(),
         });
         store.ui[LOG_IN]();
-        navigate(BASE_PATH);
+        navigate(BASE_PATH === "" ? "/" : BASE_PATH);
     }
 
     return (

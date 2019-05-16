@@ -14,7 +14,6 @@ export default function SignForm({ title, controls, button, onSubmit }) {
             css={css`
                 display: flex;
                 padding: 16px 24px 24px;
-                margin-top: 64px;
                 align-items: center;
                 flex-direction: column;
             `}

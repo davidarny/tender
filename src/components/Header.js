@@ -7,6 +7,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Chip from "@material-ui/core/Chip";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Hidden from "@material-ui/core/Hidden";
 import Button from "@material-ui/core/Button";
 import { Link } from "@reach/router";
 import { observer } from "mobx-react-lite";
@@ -19,12 +20,11 @@ import { BASE_PATH } from "context";
 function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
     return (
         <AppBar
-            position="fixed"
+            position="relative"
             css={css`
                 background-color: #37474f;
-                position: fixed;
                 width: 100%;
-                z-index: 1100;
+                height: 58px;
 
                 a {
                     color: white;
@@ -40,12 +40,19 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
                 alignItems="center"
                 css={css`
                     padding: 5px 10px;
+                    height: 100%;
                 `}
             >
                 <Grid item>
-                    <IconButton color="inherit" aria-label="Open drawer" onClick={onDrawerToggle}>
-                        <MenuIcon />
-                    </IconButton>
+                    <Hidden mdUp implementation="css">
+                        <IconButton
+                            color="inherit"
+                            aria-label="Open drawer"
+                            onClick={onDrawerToggle}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                    </Hidden>
                 </Grid>
                 <Grid item>
                     <Button

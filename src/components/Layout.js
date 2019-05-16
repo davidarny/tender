@@ -7,17 +7,10 @@ export default function Layout({ children }) {
         <div
             css={css`
                 margin-top: 58px;
-                display: flex;
-                width: inherit;
+                width: 100%;
             `}
         >
-            <div
-                css={css`
-                    width: inherit;
-                `}
-            >
-                {children}
-            </div>
+            {children}
         </div>
     );
 }
