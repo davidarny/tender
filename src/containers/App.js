@@ -6,6 +6,7 @@ import JssProvider from "components/JssProvider";
 import { Router, navigate } from "@reach/router";
 import SignUp from "containers/SignUp";
 import SignIn from "containers/SignIn";
+import LegalEntityAccount from "containers/LegalEntityAccount";
 import Header from "components/Header";
 import { StoreContext } from "index";
 
@@ -45,6 +46,7 @@ export default function App() {
                 <Router>
                     <SignUp path="/register" />
                     <SignIn path="/login" />
+                    <LegalEntityAccount path="/legal-entity-account" />
                 </Router>
             </Fragment>
         </JssProvider>

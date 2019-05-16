@@ -42,6 +42,7 @@ function Header() {
                 <Grid item>
                     <Link to="/register">Sign Up</Link>
                     <Link to="/login">Sign In</Link>
+                    <Link to="/legal-entity-account">Юр. Лицо</Link>
                 </Grid>
                 <Grid item>
                     {store.ui.isLoggedIn ? (
