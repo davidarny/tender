@@ -39,6 +39,10 @@ const AsyncStatistic = Loadable({
     loader: () => import("containers/Statistic"),
     loading: Loading,
 });
+const AsyncCatalog = Loadable({
+    loader: () => import("containers/Catalog"),
+    loading: Loading,
+});
 const AsyncSignUp = Loadable({
     loader: () => import("containers/SignUp"),
     loading: Loading,
@@ -185,6 +189,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="statistic"
                                 render={() => <AsyncStatistic />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="catalog"
+                                render={() => <AsyncCatalog />}
                             />
                             <AsyncSignUp path="register" />
                             <AsyncSignIn path="login" />
