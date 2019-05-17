@@ -52,7 +52,7 @@ function Participants() {
             </AppBar>
             {tabIndex === 0 && (
                 <TabContainer>
-                    <ParticipantsPL />
+                    <ParticipantsTable />
                 </TabContainer>
             )}
             {tabIndex === 1 && (
@@ -112,7 +112,7 @@ function TabContainer(props) {
     return <Typography component="div">{props.children}</Typography>;
 }
 
-function ParticipantsPL() {
+function ParticipantsTable() {
     return (
         <Grid container>
             <Grid item xs={12}>

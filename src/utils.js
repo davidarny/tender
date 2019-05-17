@@ -4,6 +4,7 @@ import UserStore from "models/User";
 import omit from "lodash/omit";
 import UiStore from "models/UI";
 import PartnerStore from "models/Partner";
+import DealStore from "models/Deal";
 
 export function getUserPayload() {
     return {
@@ -33,7 +34,26 @@ export function getPartnerPayload() {
         },
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
-        manager: shortid(),
+        manager: "Иванов. И.И.",
+    };
+}
+
+export function getDealPayload() {
+    return {
+        title: "Magic Deal",
+        subtitle: "Subtitle of Magic Deal",
+        text: "Long description of Magic Deal",
+        costRule: {
+            condition: "more",
+            cost: 2500,
+            of: "km",
+        },
+        activePeriod: {
+            from: new Date(),
+            to: new Date(),
+        },
+        periodicity: "year",
+        discount: 10,
     };
 }
 
@@ -47,6 +67,10 @@ export function getUiStoreSnapshot(state, action) {
 
 export function getPartnerStoreSnapshot(state, action) {
     return getStoreSnapshot(PartnerStore, state, action);
+}
+
+export function getDealStoreSnapshot(state, action) {
+    return getStoreSnapshot(DealStore, state, action);
 }
 
 function getStoreSnapshot(Store, state, action) {
