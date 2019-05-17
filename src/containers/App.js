@@ -28,6 +28,10 @@ const AsyncDeals = Loadable({
     loader: () => import("containers/Deals"),
     loading: Loading,
 });
+const AsyncStatistic = Loadable({
+    loader: () => import("containers/Statistic"),
+    loading: Loading,
+});
 const AsyncSignUp = Loadable({
     loader: () => import("containers/SignUp"),
     loading: Loading,
@@ -38,10 +42,6 @@ const AsyncSignIn = Loadable({
 });
 const AsyncAddPartner = Loadable({
     loader: () => import("containers/AddPartner"),
-    loading: Loading,
-});
-const AsyncPartnerProfile = Loadable({
-    loader: () => import("containers/PartnerProfile"),
     loading: Loading,
 });
 
@@ -163,13 +163,13 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="partners/add"
-                                render={() => <AsyncAddPartner />}
+                                path="statistic"
+                                render={() => <AsyncStatistic />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="partners/:id"
-                                render={props => <AsyncPartnerProfile {...props} />}
+                                path="partners/add"
+                                render={() => <AsyncAddPartner />}
                             />
                             <AsyncSignUp path="register" />
                             <AsyncSignIn path="login" />

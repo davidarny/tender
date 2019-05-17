@@ -15,7 +15,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "@reach/router";
 
-function Deals() {
+function Statistic() {
     return (
         <Layout>
             <Grid container>
@@ -49,14 +49,14 @@ function Deals() {
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <DealsTableCell>Летний</DealsTableCell>
+                                    <StatisticTableCell>Летний</StatisticTableCell>
                                     <TableCell>более 500 км</TableCell>
                                     <TableCell>до 15 сен 2019</TableCell>
                                     <TableCell>ООО "Омега-софт"</TableCell>
                                     <TableCellIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <DealsTableCell>На майские в Питер</DealsTableCell>
+                                    <StatisticTableCell>На майские в Питер</StatisticTableCell>
                                     <TableCell>более 2500 руб</TableCell>
                                     <TableCell>1-15 авг 2019</TableCell>
                                     <TableCell>ОАО Альфа-Банк</TableCell>
@@ -84,7 +84,7 @@ function HeaderTableCell({ children }) {
     );
 }
 
-function DealsTableCell({ children }) {
+function StatisticTableCell({ children }) {
     return (
         <TableCell>
             <Link
@@ -110,4 +110,4 @@ function TableCellIcon() {
     );
 }
 
-export default observer(Deals);
+export default observer(Statistic);
