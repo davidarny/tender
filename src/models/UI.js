@@ -11,12 +11,12 @@ const UiStore = types
         isLoggedIn: types.optional(types.boolean, false),
         drawer: types.optional(types.array(DrawerItem), [
             { title: "Главная", url: "/" },
-            { title: "Управление системой", url: "/management" },
             { title: "Партнеры", url: "/partners" },
             { title: "Участники ПЛ", url: "/participants" },
-            { title: "Тикеты", url: "/tickets" },
-            { title: "Статистика", url: "/statistic" },
             { title: "Акции", url: "/deals" },
+            { title: "Каталог", url: "/catalog" },
+            { title: "Статистика", url: "/statistic" },
+            { title: "Программа лояльности", url: "/loyality" },
         ]),
         isDrawerOpen: types.optional(types.boolean, false),
     })
