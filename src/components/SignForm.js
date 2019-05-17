@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import PropTypes from "prop-types";
 
-export default function SignForm({ title, controls, button, onSubmit }) {
+export default function SignForm({ title, controls, button, noIcon = false, onSubmit }) {
     return (
         <Paper
             css={css`
@@ -18,14 +18,16 @@ export default function SignForm({ title, controls, button, onSubmit }) {
                 flex-direction: column;
             `}
         >
-            <Avatar
-                css={css`
-                    background-color: #e91e63;
-                    margin-bottom: 5px;
-                `}
-            >
-                <LockOutlinedIcon />
-            </Avatar>
+            {!noIcon && (
+                <Avatar
+                    css={css`
+                        background-color: #e91e63;
+                        margin-bottom: 5px;
+                    `}
+                >
+                    <LockOutlinedIcon />
+                </Avatar>
+            )}
             <Typography component="h1" variant="h5">
                 {title}
             </Typography>
@@ -56,6 +58,7 @@ export default function SignForm({ title, controls, button, onSubmit }) {
 SignForm.propTypes = {
     title: PropTypes.string.isRequired,
     button: PropTypes.string.isRequired,
+    noIcon: PropTypes.bool,
     controls: PropTypes.func,
     onSubmit: PropTypes.func,
 };

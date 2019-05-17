@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, css, Global } from "@emotion/core";
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect } from "react";
 import JssProvider from "components/JssProvider";
 import { Router, Match } from "@reach/router";
 import Header from "components/Header";
@@ -9,10 +9,12 @@ import Drawer from "components/Drawer";
 import PrivateRoute from "components/PrivateRoute";
 import { StoreContext, BASE_PATH } from "context";
 import { TOGGLE_DRAWER, LOG_OUT } from "actions/ui";
+import { ADD_PARTNER } from "actions/partner";
 import { observer } from "mobx-react-lite";
 import Loadable from "react-loadable";
 import Loading from "components/Loading";
 import Grid from "@material-ui/core/Grid";
+import { getPartnerPayload } from "utils";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -30,9 +32,23 @@ const AsyncSignIn = Loadable({
     loader: () => import("containers/SignIn"),
     loading: Loading,
 });
+const AsyncAddPartner = Loadable({
+    loader: () => import("containers/AddPartner"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
+
+    useEffect(() => {
+        // stub data
+        if (store.ui.isLoggedIn) {
+            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: 'АО "Альфа-Банк"' });
+            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: "RADISSON HOTEL GROUP" });
+            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: "Окко" });
+            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: 'РФСО "Локомотив"' });
+        }
+    });
 
     function onDrawerToggle() {
         store.ui[TOGGLE_DRAWER]();
@@ -131,6 +147,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="participants"
                                 render={() => <AsyncParticipants />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="partners/add"
+                                render={() => <AsyncAddPartner />}
                             />
                             <AsyncSignUp path="register" />
                             <AsyncSignIn path="login" />

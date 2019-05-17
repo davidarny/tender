@@ -4,17 +4,20 @@ import App from "containers/App";
 import * as ServiceWorker from "./ServiceWorker";
 import { connectReduxDevtools } from "mst-middlewares";
 import { types } from "mobx-state-tree";
-import UserStore from "./models/User";
+import UserStore from "models/User";
+import PartnerStore from "models/Partner";
 import UiStore from "models/UI";
 import { setStoreContext } from "context";
 
 const model = types.model({
     user: UserStore,
     ui: UiStore,
+    partner: PartnerStore,
 });
 const store = model.create({
     user: {},
     ui: {},
+    partner: {},
 });
 
 const StoreContext = React.createContext(store);

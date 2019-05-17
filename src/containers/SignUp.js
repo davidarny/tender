@@ -249,12 +249,26 @@ export default function SignUp() {
                                         >
                                             <FormControlLabel
                                                 value="email"
-                                                control={<Radio />}
+                                                control={
+                                                    <Radio
+                                                        checked={
+                                                            form.preferredCommunicationMethod ===
+                                                            "email"
+                                                        }
+                                                    />
+                                                }
                                                 label="Эл. адрес"
                                             />
                                             <FormControlLabel
                                                 value="phone"
-                                                control={<Radio />}
+                                                control={
+                                                    <Radio
+                                                        checked={
+                                                            form.preferredCommunicationMethod ===
+                                                            "phone"
+                                                        }
+                                                    />
+                                                }
                                                 label="Телефон"
                                             />
                                         </RadioGroup>
