@@ -14,6 +14,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "@reach/router";
+import Chart from "react-google-charts";
 
 function Statistic() {
     return (
@@ -28,10 +29,50 @@ function Statistic() {
                             padding-bottom: 50px;
                         `}
                     >
-                        Список акций
+                        Статистика
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
+                    <Chart
+                        height={300}
+                        chartType="ColumnChart"
+                        loader={<div>Loading Chart</div>}
+                        data={[
+                            ["City", "2010 Population"],
+                            ["Январь", 59000],
+                            ["Февраль", 80000],
+                            ["Март", 85000],
+                            ["Апрель", 98000],
+                            ["Май", 90000],
+                            ["Июнь", 0],
+                            ["Июль", 0],
+                            ["Август", 0],
+                            ["Сентябрь", 0],
+                            ["Октябрь", 0],
+                            ["Ноябрь", 0],
+                            ["Декабрь", 0],
+                        ]}
+                        options={{
+                            chartArea: { width: "80%" },
+                            hAxis: {
+                                title: "Кол-во поездок, 2019 г",
+                                titleTextStyle: {
+                                    bold: true,
+                                    italic: false,
+                                    fontSize: 18,
+                                },
+                            },
+                            legend: { position: "none" },
+                        }}
+                    />
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    css={css`
+                        margin-top: 20px;
+                    `}
+                >
                     <Paper>
                         <Table>
                             <TableHead
@@ -40,26 +81,46 @@ function Statistic() {
                                 `}
                             >
                                 <TableRow>
-                                    <HeaderTableCell>Название</HeaderTableCell>
-                                    <HeaderTableCell>Правила</HeaderTableCell>
-                                    <HeaderTableCell>Срок действия</HeaderTableCell>
-                                    <HeaderTableCell>Партнер</HeaderTableCell>
+                                    <HeaderTableCell>Маршрут</HeaderTableCell>
+                                    <HeaderTableCell>Дата</HeaderTableCell>
+                                    <HeaderTableCell>Стоимость</HeaderTableCell>
+                                    <HeaderTableCell>Баллы</HeaderTableCell>
                                     <HeaderTableCell align="right" />
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <StatisticTableCell>Летний</StatisticTableCell>
-                                    <TableCell>более 500 км</TableCell>
-                                    <TableCell>до 15 сен 2019</TableCell>
-                                    <TableCell>ООО "Омега-софт"</TableCell>
+                                    <StatisticTableCell>
+                                        Казань - Санкт-Петербург
+                                    </StatisticTableCell>
+                                    <TableCell>28 мая 19</TableCell>
+                                    <TableCell>2544 р</TableCell>
+                                    <TableCell>+350</TableCell>
                                     <TableCellIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <StatisticTableCell>На майские в Питер</StatisticTableCell>
-                                    <TableCell>более 2500 руб</TableCell>
-                                    <TableCell>1-15 авг 2019</TableCell>
-                                    <TableCell>ОАО Альфа-Банк</TableCell>
+                                    <StatisticTableCell>Владивосток - Казань</StatisticTableCell>
+                                    <TableCell>19 мая 19</TableCell>
+                                    <TableCell>6922 р</TableCell>
+                                    <TableCell>+700</TableCell>
+                                    <TableCellIcon />
+                                </TableRow>
+                                <TableRow>
+                                    <StatisticTableCell>
+                                        Екатеринбург - Владивосток
+                                    </StatisticTableCell>
+                                    <TableCell>15 мая 19</TableCell>
+                                    <TableCell>8974 р</TableCell>
+                                    <TableCell>+89</TableCell>
+                                    <TableCellIcon />
+                                </TableRow>
+                                <TableRow>
+                                    <StatisticTableCell>
+                                        Санкт-Петербург - Екатеринбург
+                                    </StatisticTableCell>
+                                    <TableCell>12 мая 19</TableCell>
+                                    <TableCell>7899 р</TableCell>
+                                    <TableCell>+777</TableCell>
                                     <TableCellIcon />
                                 </TableRow>
                             </TableBody>
