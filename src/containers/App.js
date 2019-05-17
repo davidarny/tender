@@ -77,14 +77,12 @@ function App() {
                         body {
                             font-family: "Roboto", sans-serif;
                         }
-
                         html,
                         body {
                             margin: 0;
                             height: 100%;
                             width: 100%;
                         }
-
                         body {
                             background: #eeeeee;
                         }
@@ -165,13 +163,8 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="deals"
-                                render={() => <AsyncDeals />}
-                            />
-                            <PrivateRoute
-                                isLoggedIn={store.ui.isLoggedIn}
-                                path="statistic"
-                                render={() => <AsyncStatistic />}
+                                path="partners/add"
+                                render={() => <AsyncAddPartner />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
