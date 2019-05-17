@@ -8,11 +8,13 @@ import UserStore from "models/User";
 import PartnerStore from "models/Partner";
 import UiStore from "models/UI";
 import { setStoreContext } from "context";
+import DealStore from "models/Deal";
 
 const model = types.model({
     user: UserStore,
     ui: UiStore,
     partner: PartnerStore,
+    deal: DealStore,
 });
 const store = model.create({
     user: {},
@@ -20,6 +22,7 @@ const store = model.create({
         isLoggedIn: process.env.NODE_ENV === "development",
     },
     partner: {},
+    deal: {},
 });
 
 const StoreContext = React.createContext(store);
