@@ -24,6 +24,10 @@ const AsyncParticipants = Loadable({
     loader: () => import("containers/Participants"),
     loading: Loading,
 });
+const AsyncDeals = Loadable({
+    loader: () => import("containers/Deals"),
+    loading: Loading,
+});
 const AsyncSignUp = Loadable({
     loader: () => import("containers/SignUp"),
     loading: Loading,
@@ -147,6 +151,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="participants"
                                 render={() => <AsyncParticipants />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="deals"
+                                render={() => <AsyncDeals />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
