@@ -77,14 +77,12 @@ function App() {
                         body {
                             font-family: "Roboto", sans-serif;
                         }
-
                         html,
                         body {
                             margin: 0;
                             height: 100%;
                             width: 100%;
                         }
-
                         body {
                             background: #eeeeee;
                         }
