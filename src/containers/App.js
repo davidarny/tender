@@ -95,10 +95,10 @@ function App() {
                     noRedirect
                     render={() => (
                         <Fragment>
-                            <Match path="/login">
+                            <Match path={BASE_PATH + "/login"}>
                                 {props => props.match && store.ui[LOG_OUT]()}
                             </Match>
-                            <Match path="/register">
+                            <Match path={BASE_PATH + "/register"}>
                                 {props => props.match && store.ui[LOG_OUT]()}
                             </Match>
                         </Fragment>
