@@ -8,10 +8,10 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import HomeIcon from "@material-ui/icons/Home";
-import PeopleIcon from "@material-ui/icons/People";
-import PartnersIcon from "@material-ui/icons/Public";
+import LoyalityIcon from "@material-ui/icons/Loyalty";
+import PartnersIcon from "@material-ui/icons/People";
 import ParticipantsIcon from "@material-ui/icons/List";
-import TicketIcon from "@material-ui/icons/Receipt";
+import CatalogIcon from "@material-ui/icons/LocalLibrary";
 import StatisticIcon from "@material-ui/icons/Poll";
 import DealIcon from "@material-ui/icons/LocalOffer";
 import { Fragment } from "react";
@@ -43,12 +43,12 @@ function Drawer({ items, isOpen = false, onToggle = noop }) {
 
     const icons = [
         <HomeIcon />,
-        <PeopleIcon />,
         <PartnersIcon />,
         <ParticipantsIcon />,
-        <TicketIcon />,
-        <StatisticIcon />,
         <DealIcon />,
+        <CatalogIcon />,
+        <StatisticIcon />,
+        <LoyalityIcon />,
     ];
 
     return (
