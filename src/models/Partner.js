@@ -10,6 +10,10 @@ const Partner = types.model({
     // Название
     title: types.string,
 
+    phone: types.maybe(types.string),
+
+    email: types.maybe(types.string),
+
     // Идентификационные данные
     idData: types.model({
         // ИНН

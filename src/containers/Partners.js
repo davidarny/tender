@@ -15,9 +15,20 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
+import { BASE_PATH, StoreContext } from "context";
+import { useContext } from "react";
+import sample from "lodash/sample";
+import PropTypes from "prop-types";
 
 function Partners() {
+    const store = useContext(StoreContext);
+    const categories = ["Банки", "Отели", "Отдых и развлечения", "Другие"];
+
+    function onFabClick() {
+        navigate(BASE_PATH + "/partners/add");
+    }
+
     return (
         <Layout>
             <Grid container>
@@ -48,26 +59,19 @@ function Partners() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
-                                    <PartnersTableCell>АО "Альфа-Банк"</PartnersTableCell>
-                                    <TableCell>Банки</TableCell>
-                                    <TableCellIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <PartnersTableCell>RADISSON HOTEL GROUP</PartnersTableCell>
-                                    <TableCell>Отели</TableCell>
-                                    <TableCellIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <PartnersTableCell>Окко</PartnersTableCell>
-                                    <TableCell>Отдых и развелчения</TableCell>
-                                    <TableCellIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <PartnersTableCell>РФСО "Локомотив"</PartnersTableCell>
-                                    <TableCell>Другие</TableCell>
-                                    <TableCellIcon />
-                                </TableRow>
+                                {store.partner.partners.map(partner => {
+                                    return (
+                                        <TableRow key={partner.id}>
+                                            <PartnersTableCell
+                                                to={BASE_PATH + `/partners/${partner.id}`}
+                                            >
+                                                {partner.title}
+                                            </PartnersTableCell>
+                                            <TableCell>{sample(categories)}</TableCell>
+                                            <TableCellIcon />
+                                        </TableRow>
+                                    );
+                                })}
                             </TableBody>
                         </Table>
                     </Paper>
@@ -84,6 +88,7 @@ function Partners() {
                             background-color: #455a64;
                         }
                     `}
+                    onClick={onFabClick}
                 >
                     <AddIcon />
                 </Fab>
@@ -105,7 +110,7 @@ function HeaderTableCell({ children }) {
     );
 }
 
-function PartnersTableCell({ children }) {
+function PartnersTableCell({ to, children }) {
     return (
         <TableCell>
             <Link
@@ -113,13 +118,17 @@ function PartnersTableCell({ children }) {
                     color: black;
                     font-weight: 500;
                 `}
-                to="#"
+                to={to}
             >
                 {children}
             </Link>
         </TableCell>
     );
 }
+
+PartnersTableCell.propTypes = {
+    to: PropTypes.string,
+};
 
 function TableCellIcon() {
     return (

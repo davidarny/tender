@@ -25,6 +25,8 @@ export function getUserPayload() {
 export function getPartnerPayload() {
     return {
         title: "John Doe inc.",
+        phone: undefined,
+        email: undefined,
         idData: {
             INN: shortid(),
             ORGN: shortid(),
