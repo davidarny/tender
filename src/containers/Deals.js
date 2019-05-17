@@ -14,8 +14,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "@reach/router";
+import { useContext } from "react";
+import { StoreContext, BASE_PATH } from "context";
+import sample from "lodash/sample";
+import moment from "moment";
+import PropTypes from "prop-types";
 
 function Deals() {
+    const store = useContext(StoreContext);
+    const partners = ['ООО "Омега-софт"', "ОАО Альфа-Банк"];
+
     return (
         <Layout>
             <Grid container>
@@ -48,20 +56,43 @@ function Deals() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
-                                    <DealsTableCell>Летний</DealsTableCell>
-                                    <TableCell>более 500 км</TableCell>
-                                    <TableCell>до 15 сен 2019</TableCell>
-                                    <TableCell>ООО "Омега-софт"</TableCell>
-                                    <TableCellIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <DealsTableCell>На майские в Питер</DealsTableCell>
-                                    <TableCell>более 2500 руб</TableCell>
-                                    <TableCell>1-15 авг 2019</TableCell>
-                                    <TableCell>ОАО Альфа-Банк</TableCell>
-                                    <TableCellIcon />
-                                </TableRow>
+                                {store.deal.deals.map(deal => {
+                                    const { from, to } = deal.activePeriod;
+                                    const { cost, of, condition } = deal.costRule;
+                                    return (
+                                        <TableRow key={deal.id}>
+                                            <DealsTableCell to={BASE_PATH + `/deals/${deal.id}`}>
+                                                {deal.title}
+                                            </DealsTableCell>
+                                            <TableCell>
+                                                <span>{condition === "more" && "более"}</span>
+                                                <span>{condition === "less" && "менее"}</span>
+                                                <span>{` ${cost} ${of}`}</span>
+                                            </TableCell>
+                                            {from && !to && (
+                                                <TableCell>
+                                                    от {moment(from).format("DD MMMM YYYY")}
+                                                </TableCell>
+                                            )}
+                                            {!from && to && (
+                                                <TableCell>
+                                                    до {moment(to).format("DD MMMM YYYY")}
+                                                </TableCell>
+                                            )}
+                                            {from && to && (
+                                                <TableCell>
+                                                    <span>
+                                                        {moment(from).format("DD MMMM YYYY")}
+                                                    </span>
+                                                    <span> - </span>
+                                                    <span>{moment(to).format("DD MMMM YYYY")}</span>
+                                                </TableCell>
+                                            )}
+                                            <TableCell>{sample(partners)}</TableCell>
+                                            <TableCellIcon />
+                                        </TableRow>
+                                    );
+                                })}
                             </TableBody>
                         </Table>
                     </Paper>
@@ -84,7 +115,7 @@ function HeaderTableCell({ children }) {
     );
 }
 
-function DealsTableCell({ children }) {
+function DealsTableCell({ to, children }) {
     return (
         <TableCell>
             <Link
@@ -92,13 +123,17 @@ function DealsTableCell({ children }) {
                     color: black;
                     font-weight: 500;
                 `}
-                to="#"
+                to={to}
             >
                 {children}
             </Link>
         </TableCell>
     );
 }
+
+DealsTableCell.propTypes = {
+    to: PropTypes.string,
+};
 
 function TableCellIcon() {
     return (

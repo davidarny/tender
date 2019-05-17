@@ -16,7 +16,6 @@ import TableRow from "@material-ui/core/TableRow";
 import MoreIcon from "@material-ui/icons/MoreHoriz";
 import IconButton from "@material-ui/core/IconButton";
 import { Link } from "@reach/router";
-import Input from "@material-ui/core/Input";
 import Tab from "@material-ui/core/Tab";
 import { useEffect, useContext, useState } from "react";
 import { StoreContext } from "context";
@@ -221,21 +220,13 @@ function GridItem({ name, path, title, partner, defaultValue }) {
                     <InputLabel htmlFor={name}>{title}</InputLabel>
                 </Grid>
                 <Grid item xs={12}>
-                    <Input
-                        readOnly
-                        disableUnderline
-                        id={name}
-                        name={name}
-                        value={get(partner, path, defaultValue)}
-                    />
+                    <Typography id={name} name={name}>
+                        {get(partner, path, defaultValue)}
+                    </Typography>
                 </Grid>
             </Grid>
         </Grid>
     );
-}
-
-function withPartner(partner) {
-    return props => <GridItem partner={partner} {...props} />;
 }
 
 GridItem.propTypes = {
@@ -245,6 +236,10 @@ GridItem.propTypes = {
     defaultValue: PropTypes.string,
     path: PropTypes.string,
 };
+
+function withPartner(partner) {
+    return props => <GridItem partner={partner} {...props} />;
+}
 
 PartnerProfile.propTypes = {
     id: PropTypes.string.isRequired,

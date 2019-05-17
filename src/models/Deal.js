@@ -15,6 +15,7 @@ const Deal = types.model({
     costRule: types.model({
         condition: types.union(types.literal("more"), types.literal("less")),
         cost: types.number,
+        of: types.string,
     }),
 
     activePeriod: types.model({

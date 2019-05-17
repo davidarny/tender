@@ -10,11 +10,18 @@ import PrivateRoute from "components/PrivateRoute";
 import { StoreContext, BASE_PATH } from "context";
 import { TOGGLE_DRAWER, LOG_OUT } from "actions/ui";
 import { ADD_PARTNER } from "actions/partner";
+import { ADD_DEAL } from "actions/deal";
 import { observer } from "mobx-react-lite";
 import Loadable from "react-loadable";
 import Loading from "components/Loading";
 import Grid from "@material-ui/core/Grid";
-import { getPartnerPayload } from "utils";
+import { getPartnerPayload, getDealPayload } from "utils";
+import moment from "moment";
+import "moment/locale/ru";
+
+// stub data
+import partners from "data/partner";
+import deals from "data/deal";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -44,19 +51,19 @@ const AsyncAddPartner = Loadable({
     loader: () => import("containers/AddPartner"),
     loading: Loading,
 });
+const AsyncPartnerProfile = Loadable({
+    loader: () => import("containers/PartnerProfile"),
+    loading: Loading,
+});
+const AsyncDealProfile = Loadable({
+    loader: () => import("containers/DealProfile"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
 
-    useEffect(() => {
-        // stub data
-        if (store.ui.isLoggedIn) {
-            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: 'АО "Альфа-Банк"' });
-            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: "RADISSON HOTEL GROUP" });
-            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: "Окко" });
-            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), title: 'РФСО "Локомотив"' });
-        }
-    });
+    useEffect(() => initStubData(store));
 
     function onDrawerToggle() {
         store.ui[TOGGLE_DRAWER]();
@@ -153,6 +160,16 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
+                                path="partners/:id"
+                                render={props => <AsyncPartnerProfile {...props} />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="partners/add"
+                                render={() => <AsyncAddPartner />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
                                 path="participants"
                                 render={() => <AsyncParticipants />}
                             />
@@ -163,13 +180,13 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="statistic"
-                                render={() => <AsyncStatistic />}
+                                path="deals/:id"
+                                render={props => <AsyncDealProfile {...props} />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="partners/add"
-                                render={() => <AsyncAddPartner />}
+                                path="statistic"
+                                render={() => <AsyncStatistic />}
                             />
                             <AsyncSignUp path="register" />
                             <AsyncSignIn path="login" />
@@ -179,6 +196,28 @@ function App() {
             </Fragment>
         </JssProvider>
     );
+}
+
+function initStubData(store) {
+    if (store.ui.isLoggedIn) {
+        partners.forEach(partner => {
+            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), ...partner });
+        });
+
+        deals.forEach(deal => {
+            const payload = {
+                ...getDealPayload(),
+                ...deal,
+            };
+            if (deal.activePeriod.from) {
+                payload.activePeriod.from = moment(payload.activePeriod.from).toDate();
+            }
+            if (deal.activePeriod.to) {
+                payload.activePeriod.to = moment(payload.activePeriod.to).toDate();
+            }
+            store.deal[ADD_DEAL](payload);
+        });
+    }
 }
 
 export default observer(App);

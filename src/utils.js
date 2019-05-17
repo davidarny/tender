@@ -46,6 +46,7 @@ export function getDealPayload() {
         costRule: {
             condition: "more",
             cost: 2500,
+            of: "km",
         },
         activePeriod: {
             from: new Date(),
