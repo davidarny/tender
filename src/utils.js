@@ -43,17 +43,13 @@ export function getDealPayload() {
         title: "Magic Deal",
         subtitle: "Subtitle of Magic Deal",
         text: "Long description of Magic Deal",
-        costRule: {
-            condition: "more",
-            cost: 2500,
-            of: "km",
-        },
         activePeriod: {
             from: new Date(),
             to: new Date(),
         },
         periodicity: "year",
         discount: 10,
+        promoCode: "PITERMAY",
     };
 }
 

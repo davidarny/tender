@@ -49,7 +49,6 @@ function Deals() {
                             >
                                 <TableRow>
                                     <HeaderTableCell>Название</HeaderTableCell>
-                                    <HeaderTableCell>Правила</HeaderTableCell>
                                     <HeaderTableCell>Срок действия</HeaderTableCell>
                                     <HeaderTableCell>Партнер</HeaderTableCell>
                                     <HeaderTableCell align="right" />
@@ -58,17 +57,11 @@ function Deals() {
                             <TableBody>
                                 {store.deal.deals.map(deal => {
                                     const { from, to } = deal.activePeriod;
-                                    const { cost, of, condition } = deal.costRule;
                                     return (
                                         <TableRow key={deal.id}>
                                             <DealsTableCell to={BASE_PATH + `/deals/${deal.id}`}>
                                                 {deal.title}
                                             </DealsTableCell>
-                                            <TableCell>
-                                                <span>{condition === "more" && "более"}</span>
-                                                <span>{condition === "less" && "менее"}</span>
-                                                <span>{` ${cost} ${of}`}</span>
-                                            </TableCell>
                                             {from && !to && (
                                                 <TableCell>
                                                     от {moment(from).format("DD MMMM YYYY")}

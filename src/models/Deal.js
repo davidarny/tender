@@ -12,12 +12,6 @@ const Deal = types.model({
 
     text: types.string,
 
-    costRule: types.model({
-        condition: types.union(types.literal("more"), types.literal("less")),
-        cost: types.number,
-        of: types.string,
-    }),
-
     activePeriod: types.model({
         from: types.maybe(types.Date),
         to: types.maybe(types.Date),
@@ -31,6 +25,12 @@ const Deal = types.model({
     ),
 
     discount: types.number,
+
+    promoCode: types.string,
+
+    startStation: types.maybe(types.string),
+
+    endStation: types.maybe(types.string),
 });
 
 const DealStore = types

@@ -8,6 +8,8 @@ import find from "lodash/find";
 const expect = chai.expect;
 
 describe("deal model", () => {
+    const excludedFields = ["id", "activePeriod", "startStation", "endStation"];
+
     it("should handle initial state", () => {
         const store = getDealStoreSnapshot(undefined, {});
         expect(store.deals)
@@ -19,7 +21,7 @@ describe("deal model", () => {
         const payload = getDealPayload();
         const deals = getDealStoreSnapshot(undefined, { type: ADD_DEAL, ...payload }).deals;
         const deal = find(deals, { title: payload.title });
-        expect(omit(deal, ["id", "activePeriod"])).to.deep.equal(omit(payload, "activePeriod"));
+        expect(omit(deal, excludedFields)).to.deep.equal(omit(payload, excludedFields));
     });
 
     it("should handle GET_DEAL_BY_ID", () => {

@@ -8,6 +8,8 @@ import find from "lodash/find";
 const expect = chai.expect;
 
 describe("partner model", () => {
+    const excludedFields = ["id"];
+
     it("should handle initial state", () => {
         const store = getPartnerStoreSnapshot(undefined, {});
         expect(store.partners)
@@ -20,7 +22,7 @@ describe("partner model", () => {
         const partners = getPartnerStoreSnapshot(undefined, { type: ADD_PARTNER, ...payload })
             .partners;
         const partner = find(partners, { title: payload.title });
-        expect(omit(partner, "id")).to.deep.equal(payload);
+        expect(omit(partner, excludedFields)).to.deep.equal(payload);
     });
 
     it("should handle GET_PARTNER_BY_ID", () => {

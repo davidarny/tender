@@ -12,25 +12,35 @@ import get from "lodash/get";
 import { GET_DEAL_BY_ID } from "actions/deal";
 import PropTypes from "prop-types";
 import moment from "moment";
+import sample from "lodash/sample";
 
 export default function DealProfile({ id }) {
     const store = useContext(StoreContext);
     const [deal, setDeal] = useState({});
 
     useEffect(() => {
+        const translations = {
+            day: "eжедневно",
+            week: "eженедельно",
+            month: "eжемесячно",
+            year: "eжегодно",
+        };
+        const partners = ['ООО "Омега-софт"', "ОАО Альфа-Банк"];
+
         if (id) {
-            const document = store.deal[GET_DEAL_BY_ID]({ id });
+            const document = { ...store.deal[GET_DEAL_BY_ID]({ id }) };
+            if (!document) {
+                return;
+            }
+            if ("periodicity" in document) {
+                document.periodicity = get(translations, document.periodicity);
+            }
+            document.partner = sample(partners);
             setDeal(document);
         }
     }, [id, store.deal]);
 
     const DealItem = withDeal(deal);
-    const periodicity = {
-        day: "Ежедневно",
-        week: "Еженедельно",
-        month: "Ежемесячно",
-        year: "Ежегодно",
-    };
 
     return (
         <Layout>
@@ -79,23 +89,22 @@ export default function DealProfile({ id }) {
                                         padding-top: 20px;
                                     `}
                                 >
-                                    <DealItem
-                                        name="ticketCost"
-                                        path="costRule.cost"
-                                        title="Стоимость билета"
-                                    />
+                                    <DealItem name="partner" title="Партнер" />
+                                    {deal.startStation && (
+                                        <DealItem name="startStation" title="Начальная станция" />
+                                    )}
+                                    {deal.endStation && (
+                                        <DealItem name="endStation" title="Конечная станция" />
+                                    )}
+                                    <DealItem name="discount" suffix="%" title="Скидка" />
+                                    <DealItem name="promoCode" title="Промо код" />
                                     <DealDateItem
                                         from={get(deal, "activePeriod.from")}
                                         to={get(deal, "activePeriod.to")}
                                         name="activePeriod"
-                                        title="Период действия"
+                                        title="Срок действия, переодичность"
+                                        suffix={", " + get(deal, "periodicity")}
                                     />
-                                    <DealItem
-                                        name="periodicity"
-                                        title="Переодичность"
-                                        translations={periodicity}
-                                    />
-                                    <DealItem name="discount" suffix="%" title="Скидка" />
                                 </Grid>
                             </Paper>
                         </Grid>
@@ -109,9 +118,6 @@ export default function DealProfile({ id }) {
 function GridItem({ name, path, title, deal, translations, suffix }) {
     if (!path) {
         path = name;
-    }
-    if (suffix) {
-        suffix = " " + suffix;
     }
     return (
         <Grid
@@ -159,7 +165,7 @@ GridItem.propTypes = {
     translations: PropTypes.object,
 };
 
-function DealDateItem({ from, to, name, title }) {
+function DealDateItem({ from, to, name, title, suffix }) {
     return (
         <Grid
             item
@@ -182,11 +188,13 @@ function DealDateItem({ from, to, name, title }) {
                     {from && !to && (
                         <Typography id={name + "-from"} name={name + "-from"}>
                             от {moment(from).format("DD MMMM YYYY")}
+                            <span>{suffix}</span>
                         </Typography>
                     )}
                     {!from && to && (
                         <Typography id={name + "-to"} name={name + "-to"}>
                             до {moment(to).format("DD MMMM YYYY")}
+                            <span>{suffix}</span>
                         </Typography>
                     )}
                     {from && to && (
@@ -194,6 +202,7 @@ function DealDateItem({ from, to, name, title }) {
                             <span>{moment(from).format("DD MMMM YYYY")}</span>
                             <span> - </span>
                             <span>{moment(to).format("DD MMMM YYYY")}</span>
+                            <span>{suffix}</span>
                         </Typography>
                     )}
                 </Grid>
@@ -207,6 +216,7 @@ DealDateItem.propTypes = {
     to: PropTypes.object,
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
+    suffix: PropTypes.string,
 };
 
 function withDeal(deal) {
