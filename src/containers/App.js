@@ -40,6 +40,10 @@ const AsyncAddPartner = Loadable({
     loader: () => import("containers/AddPartner"),
     loading: Loading,
 });
+const AsyncPartnerProfile = Loadable({
+    loader: () => import("containers/PartnerProfile"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
@@ -161,6 +165,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="partners/add"
                                 render={() => <AsyncAddPartner />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="partners/:id"
+                                render={props => <AsyncPartnerProfile {...props} />}
                             />
                             <AsyncSignUp path="register" />
                             <AsyncSignIn path="login" />
