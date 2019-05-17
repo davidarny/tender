@@ -5,15 +5,17 @@ import { Redirect } from "@reach/router";
 import PropTypes from "prop-types";
 import { BASE_PATH } from "context";
 
-export default function PrivateRoute({ isLoggedIn, noRedirect = false, render }) {
+export default function PrivateRoute({ isLoggedIn, noRedirect = false, render, ...rest }) {
     if (!isLoggedIn) {
         if (noRedirect) {
             return null;
         } else {
-            return <Redirect to={BASE_PATH + "/login"} noThrow />;
+            return process.env.NODE_ENV === "development" ? null : (
+                <Redirect to={BASE_PATH + "/login"} noThrow />
+            );
         }
     } else {
-        return render();
+        return render(rest);
     }
 }
 

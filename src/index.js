@@ -16,7 +16,9 @@ const model = types.model({
 });
 const store = model.create({
     user: {},
-    ui: {},
+    ui: {
+        isLoggedIn: process.env.NODE_ENV === "development",
+    },
     partner: {},
 });
 
