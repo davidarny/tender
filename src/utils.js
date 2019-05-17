@@ -33,7 +33,7 @@ export function getPartnerPayload() {
         },
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
-        manager: shortid(),
+        manager: "Иванов. И.И.",
     };
 }
 
