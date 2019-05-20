@@ -18,6 +18,7 @@ import Grid from "@material-ui/core/Grid";
 import { getPartnerPayload, getDealPayload } from "utils";
 import moment from "moment";
 import "moment/locale/ru";
+import cloneDeep from "lodash/cloneDeep";
 
 // stub data
 import partners from "data/partner";
@@ -208,13 +209,13 @@ function App() {
 function initStubData(store) {
     if (store.ui.isLoggedIn) {
         partners.forEach(partner => {
-            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), ...partner });
+            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), ...cloneDeep(partner) });
         });
 
         deals.forEach(deal => {
             const payload = {
                 ...getDealPayload(),
-                ...deal,
+                ...cloneDeep(deal),
             };
             if (deal.activePeriod.from) {
                 payload.activePeriod.from = moment(payload.activePeriod.from).toDate();

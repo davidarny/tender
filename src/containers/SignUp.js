@@ -11,11 +11,8 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import InputLabel from "@material-ui/core/InputLabel";
 import SignForm from "components/SignForm";
-import Snackbar from "@material-ui/core/Snackbar";
-import SnackbarContent from "@material-ui/core/SnackbarContent";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
+import Typography from "@material-ui/core/Typography";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -34,17 +31,12 @@ import shortid from "shortid";
 const actions = {
     INITIAL: "INITIAL",
     SUBMIT: "SUBMIT",
-    SUBMIT_SUCCESS: "SUBMIT_SUCCESS",
 };
 
 function reducer(state, action) {
     switch (action.type) {
         case actions.SUBMIT:
             return { ...state, step: actions.SUBMIT };
-        case actions.SUBMIT_SUCCESS:
-            return { ...state, step: actions.SUBMIT_SUCCESS };
-        case actions.REDIRECT_TO_LOGIN:
-            return { ...state, step: actions.REDIRECT_TO_LOGIN };
         default:
             return { ...state, step: actions.INITIAL };
     }
@@ -64,7 +56,6 @@ export default function SignUp() {
         },
         consentToCommunication: false,
     });
-    const [isSnackbarOpen, setSnackbarState] = useState(false);
     const [isPasswordShown, setPasswordShowState] = useState(false);
     const [state, dispatch] = useReducer(reducer, { step: actions.INITIAL });
     const store = useContext(StoreContext);
@@ -134,22 +125,9 @@ export default function SignUp() {
         );
     }
 
-    function onSnackbarClose(event, reason) {
-        if (reason === "clickaway") {
-            return;
-        }
-        setSnackbarState(false);
-    }
-
     function onFormSubmit(event) {
         event.preventDefault();
         dispatch({ type: actions.SUBMIT });
-    }
-
-    function onConfirmSuccess(event) {
-        event.preventDefault();
-        dispatch({ type: actions.SUBMIT_SUCCESS });
-        setSnackbarState(true);
     }
 
     function togglePasswordVisibility() {
@@ -164,6 +142,7 @@ export default function SignUp() {
             appeal: shortid(),
         });
         store.ui[LOG_IN]();
+        console.log(BASE_PATH === "" ? "/" : BASE_PATH);
         navigate(BASE_PATH === "" ? "/" : BASE_PATH);
     }
 
@@ -341,68 +320,33 @@ export default function SignUp() {
                     )}
                 />
                 <FormContextSwitcher
-                    on={[actions.SUBMIT, actions.SUBMIT_SUCCESS]}
+                    on={[actions.SUBMIT]}
                     current={state.step}
                     render={() => (
                         <SignForm
-                            onSubmit={onConfirmSuccess}
-                            title="Confirm Sign Up"
-                            button="CONFIRM"
+                            onSubmit={onFormSuccess}
+                            title="Регистрация прошла успешно"
+                            button="ВОЙТИ В ЛИЧНЫЙ КАБИНЕТ"
+                            noIcon
                             controls={() => (
                                 <Fragment>
-                                    <FormControl margin="normal" required fullWidth>
-                                        <InputLabel htmlFor="confirmCode">Confirm Code</InputLabel>
-                                        <Input
-                                            id="confirmCode"
-                                            name="confirmCode"
-                                            autoComplete="confirmCode"
-                                            autoFocus
-                                        />
-                                    </FormControl>
+                                    <Grid
+                                        container
+                                        justify="center"
+                                        alignItems="center"
+                                        css={css`
+                                            margin: 20px 0 30px;
+                                        `}
+                                    >
+                                        <Grid item xs={12}>
+                                            <Typography variant="body1">
+                                                Теперь вы полноценный участник программы лояльности
+                                            </Typography>
+                                        </Grid>
+                                    </Grid>
                                 </Fragment>
                             )}
                         />
-                    )}
-                />
-                <FormContextSwitcher
-                    on={actions.SUBMIT_SUCCESS}
-                    current={state.step}
-                    render={() => (
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "right",
-                            }}
-                            open={isSnackbarOpen}
-                            autoHideDuration={2000}
-                            onClose={onSnackbarClose}
-                            onExited={onFormSuccess}
-                        >
-                            <SnackbarContent
-                                aria-describedby="client-snackbar"
-                                message={
-                                    <span id="client-snackbar">
-                                        <CheckCircleIcon
-                                            css={css`
-                                                vertical-align: bottom;
-                                                margin-right: 5px;
-                                            `}
-                                        />
-                                        <span>You're successfully registered!</span>
-                                    </span>
-                                }
-                                action={[
-                                    <IconButton
-                                        key="close"
-                                        aria-label="Close"
-                                        color="inherit"
-                                        onClick={onSnackbarClose}
-                                    >
-                                        <CloseIcon />
-                                    </IconButton>,
-                                ]}
-                            />
-                        </Snackbar>
                     )}
                 />
             </Grid>
