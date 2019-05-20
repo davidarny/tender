@@ -83,6 +83,10 @@ const AsyncParticipantProfile = Loadable({
     loader: () => import("containers/ParticipantProfile"),
     loading: Loading,
 });
+const AsyncAccountProfile = Loadable({
+    loader: () => import("containers/AccountProfile"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
@@ -234,6 +238,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="loyality/add-extra"
                                 render={() => <AsyncAddExtraLoyaltyProgram />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="account/:id"
+                                render={props => <AsyncAccountProfile {...props} />}
                             />
                             <AsyncSignUp path="register" />
                             <AsyncSignIn path="login" />
