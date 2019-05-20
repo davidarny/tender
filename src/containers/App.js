@@ -145,7 +145,7 @@ function App() {
                         <Router
                             css={css`
                                 width: ${store.ui.isLoggedIn ? "calc(100% - 60px)" : "100%"};
-                                height: calc(100% - 58px);
+                                ${store.ui.isLoggedIn ? "min-" : ""}height: calc(100% - 58px);
                                 padding: ${store.ui.isLoggedIn ? "0 40px 0 20px" : "0"};
                                 display: flex;
                             `}

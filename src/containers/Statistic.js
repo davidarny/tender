@@ -15,6 +15,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { Link } from "@reach/router";
 import Chart from "react-google-charts";
+import Loading from "components/Loading";
 
 function Statistic() {
     return (
@@ -34,9 +35,9 @@ function Statistic() {
                 </Grid>
                 <Grid item xs={12}>
                     <Chart
-                        height={300}
+                        height={450}
                         chartType="ColumnChart"
-                        loader={<div>Loading Chart</div>}
+                        loader={<Loading />}
                         data={[
                             ["City", "2010 Population"],
                             ["Январь", 59000],
@@ -53,7 +54,7 @@ function Statistic() {
                             ["Декабрь", 0],
                         ]}
                         options={{
-                            chartArea: { width: "80%" },
+                            chartArea: { width: "80%", bottom: 100, top: 100 },
                             hAxis: {
                                 title: "Кол-во поездок, 2019 г",
                                 titleTextStyle: {
