@@ -20,6 +20,8 @@ import Typography from "@material-ui/core/Typography";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
+import { BASE_PATH } from "context";
+import { navigate } from "@reach/router";
 
 function Catalog() {
     const [tabIndex, setTabIndex] = useState(0);
@@ -68,6 +70,10 @@ function TabContainer(props) {
 }
 
 function BaseRoulesTable() {
+    function onFabClick() {
+        navigate(BASE_PATH + "loyality/add-base");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -136,6 +142,7 @@ function BaseRoulesTable() {
                         background-color: #455a64;
                     }
                 `}
+                onClick={onFabClick}
             >
                 <AddIcon />
             </Fab>
@@ -144,6 +151,10 @@ function BaseRoulesTable() {
 }
 
 function ExtraRoulesTable() {
+    function onFabClick() {
+        navigate(BASE_PATH + "loyality/add-extra");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -202,6 +213,7 @@ function ExtraRoulesTable() {
                         background-color: #455a64;
                     }
                 `}
+                onClick={onFabClick}
             >
                 <AddIcon />
             </Fab>

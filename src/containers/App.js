@@ -48,6 +48,14 @@ const AsyncLoyaltyProgram = Loadable({
     loader: () => import("containers/LoyaltyProgram"),
     loading: Loading,
 });
+const AsyncAddBaseLoyaltyProgram = Loadable({
+    loader: () => import("containers/AddBaseLoyaltyProgram"),
+    loading: Loading,
+});
+const AsyncAddExtraLoyaltyProgram = Loadable({
+    loader: () => import("containers/AddExtraLoyaltyProgram"),
+    loading: Loading,
+});
 const AsyncSignUp = Loadable({
     loader: () => import("containers/SignUp"),
     loading: Loading,
@@ -174,6 +182,16 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="partners/add"
                                 render={() => <AsyncAddPartner />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="loyality/add-base"
+                                render={() => <AsyncAddBaseLoyaltyProgram />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="loyality/add-extra"
+                                render={() => <AsyncAddExtraLoyaltyProgram />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
