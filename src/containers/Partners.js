@@ -78,7 +78,7 @@ function Partners() {
                 </Grid>
                 <Fab
                     css={css`
-                        position: absolute;
+                        position: fixed;
                         right: 50px;
                         bottom: 50px;
                         background-color: #263238;

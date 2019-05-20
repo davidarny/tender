@@ -66,7 +66,7 @@ function Participants() {
                                     return (
                                         <TableRow key={participant.id}>
                                             <LinkTableCell
-                                                to={BASE_PATH + `/participants/${partner.id}`}
+                                                to={BASE_PATH + `/participants/${participant.id}`}
                                             >
                                                 {participant.fullName}
                                             </LinkTableCell>
@@ -82,7 +82,7 @@ function Participants() {
                 </Grid>
                 <Fab
                     css={css`
-                        position: absolute;
+                        position: fixed;
                         right: 50px;
                         bottom: 50px;
                         background-color: #263238;

@@ -29,9 +29,6 @@ export default function DealProfile({ id }) {
 
         if (id) {
             const document = { ...store.deal[GET_DEAL_BY_ID]({ id }) };
-            if (!document) {
-                return;
-            }
             if ("periodicity" in document) {
                 document.periodicity = get(translations, document.periodicity);
             }
@@ -115,9 +112,9 @@ export default function DealProfile({ id }) {
     );
 }
 
-function GridItem({ name, path, title, deal, translations, suffix }) {
-    if (!path) {
-        path = name;
+function GridItem({ name, objectPath, title, deal, translations, suffix }) {
+    if (!objectPath) {
+        objectPath = name;
     }
     return (
         <Grid
@@ -140,13 +137,13 @@ function GridItem({ name, path, title, deal, translations, suffix }) {
                 <Grid item xs={12}>
                     {translations && (
                         <Typography id={name} name={name}>
-                            <span>{translations[get(deal, path)]}</span>
+                            <span>{translations[get(deal, objectPath)]}</span>
                             <span>{suffix}</span>
                         </Typography>
                     )}
                     {!translations && (
                         <Typography id={name} name={name}>
-                            <span>{get(deal, path)}</span>
+                            <span>{get(deal, objectPath)}</span>
                             <span>{suffix}</span>
                         </Typography>
                     )}
@@ -160,7 +157,7 @@ GridItem.propTypes = {
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     deal: PropTypes.object,
-    path: PropTypes.string,
+    objectPath: PropTypes.string,
     suffix: PropTypes.string,
     translations: PropTypes.object,
 };

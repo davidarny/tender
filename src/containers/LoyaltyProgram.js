@@ -132,7 +132,7 @@ function BaseRolesTable() {
             </Grid>
             <Fab
                 css={css`
-                    position: absolute;
+                    position: fixed;
                     right: 50px;
                     bottom: 50px;
                     background-color: #263238;
@@ -203,7 +203,7 @@ function ExtraRolesTable() {
             </Grid>
             <Fab
                 css={css`
-                    position: absolute;
+                    position: fixed;
                     right: 50px;
                     bottom: 50px;
                     background-color: #263238;

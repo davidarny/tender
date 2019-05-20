@@ -14,6 +14,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
+import moment from "moment";
 
 export default function ParticipantProfile({ id }) {
     const store = useContext(StoreContext);
@@ -21,8 +22,14 @@ export default function ParticipantProfile({ id }) {
     const [tabIndex, setTabIndex] = useState(0);
 
     useEffect(() => {
+        const translations = {
+            RU: "Российская Федерация",
+        };
         if (id) {
-            const document = store.participant[GET_PARTICIPANT_BY_ID]({ id });
+            const document = { ...store.participant[GET_PARTICIPANT_BY_ID]({ id }) };
+            if ("citizenship" in document) {
+                document.citizenship = get(translations, document.citizenship);
+            }
             setParticipant(document);
         }
     }, [id, store.participant]);
@@ -71,23 +78,16 @@ export default function ParticipantProfile({ id }) {
                                         padding-top: 20px;
                                     `}
                                 >
-                                    <ParticipantItem name="INN" path="idData.INN" title="ИНН" />
-                                    <ParticipantItem name="ORGN" path="idData.ORGN" title="ОРГН" />
+                                    <ParticipantItem name="number" title="Номер участника ПЛ" />
+                                    <ParticipantItem name="email" title="Эл. адрес" />
+                                    <ParticipantItem name="phone" title="Телефон" />
                                     <ParticipantItem
-                                        name="manager"
-                                        title="Менеджер"
-                                        partner={participant}
+                                        name="birthDate"
+                                        title="Дата рождения"
+                                        render={data => moment(data).format("DD MMMM YYYY")}
                                     />
-                                    <ParticipantItem
-                                        name="email"
-                                        title="Эл. адрес"
-                                        defaultValue="example@mail.com"
-                                    />
-                                    <ParticipantItem
-                                        name="phone"
-                                        title="Телефон"
-                                        defaultValue="+7 (111) 222-33-44"
-                                    />
+                                    <ParticipantItem name="citizenship" title="Гражданство" />
+                                    <ParticipantItem name="passport" title="Паспортные данные" />
                                 </Grid>
                             )}
                         </Paper>
@@ -98,9 +98,9 @@ export default function ParticipantProfile({ id }) {
     );
 }
 
-function GridItem({ name, path, title, partner: participant, defaultValue }) {
-    if (!path) {
-        path = name;
+function GridItem({ name, objectPath, title, participant, defaultValue, render }) {
+    if (!objectPath) {
+        objectPath = name;
     }
     return (
         <Grid
@@ -122,7 +122,8 @@ function GridItem({ name, path, title, partner: participant, defaultValue }) {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography id={name} name={name}>
-                        {get(participant, path, defaultValue)}
+                        {render && render(get(participant, objectPath, defaultValue))}
+                        {!render && get(participant, objectPath, defaultValue)}
                     </Typography>
                 </Grid>
             </Grid>
@@ -135,9 +136,10 @@ GridItem.propTypes = {
     title: PropTypes.string.isRequired,
     participant: PropTypes.object,
     defaultValue: PropTypes.string,
-    path: PropTypes.string,
+    objectPath: PropTypes.string,
+    render: PropTypes.func,
 };
 
-function withParticipant(partner) {
-    return props => <GridItem participant={partner} {...props} />;
+function withParticipant(participant) {
+    return props => <GridItem participant={participant} {...props} />;
 }

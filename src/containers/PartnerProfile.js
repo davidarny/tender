@@ -79,8 +79,16 @@ export default function PartnerProfile({ id }) {
                                             padding-top: 20px;
                                         `}
                                     >
-                                        <PartnerItem name="INN" path="idData.INN" title="ИНН" />
-                                        <PartnerItem name="ORGN" path="idData.ORGN" title="ОРГН" />
+                                        <PartnerItem
+                                            name="INN"
+                                            objectPath="idData.INN"
+                                            title="ИНН"
+                                        />
+                                        <PartnerItem
+                                            name="ORGN"
+                                            objectPath="idData.ORGN"
+                                            title="ОРГН"
+                                        />
                                         <PartnerItem
                                             name="manager"
                                             title="Менеджер"
@@ -218,9 +226,9 @@ PartnerProfile.propTypes = {
     id: PropTypes.string.isRequired,
 };
 
-function GridItem({ name, path, title, partner, defaultValue }) {
-    if (!path) {
-        path = name;
+function GridItem({ name, objectPath, title, partner, defaultValue }) {
+    if (!objectPath) {
+        objectPath = name;
     }
     return (
         <Grid
@@ -242,7 +250,7 @@ function GridItem({ name, path, title, partner, defaultValue }) {
                 </Grid>
                 <Grid item xs={12}>
                     <Typography id={name} name={name}>
-                        {get(partner, path, defaultValue)}
+                        {get(partner, objectPath, defaultValue)}
                     </Typography>
                 </Grid>
             </Grid>
@@ -255,7 +263,7 @@ GridItem.propTypes = {
     title: PropTypes.string.isRequired,
     partner: PropTypes.object,
     defaultValue: PropTypes.string,
-    path: PropTypes.string,
+    objectPath: PropTypes.string,
 };
 
 function withPartner(partner) {

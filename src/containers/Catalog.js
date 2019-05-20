@@ -147,7 +147,7 @@ function RoutesTable() {
             </Grid>
             <Fab
                 css={css`
-                    position: absolute;
+                    position: fixed;
                     right: 50px;
                     bottom: 50px;
                     background-color: #263238;
@@ -207,7 +207,7 @@ function TrainsTable() {
             </Grid>
             <Fab
                 css={css`
-                    position: absolute;
+                    position: fixed;
                     right: 50px;
                     bottom: 50px;
                     background-color: #263238;
@@ -283,7 +283,7 @@ function WagonsTable() {
             </Grid>
             <Fab
                 css={css`
-                    position: absolute;
+                    position: fixed;
                     right: 50px;
                     bottom: 50px;
                     background-color: #263238;
