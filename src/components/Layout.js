@@ -1,18 +1,22 @@
 /** @jsx jsx */
 
 import { jsx, css } from "@emotion/core";
+import PropTypes from "prop-types";
 
-export default function Layout({ children }) {
+export default function Layout({ children, centered = false }) {
     return (
         <div
             css={css`
-                margin-top: 58px;
-                margin-bottom: 20px;
+                padding: ${centered ? "20px" : "50px"} 0 20px;
                 width: 100%;
-                height: 100%;
+                min-height: 100%;
             `}
         >
             {children}
         </div>
     );
 }
+
+Layout.propTypes = {
+    centered: PropTypes.bool,
+};

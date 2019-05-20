@@ -19,7 +19,7 @@ describe("partner model", () => {
 
     it("should handle ADD_PARTNER", () => {
         const payload = getPartnerPayload();
-        const partners = getPartnerStoreSnapshot(undefined, { type: ADD_PARTNER, ...payload })
+        const partners = getPartnerStoreSnapshot(undefined, { type: ADD_PARTNER, payload })
             .partners;
         const partner = find(partners, { title: payload.title });
         expect(omit(partner, excludedFields)).to.deep.equal(payload);
@@ -30,13 +30,16 @@ describe("partner model", () => {
         const payload = getPartnerPayload();
         const store = getPartnerStoreSnapshot(
             { partners: [{ id, ...payload }] },
-            { type: GET_PARTNER_BY_ID, id }
+            { type: GET_PARTNER_BY_ID, payload: { id } }
         );
         expect(store.result).to.have.property("id", id);
     });
 
     it("should get undefined if GET_PARTNER_BY_ID on empty array", () => {
-        const store = getPartnerStoreSnapshot(undefined, { type: GET_PARTNER_BY_ID });
+        const store = getPartnerStoreSnapshot(undefined, {
+            type: GET_PARTNER_BY_ID,
+            payload: { id: shortid() },
+        });
         expect(store.result).to.equal(undefined);
     });
 });

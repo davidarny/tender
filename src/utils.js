@@ -1,7 +1,6 @@
 import { getSnapshot } from "mobx-state-tree";
 import shortid from "shortid";
 import UserStore from "models/User";
-import omit from "lodash/omit";
 import UiStore from "models/UI";
 import PartnerStore from "models/Partner";
 import DealStore from "models/Deal";
@@ -35,6 +34,7 @@ export function getPartnerPayload() {
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
         manager: "Иванов. И.И.",
+        participants: [],
     };
 }
 
@@ -50,6 +50,20 @@ export function getDealPayload() {
         periodicity: "year",
         discount: 10,
         promoCode: "PITERMAY",
+    };
+}
+
+export function getParticipantPayload(partner) {
+    return {
+        number: 111222333,
+        fullName: "John Doe",
+        partner,
+        type: "personal",
+        email: "john.doe@mail.com",
+        phone: "+12345678910",
+        birthDate: new Date(),
+        citizenship: "RU",
+        passport: "8811090121",
     };
 }
 
@@ -73,7 +87,7 @@ function getStoreSnapshot(Store, state, action) {
     let result = {};
     const store = Store.create(state);
     if (action.type) {
-        result = store[action.type](omit(action, "type"));
+        result = store[action.type](action.payload);
     }
     return { ...getSnapshot(store), result };
 }

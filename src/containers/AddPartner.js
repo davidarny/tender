@@ -19,6 +19,7 @@ import { ADD_PARTNER } from "actions/partner";
 import { getPartnerPayload } from "utils";
 import { navigate } from "@reach/router";
 import shortid from "shortid";
+import Layout from "components/Layout";
 
 export default function AddPartner() {
     const [form, setFormValues] = useState({
@@ -82,142 +83,146 @@ export default function AddPartner() {
     }
 
     return (
-        <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            css={css`
-                width: 100%;
-                height: 100%;
-            `}
-        >
+        <Layout centered>
             <Grid
-                item
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
                 css={css`
-                    max-width: 600px;
+                    width: 100%;
+                    height: 100%;
                 `}
             >
-                <SignForm
-                    noIcon
-                    title="Новый партнёр"
-                    button="ЗАРЕГИСТРИРОВАТЬ"
-                    onSubmit={onFormSubmit}
-                    controls={() => (
-                        <Fragment>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="title">Название партнёра</InputLabel>
-                                <Input
-                                    id="title"
-                                    name="title"
-                                    autoComplete="title"
-                                    autoFocus
-                                    onChange={onTitleChange}
-                                />
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="title">ИНН</InputLabel>
-                                <Input
-                                    id="INN"
-                                    name="INN"
-                                    autoComplete="INN"
-                                    onChange={onINNChange}
-                                />
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="title">ОРГН</InputLabel>
-                                <Input
-                                    id="ORGN"
-                                    name="ORGN"
-                                    autoComplete="ORGN"
-                                    onChange={onORGNChange}
-                                />
-                            </FormControl>
-                            <FormControl required fullWidth>
-                                <InputLabel
-                                    shrink
-                                    htmlFor="communicationLanguage-label-placeholder"
-                                >
-                                    Язык коммуникации
-                                </InputLabel>
-                                <Select
-                                    value={form.communicationLanguage}
-                                    onChange={onLanguageChange}
-                                    input={
-                                        <Input
-                                            name="communicationLanguage"
-                                            id="communicationLanguage-label-placeholder"
+                <Grid
+                    item
+                    css={css`
+                        max-width: 600px;
+                    `}
+                >
+                    <SignForm
+                        noIcon
+                        title="Новый партнёр"
+                        button="ЗАРЕГИСТРИРОВАТЬ"
+                        onSubmit={onFormSubmit}
+                        controls={() => (
+                            <Fragment>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="title">Название партнёра</InputLabel>
+                                    <Input
+                                        id="title"
+                                        name="title"
+                                        autoComplete="title"
+                                        autoFocus
+                                        onChange={onTitleChange}
+                                    />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="title">ИНН</InputLabel>
+                                    <Input
+                                        id="INN"
+                                        name="INN"
+                                        autoComplete="INN"
+                                        onChange={onINNChange}
+                                    />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="title">ОРГН</InputLabel>
+                                    <Input
+                                        id="ORGN"
+                                        name="ORGN"
+                                        autoComplete="ORGN"
+                                        onChange={onORGNChange}
+                                    />
+                                </FormControl>
+                                <FormControl required fullWidth>
+                                    <InputLabel
+                                        shrink
+                                        htmlFor="communicationLanguage-label-placeholder"
+                                    >
+                                        Язык коммуникации
+                                    </InputLabel>
+                                    <Select
+                                        value={form.communicationLanguage}
+                                        onChange={onLanguageChange}
+                                        input={
+                                            <Input
+                                                name="communicationLanguage"
+                                                id="communicationLanguage-label-placeholder"
+                                            />
+                                        }
+                                        displayEmpty
+                                        name="communicationLanguage"
+                                    >
+                                        <MenuItem value="ru">Русский</MenuItem>
+                                        <MenuItem value="en">Английский</MenuItem>
+                                        <MenuItem value="fr">Французский</MenuItem>
+                                        <MenuItem value="ge">Немецкий</MenuItem>
+                                    </Select>
+                                    <FormHelperText>Язык коммуникации</FormHelperText>
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="title">Телефон</InputLabel>
+                                    <Input
+                                        id="phone"
+                                        name="phone"
+                                        autoComplete="phone"
+                                        onChange={onPhoneChange}
+                                    />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <InputLabel htmlFor="title">Эл. почта</InputLabel>
+                                    <Input
+                                        id="email"
+                                        name="email"
+                                        autoComplete="email"
+                                        onChange={onEmailChange}
+                                    />
+                                </FormControl>
+                                <FormControl margin="normal" required fullWidth>
+                                    <FormLabel component="legend">
+                                        Предпочтительный способ связи
+                                    </FormLabel>
+                                    <RadioGroup
+                                        aria-label="Предпочтительный способ связи"
+                                        name="preferredCommunicationMethod"
+                                        value={form.preferredCommunicationMethod}
+                                        onChange={onPreferredCommunicationMethodChange}
+                                        css={css`
+                                            flex-direction: row;
+                                        `}
+                                    >
+                                        <FormControlLabel
+                                            value="email"
+                                            control={
+                                                <Radio
+                                                    checked={
+                                                        form.preferredCommunicationMethod ===
+                                                        "email"
+                                                    }
+                                                />
+                                            }
+                                            label="Эл. адрес"
                                         />
-                                    }
-                                    displayEmpty
-                                    name="communicationLanguage"
-                                >
-                                    <MenuItem value="ru">Русский</MenuItem>
-                                    <MenuItem value="en">Английский</MenuItem>
-                                    <MenuItem value="fr">Французский</MenuItem>
-                                    <MenuItem value="ge">Немецкий</MenuItem>
-                                </Select>
-                                <FormHelperText>Язык коммуникации</FormHelperText>
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="title">Телефон</InputLabel>
-                                <Input
-                                    id="phone"
-                                    name="phone"
-                                    autoComplete="phone"
-                                    onChange={onPhoneChange}
-                                />
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="title">Эл. почта</InputLabel>
-                                <Input
-                                    id="email"
-                                    name="email"
-                                    autoComplete="email"
-                                    onChange={onEmailChange}
-                                />
-                            </FormControl>
-                            <FormControl margin="normal" required fullWidth>
-                                <FormLabel component="legend">
-                                    Предпочтительный способ связи
-                                </FormLabel>
-                                <RadioGroup
-                                    aria-label="Предпочтительный способ связи"
-                                    name="preferredCommunicationMethod"
-                                    value={form.preferredCommunicationMethod}
-                                    onChange={onPreferredCommunicationMethodChange}
-                                    css={css`
-                                        flex-direction: row;
-                                    `}
-                                >
-                                    <FormControlLabel
-                                        value="email"
-                                        control={
-                                            <Radio
-                                                checked={
-                                                    form.preferredCommunicationMethod === "email"
-                                                }
-                                            />
-                                        }
-                                        label="Эл. адрес"
-                                    />
-                                    <FormControlLabel
-                                        value="phone"
-                                        control={
-                                            <Radio
-                                                checked={
-                                                    form.preferredCommunicationMethod === "phone"
-                                                }
-                                            />
-                                        }
-                                        label="Телефон"
-                                    />
-                                </RadioGroup>
-                            </FormControl>
-                        </Fragment>
-                    )}
-                />
+                                        <FormControlLabel
+                                            value="phone"
+                                            control={
+                                                <Radio
+                                                    checked={
+                                                        form.preferredCommunicationMethod ===
+                                                        "phone"
+                                                    }
+                                                />
+                                            }
+                                            label="Телефон"
+                                        />
+                                    </RadioGroup>
+                                </FormControl>
+                            </Fragment>
+                        )}
+                    />
+                </Grid>
             </Grid>
-        </Grid>
+        </Layout>
     );
 }

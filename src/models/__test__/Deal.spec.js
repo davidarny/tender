@@ -19,7 +19,7 @@ describe("deal model", () => {
 
     it("should handle ADD_DEAL", () => {
         const payload = getDealPayload();
-        const deals = getDealStoreSnapshot(undefined, { type: ADD_DEAL, ...payload }).deals;
+        const deals = getDealStoreSnapshot(undefined, { type: ADD_DEAL, payload }).deals;
         const deal = find(deals, { title: payload.title });
         expect(omit(deal, excludedFields)).to.deep.equal(omit(payload, excludedFields));
     });
@@ -29,13 +29,16 @@ describe("deal model", () => {
         const payload = getDealPayload();
         const store = getDealStoreSnapshot(
             { deals: [{ id, ...payload }] },
-            { type: GET_DEAL_BY_ID, id }
+            { type: GET_DEAL_BY_ID, payload: { id } }
         );
         expect(store.result).to.have.property("id", id);
     });
 
     it("should get undefined if GET_DEAL_BY_ID on empty array", () => {
-        const store = getDealStoreSnapshot(undefined, { type: GET_DEAL_BY_ID });
+        const store = getDealStoreSnapshot(undefined, {
+            type: GET_DEAL_BY_ID,
+            payload: { id: shortid() },
+        });
         expect(store.result).to.equal(undefined);
     });
 });

@@ -9,19 +9,23 @@ import PartnerStore from "models/Partner";
 import UiStore from "models/UI";
 import { setStoreContext } from "context";
 import DealStore from "models/Deal";
+import ParticipantStore from "models/Participant";
 
 const model = types.model({
     user: UserStore,
     ui: UiStore,
     partner: PartnerStore,
+    participant: ParticipantStore,
     deal: DealStore,
 });
+
 const store = model.create({
     user: {},
     ui: {
         isLoggedIn: process.env.NODE_ENV === "development",
     },
     partner: {},
+    participant: {},
     deal: {},
 });
 

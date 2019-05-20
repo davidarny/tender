@@ -16,18 +16,15 @@ describe("user model", () => {
 
     it("should handle SET_CURRENT_USER", () => {
         const payload = getUserPayload();
-        const user = getUserStoreSnapshot(undefined, { type: SET_CURRENT_USER, ...payload })
-            .current;
+        const user = getUserStoreSnapshot(undefined, { type: SET_CURRENT_USER, payload }).current;
         expect(user).to.deep.include(omit(payload, excludedFields));
         expect(user.birthDate).to.be.a("number");
     });
 
     it("should handle REMOVE_CURRENT_USER", () => {
         const payload = getUserPayload();
-        const user = getUserStoreSnapshot(
-            { id: shortid(), ...payload },
-            { type: REMOVE_CURRENT_USER }
-        ).current;
+        const user = getUserStoreSnapshot({ id: shortid(), payload }, { type: REMOVE_CURRENT_USER })
+            .current;
         expect(user).to.equal(undefined);
     });
 });
