@@ -19,7 +19,6 @@ import { Fragment } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import CreditCard from "assets/credit-card.png";
@@ -28,6 +27,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Input from "@material-ui/core/Input";
 import shortid from "shortid";
 import GridItem from "components/GridItem";
+import StyledTableHead from "components/table/StyledTableHead";
+import LinkTableCell from "components/table/LinkTableCell";
 
 export default function ParticipantProfile({ id }) {
     const store = useContext(StoreContext);
@@ -82,12 +83,12 @@ export default function ParticipantProfile({ id }) {
                                 <Tab label="Информация" />
                                 <Tab label="Бонусный счёт" />
                                 <Tab label="Поездки" />
-                                <Tab label="Тикеты" />
                             </Tabs>
                         </AppBar>
                     </Grid>
                     {tabIndex === 0 && <MainInfo component={ParticipantItem} />}
                     {tabIndex === 1 && <BonusCardInfo />}
+                    {tabIndex === 2 && <TripsInfo />}
                 </Grid>
             </Grid>
         </Layout>
@@ -214,63 +215,32 @@ function BonusCardInfo() {
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Дата и время</HeaderTableCell>
                                 <HeaderTableCell>Баллы</HeaderTableCell>
                                 <HeaderTableCell>Комментарий</HeaderTableCell>
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
                             <TableRow>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
-                                <TableCell
-                                    css={css`
-                                        color: #4caf50;
-                                        font-weight: 500;
-                                    `}
-                                >
-                                    + 350
-                                </TableCell>
+                                <PointsTableCell add>+ 350</PointsTableCell>
                                 <TableCell>Начисление при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
-                                <TableCell
-                                    css={css`
-                                        font-weight: 500;
-                                    `}
-                                >
-                                    - 350
-                                </TableCell>
+                                <PointsTableCell>- 350</PointsTableCell>
                                 <TableCell>Списание при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
-                                <TableCell
-                                    css={css`
-                                        color: #4caf50;
-                                        font-weight: 500;
-                                    `}
-                                >
-                                    + 80
-                                </TableCell>
+                                <PointsTableCell add>+ 80</PointsTableCell>
                                 <TableCell>По акции "На майские в Питер"</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
-                                <TableCell
-                                    css={css`
-                                        color: #4caf50;
-                                        font-weight: 500;
-                                    `}
-                                >
-                                    + 700
-                                </TableCell>
+                                <PointsTableCell add>+ 700</PointsTableCell>
                                 <TableCell>Трансфер баллов</TableCell>
                             </TableRow>
                         </TableBody>
@@ -280,6 +250,76 @@ function BonusCardInfo() {
         </Fragment>
     );
 }
+
+function TripsInfo() {
+    return (
+        <Grid item xs={12}>
+            <Paper>
+                <Table>
+                    <StyledTableHead>
+                        <TableRow>
+                            <HeaderTableCell>Маршрут</HeaderTableCell>
+                            <HeaderTableCell>Дата</HeaderTableCell>
+                            <HeaderTableCell>Стоимость</HeaderTableCell>
+                            <HeaderTableCell>Баллы</HeaderTableCell>
+                        </TableRow>
+                    </StyledTableHead>
+                    <TableBody>
+                        <TableRow>
+                            <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
+                                Казань - Санкт-Петербург
+                            </LinkTableCell>
+                            <TableCell>28 мая 2019</TableCell>
+                            <TableCell>2544 р</TableCell>
+                            <PointsTableCell add>+ 350</PointsTableCell>
+                        </TableRow>
+                        <TableRow>
+                            <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
+                                Владивосток - Казань
+                            </LinkTableCell>
+                            <TableCell>19 мая 2019</TableCell>
+                            <TableCell>6922 р</TableCell>
+                            <PointsTableCell add>+ 700</PointsTableCell>
+                        </TableRow>
+                        <TableRow>
+                            <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
+                                Екатеринбург - Владивосток
+                            </LinkTableCell>
+                            <TableCell>15 мая 2019</TableCell>
+                            <TableCell>8974 р</TableCell>
+                            <PointsTableCell add>+ 80</PointsTableCell>
+                        </TableRow>
+                        <TableRow>
+                            <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
+                                Санкт-Петербург - Екатеринбург
+                            </LinkTableCell>
+                            <TableCell>12 мая 2019</TableCell>
+                            <TableCell>7899 р</TableCell>
+                            <PointsTableCell add>+ 720</PointsTableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </Paper>
+        </Grid>
+    );
+}
+
+function PointsTableCell({ add = false, children }) {
+    return (
+        <TableCell
+            css={css`
+                color: ${add ? "#4caf50" : "black"};
+                font-weight: 500;
+            `}
+        >
+            {children}
+        </TableCell>
+    );
+}
+
+PointsTableCell.propTypes = {
+    add: PropTypes.bool,
+};
 
 function withParticipant(participant) {
     return props => <GridItem data={participant} {...props} />;

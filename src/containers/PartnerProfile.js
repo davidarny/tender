@@ -65,7 +65,6 @@ export default function PartnerProfile({ id }) {
                                     <Tab label="Информация" />
                                     <Tab label="Участники ПЛ" />
                                     <Tab label="Акции" />
-                                    <Tab label="Тикеты" />
                                 </Tabs>
                             </AppBar>
                         </Grid>
