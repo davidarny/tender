@@ -63,7 +63,6 @@ function Participants() {
                                     const partner = store.partner[GET_PARTNER_BY_ID]({
                                         id: participant.partner,
                                     });
-                                    console.log(participant.partner);
                                     return (
                                         <TableRow key={participant.id}>
                                             <LinkTableCell

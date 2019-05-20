@@ -79,6 +79,10 @@ const AsyncDealProfile = Loadable({
     loader: () => import("containers/DealProfile"),
     loading: Loading,
 });
+const AsyncParticipantProfile = Loadable({
+    loader: () => import("containers/ParticipantProfile"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
@@ -188,18 +192,13 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="loyality/add-base"
-                                render={() => <AsyncAddBaseLoyaltyProgram />}
-                            />
-                            <PrivateRoute
-                                isLoggedIn={store.ui.isLoggedIn}
-                                path="loyality/add-extra"
-                                render={() => <AsyncAddExtraLoyaltyProgram />}
-                            />
-                            <PrivateRoute
-                                isLoggedIn={store.ui.isLoggedIn}
                                 path="participants"
                                 render={() => <AsyncParticipants />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="participants/:id"
+                                render={() => <AsyncParticipantProfile />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
@@ -225,6 +224,16 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="loyality"
                                 render={() => <AsyncLoyaltyProgram />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="loyality/add-base"
+                                render={() => <AsyncAddBaseLoyaltyProgram />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="loyality/add-extra"
+                                render={() => <AsyncAddExtraLoyaltyProgram />}
                             />
                             <AsyncSignUp path="register" />
                             <AsyncSignIn path="login" />

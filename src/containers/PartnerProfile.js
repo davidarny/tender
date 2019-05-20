@@ -13,9 +13,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import MoreIcon from "@material-ui/icons/MoreHoriz";
-import IconButton from "@material-ui/core/IconButton";
-import { Link } from "@reach/router";
 import Tab from "@material-ui/core/Tab";
 import { useEffect, useContext, useState } from "react";
 import { StoreContext, BASE_PATH } from "context";
@@ -23,6 +20,9 @@ import get from "lodash/get";
 import { GET_PARTNER_BY_ID } from "actions/partner";
 import PropTypes from "prop-types";
 import moment from "moment";
+import LinkTableCell from "components/table/LinkTableCell";
+import HeaderTableCell from "components/table/HeaderTableCell";
+import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 
 export default function PartnerProfile({ id }) {
     const store = useContext(StoreContext);
@@ -115,33 +115,33 @@ export default function PartnerProfile({ id }) {
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
                                                 <LinkTableCell>Иванов Иван Иванович</LinkTableCell>
-                                                <TableCellIcon />
+                                                <TableCellMoreIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
                                                 <LinkTableCell>
                                                     Мельников Рустам Фахитович
                                                 </LinkTableCell>
-                                                <TableCellIcon />
+                                                <TableCellMoreIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
                                                 <LinkTableCell>
                                                     Меньшиков Владимир Александрович
                                                 </LinkTableCell>
-                                                <TableCellIcon />
+                                                <TableCellMoreIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
                                                 <LinkTableCell>
                                                     Дюжев Алексей Станиславович
                                                 </LinkTableCell>
-                                                <TableCellIcon />
+                                                <TableCellMoreIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
                                                 <LinkTableCell>Лер Максим Евгеньевич</LinkTableCell>
-                                                <TableCellIcon />
+                                                <TableCellMoreIcon />
                                             </TableRow>
                                         </TableBody>
                                     </Table>
@@ -198,7 +198,7 @@ export default function PartnerProfile({ id }) {
                                                                 </span>
                                                             </TableCell>
                                                         )}
-                                                        <TableCellIcon />
+                                                        <TableCellMoreIcon />
                                                     </TableRow>
                                                 );
                                             })}
@@ -214,48 +214,9 @@ export default function PartnerProfile({ id }) {
     );
 }
 
-function HeaderTableCell({ children }) {
-    return (
-        <TableCell
-            css={css`
-                font-size: 0.9em;
-                color: black;
-            `}
-        >
-            {children}
-        </TableCell>
-    );
-}
-
-function LinkTableCell({ to = "#", children }) {
-    return (
-        <TableCell>
-            <Link
-                css={css`
-                    color: black;
-                    font-weight: 500;
-                `}
-                to={to}
-            >
-                {children}
-            </Link>
-        </TableCell>
-    );
-}
-
-LinkTableCell.propTypes = {
-    to: PropTypes.string,
+PartnerProfile.propTypes = {
+    id: PropTypes.string.isRequired,
 };
-
-function TableCellIcon() {
-    return (
-        <TableCell align="right">
-            <IconButton>
-                <MoreIcon />
-            </IconButton>
-        </TableCell>
-    );
-}
 
 function GridItem({ name, path, title, partner, defaultValue }) {
     if (!path) {
@@ -300,7 +261,3 @@ GridItem.propTypes = {
 function withPartner(partner) {
     return props => <GridItem partner={partner} {...props} />;
 }
-
-PartnerProfile.propTypes = {
-    id: PropTypes.string.isRequired,
-};
