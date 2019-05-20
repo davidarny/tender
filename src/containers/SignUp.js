@@ -179,6 +179,7 @@ export default function SignUp() {
                                             id="fullName"
                                             name="fullName"
                                             autoComplete="fullName"
+                                            autoFocus
                                             onChange={onFullNameChange}
                                         />
                                     </FormControl>
@@ -188,7 +189,6 @@ export default function SignUp() {
                                             id="email"
                                             name="email"
                                             autoComplete="email"
-                                            autoFocus
                                             onChange={onEmailChange}
                                         />
                                     </FormControl>
