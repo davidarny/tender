@@ -7,7 +7,7 @@ const Participant = types.model({
     id: types.identifier,
 
     // Номер участника ПЛ
-    number: types.number,
+    number: types.string,
 
     // ФИО
     fullName: types.string,

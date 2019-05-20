@@ -7,7 +7,7 @@ import DealStore from "models/Deal";
 
 export function getUserPayload() {
     return {
-        appeal: shortid(),
+        appeal: "1053600591197",
         email: "john.doe@mail.com",
         phone: "+12345678910",
         password: shortid(),
@@ -16,7 +16,7 @@ export function getUserPayload() {
         preferredCommunicationMethod: "email",
         idDocument: {
             documentType: "passport",
-            documentId: shortid(),
+            documentId: "3664069397",
         },
         consentToCommunication: true,
     };
@@ -25,11 +25,11 @@ export function getUserPayload() {
 export function getPartnerPayload() {
     return {
         title: "John Doe inc.",
-        phone: undefined,
-        email: undefined,
+        phone: "john.doe@mail.com",
+        email: "+12345678910",
         idData: {
-            INN: shortid(),
-            ORGN: shortid(),
+            INN: "3664069397",
+            ORGN: "1053600591197",
         },
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
@@ -55,7 +55,7 @@ export function getDealPayload() {
 
 export function getParticipantPayload(partner) {
     return {
-        number: 111222333,
+        number: "1053600591197",
         fullName: "John Doe",
         partner,
         type: "personal",

@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Paper from "@material-ui/core/Paper";
-import InputLabel from "@material-ui/core/InputLabel";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -23,6 +22,7 @@ import moment from "moment";
 import LinkTableCell from "components/table/LinkTableCell";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
+import GridItem from "components/GridItem";
 
 export default function PartnerProfile({ id }) {
     const store = useContext(StoreContext);
@@ -81,19 +81,15 @@ export default function PartnerProfile({ id }) {
                                     >
                                         <PartnerItem
                                             name="INN"
-                                            objectPath="idData.INN"
+                                            pathToProp="idData.INN"
                                             title="ИНН"
                                         />
                                         <PartnerItem
                                             name="ORGN"
-                                            objectPath="idData.ORGN"
+                                            pathToProp="idData.ORGN"
                                             title="ОРГН"
                                         />
-                                        <PartnerItem
-                                            name="manager"
-                                            title="Менеджер"
-                                            partner={partner}
-                                        />
+                                        <PartnerItem name="manager" title="Менеджер" />
                                         <PartnerItem
                                             name="email"
                                             title="Эл. адрес"
@@ -222,50 +218,10 @@ export default function PartnerProfile({ id }) {
     );
 }
 
-PartnerProfile.propTypes = {
-    id: PropTypes.string.isRequired,
-};
-
-function GridItem({ name, objectPath, title, partner, defaultValue }) {
-    if (!objectPath) {
-        objectPath = name;
-    }
-    return (
-        <Grid
-            item
-            xs={12}
-            css={css`
-                margin-bottom: 20px;
-            `}
-        >
-            <Grid container>
-                <Grid
-                    item
-                    xs={12}
-                    css={css`
-                        margin-bottom: 10px;
-                    `}
-                >
-                    <InputLabel htmlFor={name}>{title}</InputLabel>
-                </Grid>
-                <Grid item xs={12}>
-                    <Typography id={name} name={name}>
-                        {get(partner, objectPath, defaultValue)}
-                    </Typography>
-                </Grid>
-            </Grid>
-        </Grid>
-    );
-}
-
-GridItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    partner: PropTypes.object,
-    defaultValue: PropTypes.string,
-    objectPath: PropTypes.string,
-};
-
 function withPartner(partner) {
-    return props => <GridItem partner={partner} {...props} />;
+    return props => <GridItem data={partner} {...props} />;
 }
+
+PartnerProfile.propTypes = {
+    id: PropTypes.string,
+};

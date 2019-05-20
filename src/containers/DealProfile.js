@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import Layout from "components/Layout";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import InputLabel from "@material-ui/core/InputLabel";
 import { useEffect, useContext, useState } from "react";
 import { StoreContext } from "context";
 import get from "lodash/get";
@@ -13,6 +12,8 @@ import { GET_DEAL_BY_ID } from "actions/deal";
 import PropTypes from "prop-types";
 import moment from "moment";
 import sample from "lodash/sample";
+import GridItem from "components/GridItem";
+import { Fragment } from "react";
 
 export default function DealProfile({ id }) {
     const store = useContext(StoreContext);
@@ -93,14 +94,64 @@ export default function DealProfile({ id }) {
                                     {deal.endStation && (
                                         <DealItem name="endStation" title="Конечная станция" />
                                     )}
-                                    <DealItem name="discount" suffix="%" title="Скидка" />
+                                    <DealItem
+                                        name="discount"
+                                        title="Скидка"
+                                        render={data => (
+                                            <Fragment>
+                                                <span>{data}</span>
+                                                <span>%</span>
+                                            </Fragment>
+                                        )}
+                                    />
                                     <DealItem name="promoCode" title="Промо код" />
-                                    <DealDateItem
-                                        from={get(deal, "activePeriod.from")}
-                                        to={get(deal, "activePeriod.to")}
+                                    <DealItem
                                         name="activePeriod"
                                         title="Срок действия, переодичность"
-                                        suffix={", " + get(deal, "periodicity")}
+                                        render={(_, name) => {
+                                            const from = get(deal, "activePeriod.from");
+                                            const to = get(deal, "activePeriod.to");
+                                            const suffix = ", " + get(deal, "periodicity");
+                                            return (
+                                                <Fragment>
+                                                    {from && !to && (
+                                                        <Typography
+                                                            id={name + "-from"}
+                                                            name={name + "-from"}
+                                                        >
+                                                            от {moment(from).format("DD MMMM YYYY")}
+                                                            <span>{suffix}</span>
+                                                        </Typography>
+                                                    )}
+                                                    {!from && to && (
+                                                        <Typography
+                                                            id={name + "-to"}
+                                                            name={name + "-to"}
+                                                        >
+                                                            до {moment(to).format("DD MMMM YYYY")}
+                                                            <span>{suffix}</span>
+                                                        </Typography>
+                                                    )}
+                                                    {from && to && (
+                                                        <Typography
+                                                            id={name + "-from-to"}
+                                                            name={name + "-from-to"}
+                                                        >
+                                                            <span>
+                                                                {moment(from).format(
+                                                                    "DD MMMM YYYY"
+                                                                )}
+                                                            </span>
+                                                            <span> - </span>
+                                                            <span>
+                                                                {moment(to).format("DD MMMM YYYY")}
+                                                            </span>
+                                                            <span>{suffix}</span>
+                                                        </Typography>
+                                                    )}
+                                                </Fragment>
+                                            );
+                                        }}
                                     />
                                 </Grid>
                             </Paper>
@@ -112,114 +163,10 @@ export default function DealProfile({ id }) {
     );
 }
 
-function GridItem({ name, objectPath, title, deal, translations, suffix }) {
-    if (!objectPath) {
-        objectPath = name;
-    }
-    return (
-        <Grid
-            item
-            xs={12}
-            css={css`
-                margin-bottom: 20px;
-            `}
-        >
-            <Grid container>
-                <Grid
-                    item
-                    xs={12}
-                    css={css`
-                        margin-bottom: 10px;
-                    `}
-                >
-                    <InputLabel htmlFor={name}>{title}</InputLabel>
-                </Grid>
-                <Grid item xs={12}>
-                    {translations && (
-                        <Typography id={name} name={name}>
-                            <span>{translations[get(deal, objectPath)]}</span>
-                            <span>{suffix}</span>
-                        </Typography>
-                    )}
-                    {!translations && (
-                        <Typography id={name} name={name}>
-                            <span>{get(deal, objectPath)}</span>
-                            <span>{suffix}</span>
-                        </Typography>
-                    )}
-                </Grid>
-            </Grid>
-        </Grid>
-    );
-}
-
-GridItem.propTypes = {
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    deal: PropTypes.object,
-    objectPath: PropTypes.string,
-    suffix: PropTypes.string,
-    translations: PropTypes.object,
-};
-
-function DealDateItem({ from, to, name, title, suffix }) {
-    return (
-        <Grid
-            item
-            xs={12}
-            css={css`
-                margin-bottom: 20px;
-            `}
-        >
-            <Grid container>
-                <Grid
-                    item
-                    xs={12}
-                    css={css`
-                        margin-bottom: 10px;
-                    `}
-                >
-                    <InputLabel htmlFor={name}>{title}</InputLabel>
-                </Grid>
-                <Grid item xs={12}>
-                    {from && !to && (
-                        <Typography id={name + "-from"} name={name + "-from"}>
-                            от {moment(from).format("DD MMMM YYYY")}
-                            <span>{suffix}</span>
-                        </Typography>
-                    )}
-                    {!from && to && (
-                        <Typography id={name + "-to"} name={name + "-to"}>
-                            до {moment(to).format("DD MMMM YYYY")}
-                            <span>{suffix}</span>
-                        </Typography>
-                    )}
-                    {from && to && (
-                        <Typography id={name + "-from-to"} name={name + "-from-to"}>
-                            <span>{moment(from).format("DD MMMM YYYY")}</span>
-                            <span> - </span>
-                            <span>{moment(to).format("DD MMMM YYYY")}</span>
-                            <span>{suffix}</span>
-                        </Typography>
-                    )}
-                </Grid>
-            </Grid>
-        </Grid>
-    );
-}
-
-DealDateItem.propTypes = {
-    from: PropTypes.object,
-    to: PropTypes.object,
-    name: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    suffix: PropTypes.string,
-};
-
 function withDeal(deal) {
-    return props => <GridItem deal={deal} {...props} />;
+    return props => <GridItem data={deal} {...props} />;
 }
 
 DealProfile.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
 };
