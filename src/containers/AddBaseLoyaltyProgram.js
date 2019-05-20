@@ -26,13 +26,13 @@ export default function AddBaseLoyaltyProgram() {
 
     function onTitleChange(event) {
         setFormValues({ ...form, title: event.target.value });
-        console.log("%AddBaseLoyaltyProgram title change", "color: #2E7D32", event.target.value);
+        console.log("%cAddBaseLoyaltyProgram title change", "color: #2E7D32", event.target.value);
     }
 
     function onPointsTypeChange(event) {
         setFormValues({ ...form, pointsType: event.target.value });
         console.log(
-            "%AddBaseLoyaltyProgram points type change",
+            "%cAddBaseLoyaltyProgram points type change",
             "color: #2E7D32",
             event.target.value
         );
@@ -41,7 +41,7 @@ export default function AddBaseLoyaltyProgram() {
     function onConditionChange(event) {
         setFormValues({ ...form, condition: event.target.value });
         console.log(
-            "%AddBaseLoyaltyProgram condition change",
+            "%cAddBaseLoyaltyProgram condition change",
             "color: #2E7D32",
             event.target.value
         );
@@ -49,13 +49,17 @@ export default function AddBaseLoyaltyProgram() {
 
     function onPropertyChange(event) {
         setFormValues({ ...form, property: event.target.value });
-        console.log("%AddBaseLoyaltyProgram property change", "color: #2E7D32", event.target.value);
+        console.log(
+            "%cAddBaseLoyaltyProgram property change",
+            "color: #2E7D32",
+            event.target.value
+        );
     }
 
     function onDistanceChange(event) {
         setFormValues({ ...form, distance: event.target.value });
         console.log(
-            "%AddBaseLoyaltyProgram ddistance change",
+            "%cAddBaseLoyaltyProgram ddistance change",
             "color: #2E7D32",
             event.target.value
         );
@@ -63,16 +67,16 @@ export default function AddBaseLoyaltyProgram() {
 
     function onPointsChange(event) {
         setFormValues({ ...form, points: event.target.value });
-        console.log("%AddBaseLoyaltyProgram points change", "color: #2E7D32", event.target.value);
+        console.log("%cAddBaseLoyaltyProgram points change", "color: #2E7D32", event.target.value);
     }
 
     function onTrainChange(event) {
         setFormValues({ ...form, train: event.target.value });
-        console.log("%AddBaseLoyaltyProgram train change", "color: #2E7D32", event.target.value);
+        console.log("%cAddBaseLoyaltyProgram train change", "color: #2E7D32", event.target.value);
     }
 
     function onFormSubmit(event) {
-        console.log("%AddBaseLoyaltyProgram submit", "color: #2E7D32", form);
+        console.log("%cAddBaseLoyaltyProgram submit", "color: #2E7D32", form);
         event.preventDefault();
         // TODO: save data
         navigate(BASE_PATH + "/loyality");

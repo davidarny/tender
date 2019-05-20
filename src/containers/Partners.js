@@ -4,21 +4,21 @@ import { jsx, css } from "@emotion/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
-import IconButton from "@material-ui/core/IconButton";
-import MoreIcon from "@material-ui/icons/MoreHoriz";
 import Layout from "components/Layout";
 import FixedFab from "components/FixedFab";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { Link, navigate } from "@reach/router";
+import { navigate } from "@reach/router";
 import { BASE_PATH, StoreContext } from "context";
 import { useContext } from "react";
 import sample from "lodash/sample";
-import PropTypes from "prop-types";
+import StyledTableHead from "components/table/StyledTableHead";
+import LinkTableCell from "components/table/LinkTableCell";
+import HeaderTableCell from "components/table/HeaderTableCell";
+import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 
 function Partners() {
     const store = useContext(StoreContext);
@@ -46,28 +46,24 @@ function Partners() {
                 <Grid item xs={12}>
                     <Paper>
                         <Table>
-                            <TableHead
-                                css={css`
-                                    background-color: #b0bec5;
-                                `}
-                            >
+                            <StyledTableHead>
                                 <TableRow>
                                     <HeaderTableCell>Партнер</HeaderTableCell>
                                     <HeaderTableCell>Категория</HeaderTableCell>
                                     <HeaderTableCell align="right" />
                                 </TableRow>
-                            </TableHead>
+                            </StyledTableHead>
                             <TableBody>
                                 {store.partner.partners.map(partner => {
                                     return (
                                         <TableRow key={partner.id}>
-                                            <PartnersTableCell
+                                            <LinkTableCell
                                                 to={BASE_PATH + `/partners/${partner.id}`}
                                             >
                                                 {partner.title}
-                                            </PartnersTableCell>
+                                            </LinkTableCell>
                                             <TableCell>{sample(categories)}</TableCell>
-                                            <TableCellIcon />
+                                            <TableCellMoreIcon />
                                         </TableRow>
                                     );
                                 })}
@@ -78,49 +74,6 @@ function Partners() {
                 <FixedFab onClick={onFabClick} />
             </Grid>
         </Layout>
-    );
-}
-
-function HeaderTableCell({ children }) {
-    return (
-        <TableCell
-            css={css`
-                font-size: 0.9em;
-                color: black;
-            `}
-        >
-            {children}
-        </TableCell>
-    );
-}
-
-function PartnersTableCell({ to, children }) {
-    return (
-        <TableCell>
-            <Link
-                css={css`
-                    color: black;
-                    font-weight: 500;
-                `}
-                to={to}
-            >
-                {children}
-            </Link>
-        </TableCell>
-    );
-}
-
-PartnersTableCell.propTypes = {
-    to: PropTypes.string,
-};
-
-function TableCellIcon() {
-    return (
-        <TableCell align="right">
-            <IconButton>
-                <MoreIcon />
-            </IconButton>
-        </TableCell>
     );
 }
 

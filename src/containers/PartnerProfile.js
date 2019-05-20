@@ -10,7 +10,6 @@ import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Tab from "@material-ui/core/Tab";
 import { useEffect, useContext, useState } from "react";
@@ -23,6 +22,7 @@ import LinkTableCell from "components/table/LinkTableCell";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import GridItem from "components/GridItem";
+import StyledTableHead from "components/table/StyledTableHead";
 
 export default function PartnerProfile({ id }) {
     const store = useContext(StoreContext);
@@ -70,144 +70,9 @@ export default function PartnerProfile({ id }) {
                         </Grid>
                         <Grid item xs={12}>
                             <Paper>
-                                {tabIndex === 0 && (
-                                    <Grid
-                                        container
-                                        css={css`
-                                            padding-left: 20px;
-                                            padding-top: 20px;
-                                        `}
-                                    >
-                                        <PartnerItem
-                                            name="INN"
-                                            pathToProp="idData.INN"
-                                            title="ИНН"
-                                        />
-                                        <PartnerItem
-                                            name="ORGN"
-                                            pathToProp="idData.ORGN"
-                                            title="ОРГН"
-                                        />
-                                        <PartnerItem name="manager" title="Менеджер" />
-                                        <PartnerItem
-                                            name="email"
-                                            title="Эл. адрес"
-                                            defaultValue="example@mail.com"
-                                        />
-                                        <PartnerItem
-                                            name="phone"
-                                            title="Телефон"
-                                            defaultValue="+7 (111) 222-33-44"
-                                        />
-                                    </Grid>
-                                )}
-                                {tabIndex === 1 && (
-                                    <Table>
-                                        <TableHead
-                                            css={css`
-                                                background-color: #b0bec5;
-                                            `}
-                                        >
-                                            <TableRow>
-                                                <HeaderTableCell>Номер УПЛ</HeaderTableCell>
-                                                <HeaderTableCell>ФИО</HeaderTableCell>
-                                                <HeaderTableCell align="right" />
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            <TableRow>
-                                                <TableCell>1545673513</TableCell>
-                                                <LinkTableCell>Иванов Иван Иванович</LinkTableCell>
-                                                <TableCellMoreIcon />
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>1545673513</TableCell>
-                                                <LinkTableCell>
-                                                    Мельников Рустам Фахитович
-                                                </LinkTableCell>
-                                                <TableCellMoreIcon />
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>1545673513</TableCell>
-                                                <LinkTableCell>
-                                                    Меньшиков Владимир Александрович
-                                                </LinkTableCell>
-                                                <TableCellMoreIcon />
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>1545673513</TableCell>
-                                                <LinkTableCell>
-                                                    Дюжев Алексей Станиславович
-                                                </LinkTableCell>
-                                                <TableCellMoreIcon />
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>1545673513</TableCell>
-                                                <LinkTableCell>Лер Максим Евгеньевич</LinkTableCell>
-                                                <TableCellMoreIcon />
-                                            </TableRow>
-                                        </TableBody>
-                                    </Table>
-                                )}
-                                {tabIndex === 2 && (
-                                    <Table>
-                                        <TableHead
-                                            css={css`
-                                                background-color: #b0bec5;
-                                            `}
-                                        >
-                                            <TableRow>
-                                                <HeaderTableCell>Название</HeaderTableCell>
-                                                <HeaderTableCell>Срок действия</HeaderTableCell>
-                                                <HeaderTableCell align="right" />
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {store.deal.deals.map(deal => {
-                                                const { from, to } = deal.activePeriod;
-                                                return (
-                                                    <TableRow key={deal.id}>
-                                                        <LinkTableCell
-                                                            to={BASE_PATH + `/deals/${deal.id}`}
-                                                        >
-                                                            {deal.title}
-                                                        </LinkTableCell>
-                                                        {from && !to && (
-                                                            <TableCell>
-                                                                от{" "}
-                                                                {moment(from).format(
-                                                                    "DD MMMM YYYY"
-                                                                )}
-                                                            </TableCell>
-                                                        )}
-                                                        {!from && to && (
-                                                            <TableCell>
-                                                                до{" "}
-                                                                {moment(to).format("DD MMMM YYYY")}
-                                                            </TableCell>
-                                                        )}
-                                                        {from && to && (
-                                                            <TableCell>
-                                                                <span>
-                                                                    {moment(from).format(
-                                                                        "DD MMMM YYYY"
-                                                                    )}
-                                                                </span>
-                                                                <span> - </span>
-                                                                <span>
-                                                                    {moment(to).format(
-                                                                        "DD MMMM YYYY"
-                                                                    )}
-                                                                </span>
-                                                            </TableCell>
-                                                        )}
-                                                        <TableCellMoreIcon />
-                                                    </TableRow>
-                                                );
-                                            })}
-                                        </TableBody>
-                                    </Table>
-                                )}
+                                {tabIndex === 0 && <MainInfo component={PartnerItem} />}
+                                {tabIndex === 1 && <ParticipantsInfo />}
+                                {tabIndex === 2 && <DealsInfo deals={store.deal.deals} />}
                             </Paper>
                         </Grid>
                     </Grid>
@@ -216,6 +81,113 @@ export default function PartnerProfile({ id }) {
         </Layout>
     );
 }
+
+function MainInfo({ component: PartnerItem }) {
+    return (
+        <Grid
+            container
+            css={css`
+                padding-left: 20px;
+                padding-top: 20px;
+            `}
+        >
+            <PartnerItem name="INN" pathToProp="idData.INN" title="ИНН" />
+            <PartnerItem name="ORGN" pathToProp="idData.ORGN" title="ОРГН" />
+            <PartnerItem name="manager" title="Менеджер" />
+            <PartnerItem name="email" title="Эл. адрес" defaultValue="example@mail.com" />
+            <PartnerItem name="phone" title="Телефон" defaultValue="+7 (111) 222-33-44" />
+        </Grid>
+    );
+}
+
+MainInfo.propTypes = {
+    component: PropTypes.elementType.isRequired,
+};
+
+function ParticipantsInfo() {
+    return (
+        <Table>
+            <StyledTableHead>
+                <TableRow>
+                    <HeaderTableCell>Номер УПЛ</HeaderTableCell>
+                    <HeaderTableCell>ФИО</HeaderTableCell>
+                    <HeaderTableCell align="right" />
+                </TableRow>
+            </StyledTableHead>
+            <TableBody>
+                <TableRow>
+                    <TableCell>1545673513</TableCell>
+                    <LinkTableCell>Иванов Иван Иванович</LinkTableCell>
+                    <TableCellMoreIcon />
+                </TableRow>
+                <TableRow>
+                    <TableCell>1545673513</TableCell>
+                    <LinkTableCell>Мельников Рустам Фахитович</LinkTableCell>
+                    <TableCellMoreIcon />
+                </TableRow>
+                <TableRow>
+                    <TableCell>1545673513</TableCell>
+                    <LinkTableCell>Меньшиков Владимир Александрович</LinkTableCell>
+                    <TableCellMoreIcon />
+                </TableRow>
+                <TableRow>
+                    <TableCell>1545673513</TableCell>
+                    <LinkTableCell>Дюжев Алексей Станиславович</LinkTableCell>
+                    <TableCellMoreIcon />
+                </TableRow>
+                <TableRow>
+                    <TableCell>1545673513</TableCell>
+                    <LinkTableCell>Лер Максим Евгеньевич</LinkTableCell>
+                    <TableCellMoreIcon />
+                </TableRow>
+            </TableBody>
+        </Table>
+    );
+}
+
+function DealsInfo({ deals }) {
+    return (
+        <Table>
+            <StyledTableHead>
+                <TableRow>
+                    <HeaderTableCell>Название</HeaderTableCell>
+                    <HeaderTableCell>Срок действия</HeaderTableCell>
+                    <HeaderTableCell align="right" />
+                </TableRow>
+            </StyledTableHead>
+            <TableBody>
+                {deals.map(deal => {
+                    const { from, to } = deal.activePeriod;
+                    return (
+                        <TableRow key={deal.id}>
+                            <LinkTableCell to={BASE_PATH + `/deals/${deal.id}`}>
+                                {deal.title}
+                            </LinkTableCell>
+                            {from && !to && (
+                                <TableCell>от {moment(from).format("DD MMMM YYYY")}</TableCell>
+                            )}
+                            {!from && to && (
+                                <TableCell>до {moment(to).format("DD MMMM YYYY")}</TableCell>
+                            )}
+                            {from && to && (
+                                <TableCell>
+                                    <span>{moment(from).format("DD MMMM YYYY")}</span>
+                                    <span> - </span>
+                                    <span>{moment(to).format("DD MMMM YYYY")}</span>
+                                </TableCell>
+                            )}
+                            <TableCellMoreIcon />
+                        </TableRow>
+                    );
+                })}
+            </TableBody>
+        </Table>
+    );
+}
+
+DealsInfo.propTypes = {
+    deals: PropTypes.array.isRequired,
+};
 
 function withPartner(partner) {
     return props => <GridItem data={partner} {...props} />;

@@ -3,22 +3,24 @@
 import { jsx, css } from "@emotion/core";
 import Grid from "@material-ui/core/Grid";
 import { observer } from "mobx-react-lite";
-import IconButton from "@material-ui/core/IconButton";
-import MoreIcon from "@material-ui/icons/MoreHoriz";
 import Layout from "components/Layout";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import FixedFab from "components/FixedFab";
-import { Link } from "@reach/router";
 import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
+import StyledTableHead from "components/table/StyledTableHead";
+import HeaderTableCell from "components/table/HeaderTableCell";
+import LinkTableCell from "components/table/LinkTableCell";
+import TableCellMoreIcon from "components/table/TableCellMoreIcon";
+import shortid from "shortid";
+import { BASE_PATH } from "context";
 
 function Catalog() {
     const [tabIndex, setTabIndex] = useState(0);
@@ -49,96 +51,43 @@ function Catalog() {
                     <Tab label="Каталог вагонов" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && (
-                <TabContainer>
-                    <RoutesTable />
-                </TabContainer>
-            )}
-            {tabIndex === 1 && (
-                <TabContainer>
-                    <TrainsTable />
-                </TabContainer>
-            )}
-            {tabIndex === 2 && (
-                <TabContainer>
-                    <WagonsTable />
-                </TabContainer>
-            )}
+            {tabIndex === 0 && <RoutesInfo />}
+            {tabIndex === 1 && <TrainsInfo />}
+            {tabIndex === 2 && <WagonsInfo />}
         </Layout>
     );
 }
 
-function HeaderTableCell({ children }) {
-    return (
-        <TableCell
-            css={css`
-                font-size: 0.9em;
-                color: black;
-            `}
-        >
-            {children}
-        </TableCell>
-    );
-}
-
-function LinkTableCell({ children }) {
-    return (
-        <TableCell>
-            <Link
-                css={css`
-                    color: black;
-                    font-weight: 500;
-                `}
-                to="#"
-            >
-                {children}
-            </Link>
-        </TableCell>
-    );
-}
-
-function TableCellIcon() {
-    return (
-        <TableCell align="right">
-            <IconButton>
-                <MoreIcon />
-            </IconButton>
-        </TableCell>
-    );
-}
-
-function TabContainer(props) {
-    return <Typography component="div">{props.children}</Typography>;
-}
-
-function RoutesTable() {
+function RoutesInfo() {
     return (
         <Grid container>
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Маршрут</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
                             <TableRow>
-                                <LinkTableCell>Санкт-Петербург - Москва</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
+                                    Санкт-Петербург - Москва
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>Москва - Владивосток</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
+                                    Москва - Владивосток
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>Санкт-Петербург - Чебоксары</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
+                                    Санкт-Петербург - Чебоксары
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -149,42 +98,48 @@ function RoutesTable() {
     );
 }
 
-function TrainsTable() {
+function TrainsInfo() {
     return (
         <Grid container>
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Номер поезда</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
                             <TableRow>
-                                <LinkTableCell>116С</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
+                                    116С
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>858А</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
+                                    858А
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>032А-Лев Толстой</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
+                                    032А-Лев Толстой
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>100Э</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
+                                    100Э
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>133А</LinkTableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
+                                    133А
+                                </LinkTableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -195,58 +150,68 @@ function TrainsTable() {
     );
 }
 
-function WagonsTable() {
+function WagonsInfo() {
     return (
         <Grid container>
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Идентификатор</HeaderTableCell>
                                 <HeaderTableCell>Класс</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
                             <TableRow>
-                                <LinkTableCell>558875</LinkTableCell>
-                                <TableCell>Крупейный</TableCell>
-                                <TableCellIcon />
+                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                    558875
+                                </LinkTableCell>
+                                <TableCell>Купейный</TableCell>
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>993121</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                    993121
+                                </LinkTableCell>
                                 <TableCell>Плацкартный</TableCell>
-                                <TableCellIcon />
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>2123312</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                    2123312
+                                </LinkTableCell>
                                 <TableCell>Сидячий</TableCell>
-                                <TableCellIcon />
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>5588917</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                    5588917
+                                </LinkTableCell>
                                 <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellIcon />
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>1128917</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                    1128917
+                                </LinkTableCell>
                                 <TableCell>Мягкий</TableCell>
-                                <TableCellIcon />
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>5588917</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                    5588917
+                                </LinkTableCell>
                                 <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellIcon />
+                                <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>1128917</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                    1128917
+                                </LinkTableCell>
                                 <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellIcon />
+                                <TableCellMoreIcon />
                             </TableRow>
                         </TableBody>
                     </Table>

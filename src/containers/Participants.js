@@ -7,7 +7,6 @@ import Layout from "components/Layout";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import FixedFab from "components/FixedFab";
@@ -18,6 +17,7 @@ import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import { useContext } from "react";
 import { StoreContext, BASE_PATH } from "context";
 import { GET_PARTNER_BY_ID } from "actions/partner";
+import StyledTableHead from "components/table/StyledTableHead";
 
 function Participants() {
     const store = useContext(StoreContext);
@@ -45,18 +45,14 @@ function Participants() {
                 <Grid item xs={12}>
                     <Paper>
                         <Table>
-                            <TableHead
-                                css={css`
-                                    background-color: #b0bec5;
-                                `}
-                            >
+                            <StyledTableHead>
                                 <TableRow>
                                     <HeaderTableCell>ФИО</HeaderTableCell>
                                     <HeaderTableCell>Партнёр</HeaderTableCell>
                                     <HeaderTableCell>Тип</HeaderTableCell>
                                     <HeaderTableCell align="right" />
                                 </TableRow>
-                            </TableHead>
+                            </StyledTableHead>
                             <TableBody>
                                 {store.participant.participants.map(participant => {
                                     const partner = store.partner[GET_PARTNER_BY_ID]({

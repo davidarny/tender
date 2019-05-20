@@ -25,13 +25,13 @@ export default function AddExtraLoyaltyProgram() {
 
     function onTitleChange(event) {
         setFormValues({ ...form, title: event.target.value });
-        console.log("%AddExtraLoyaltyProgram title change", "color: #2E7D32", event.target.value);
+        console.log("%cAddExtraLoyaltyProgram title change", "color: #2E7D32", event.target.value);
     }
 
     function onStationStartChange(event) {
         setFormValues({ ...form, stationStart: event.target.value });
         console.log(
-            "%AddExtraLoyaltyProgram station start change",
+            "%cAddExtraLoyaltyProgram station start change",
             "color: #2E7D32",
             event.target.value
         );
@@ -40,7 +40,7 @@ export default function AddExtraLoyaltyProgram() {
     function onStationEndChange(event) {
         setFormValues({ ...form, stationEnd: event.target.value });
         console.log(
-            "%AddExtraLoyaltyProgram station end change",
+            "%cAddExtraLoyaltyProgram station end change",
             "color: #2E7D32",
             event.target.value
         );
@@ -48,21 +48,25 @@ export default function AddExtraLoyaltyProgram() {
 
     function onTrainChange(event) {
         setFormValues({ ...form, train: event.target.value });
-        console.log("%AddExtraLoyaltyProgram train change", "color: #2E7D32", event.target.value);
+        console.log("%cAddExtraLoyaltyProgram train change", "color: #2E7D32", event.target.value);
     }
 
     function onServiceChange(event) {
         setFormValues({ ...form, train: event.target.value });
-        console.log("%AddExtraLoyaltyProgram service change", "color: #2E7D32", event.target.value);
+        console.log(
+            "%cAddExtraLoyaltyProgram service change",
+            "color: #2E7D32",
+            event.target.value
+        );
     }
 
     function onTermsChange(event) {
         setFormValues({ ...form, terms: event.target.value });
-        console.log("%AddExtraLoyaltyProgram terms change", "color: #2E7D32", event.target.value);
+        console.log("%cAddExtraLoyaltyProgram terms change", "color: #2E7D32", event.target.value);
     }
 
     function onFormSubmit(event) {
-        console.log("%AddExtraLoyaltyProgram submit", "color: #2E7D32", form);
+        console.log("%cAddExtraLoyaltyProgram submit", "color: #2E7D32", form);
         event.preventDefault();
         // TODO: save data
         navigate(BASE_PATH + "/loyality");

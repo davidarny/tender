@@ -4,18 +4,20 @@ import { jsx, css } from "@emotion/core";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { observer } from "mobx-react-lite";
-import IconButton from "@material-ui/core/IconButton";
-import MoreIcon from "@material-ui/icons/MoreHoriz";
 import Layout from "components/Layout";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { Link } from "@reach/router";
 import Chart from "react-google-charts";
 import Loading from "components/Loading";
+import StyledTableHead from "components/table/StyledTableHead";
+import LinkTableCell from "components/table/LinkTableCell";
+import HeaderTableCell from "components/table/HeaderTableCell";
+import TableCellMoreIcon from "components/table/TableCellMoreIcon";
+import shortid from "shortid";
+import { BASE_PATH } from "context";
 
 function Statistic() {
     return (
@@ -76,11 +78,7 @@ function Statistic() {
                 >
                     <Paper>
                         <Table>
-                            <TableHead
-                                css={css`
-                                    background-color: #b0bec5;
-                                `}
-                            >
+                            <StyledTableHead>
                                 <TableRow>
                                     <HeaderTableCell>Маршрут</HeaderTableCell>
                                     <HeaderTableCell>Дата</HeaderTableCell>
@@ -88,41 +86,43 @@ function Statistic() {
                                     <HeaderTableCell>Баллы</HeaderTableCell>
                                     <HeaderTableCell align="right" />
                                 </TableRow>
-                            </TableHead>
+                            </StyledTableHead>
                             <TableBody>
                                 <TableRow>
-                                    <StatisticTableCell>
+                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
                                         Казань - Санкт-Петербург
-                                    </StatisticTableCell>
+                                    </LinkTableCell>
                                     <TableCell>28 мая 19</TableCell>
                                     <TableCell>2544 р</TableCell>
                                     <TableCell>+350</TableCell>
-                                    <TableCellIcon />
+                                    <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <StatisticTableCell>Владивосток - Казань</StatisticTableCell>
+                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
+                                        Владивосток - Казань
+                                    </LinkTableCell>
                                     <TableCell>19 мая 19</TableCell>
                                     <TableCell>6922 р</TableCell>
                                     <TableCell>+700</TableCell>
-                                    <TableCellIcon />
+                                    <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <StatisticTableCell>
+                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
                                         Екатеринбург - Владивосток
-                                    </StatisticTableCell>
+                                    </LinkTableCell>
                                     <TableCell>15 мая 19</TableCell>
                                     <TableCell>8974 р</TableCell>
                                     <TableCell>+89</TableCell>
-                                    <TableCellIcon />
+                                    <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <StatisticTableCell>
+                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
                                         Санкт-Петербург - Екатеринбург
-                                    </StatisticTableCell>
+                                    </LinkTableCell>
                                     <TableCell>12 мая 19</TableCell>
                                     <TableCell>7899 р</TableCell>
                                     <TableCell>+777</TableCell>
-                                    <TableCellIcon />
+                                    <TableCellMoreIcon />
                                 </TableRow>
                             </TableBody>
                         </Table>
@@ -130,45 +130,6 @@ function Statistic() {
                 </Grid>
             </Grid>
         </Layout>
-    );
-}
-
-function HeaderTableCell({ children }) {
-    return (
-        <TableCell
-            css={css`
-                font-size: 0.9em;
-                color: black;
-            `}
-        >
-            {children}
-        </TableCell>
-    );
-}
-
-function StatisticTableCell({ children }) {
-    return (
-        <TableCell>
-            <Link
-                css={css`
-                    color: black;
-                    font-weight: 500;
-                `}
-                to="#"
-            >
-                {children}
-            </Link>
-        </TableCell>
-    );
-}
-
-function TableCellIcon() {
-    return (
-        <TableCell align="right">
-            <IconButton>
-                <MoreIcon />
-            </IconButton>
-        </TableCell>
     );
 }
 

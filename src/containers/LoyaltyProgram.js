@@ -7,7 +7,6 @@ import Layout from "components/Layout";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import FixedFab from "components/FixedFab";
@@ -21,11 +20,13 @@ import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import { BASE_PATH } from "context";
 import { navigate } from "@reach/router";
+import StyledTableHead from "components/table/StyledTableHead";
+import shortid from "shortid";
 
 function Catalog() {
     const [tabIndex, setTabIndex] = useState(0);
 
-    function onTabChange(event, index) {
+    function onTabChange(_, index) {
         setTabIndex(index);
     }
 
@@ -50,25 +51,13 @@ function Catalog() {
                     <Tab label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && (
-                <TabsContainer>
-                    <BaseRolesTable />
-                </TabsContainer>
-            )}
-            {tabIndex === 1 && (
-                <TabsContainer>
-                    <ExtraRolesTable />
-                </TabsContainer>
-            )}
+            {tabIndex === 0 && <BaseRolesInfo />}
+            {tabIndex === 1 && <ExtraRolesInfo />}
         </Layout>
     );
 }
 
-function TabsContainer(props) {
-    return <Typography component="div">{props.children}</Typography>;
-}
-
-function BaseRolesTable() {
+function BaseRolesInfo() {
     function onFabClick() {
         navigate(BASE_PATH + "loyality/add-base");
     }
@@ -78,11 +67,7 @@ function BaseRolesTable() {
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Название</HeaderTableCell>
                                 <HeaderTableCell>Тип</HeaderTableCell>
@@ -90,36 +75,30 @@ function BaseRolesTable() {
                                 <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
                             <TableRow>
-                                <LinkTableCell>Стандартное правило</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
+                                    Стандартное правило
+                                </LinkTableCell>
                                 <TableCell>Списание</TableCell>
                                 <TableCell>Расстояние</TableCell>
-                                <TableCell
-                                    css={css`
-                                        color: green;
-                                    `}
-                                >
-                                    Активно
-                                </TableCell>
+                                <ActiveTableCell>Активно</ActiveTableCell>
                                 <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>Дальние поездки</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
+                                    Дальние поездки
+                                </LinkTableCell>
                                 <TableCell>Начисление</TableCell>
                                 <TableCell>Стоимость</TableCell>
-                                <TableCell
-                                    css={css`
-                                        color: green;
-                                    `}
-                                >
-                                    Активно
-                                </TableCell>
+                                <ActiveTableCell>Активно</ActiveTableCell>
                                 <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>Стандартное правлило</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
+                                    Стандартное правлило
+                                </LinkTableCell>
                                 <TableCell>Начисление</TableCell>
                                 <TableCell>Стоимость</TableCell>
                                 <TableCell>Не активно</TableCell>
@@ -134,7 +113,7 @@ function BaseRolesTable() {
     );
 }
 
-function ExtraRolesTable() {
+function ExtraRolesInfo() {
     function onFabClick() {
         navigate(BASE_PATH + "loyality/add-extra");
     }
@@ -144,41 +123,29 @@ function ExtraRolesTable() {
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Название</HeaderTableCell>
                                 <HeaderTableCell>Тип</HeaderTableCell>
                                 <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
                             <TableRow>
-                                <LinkTableCell>Тестовое правило</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
+                                    Тестовое правило
+                                </LinkTableCell>
                                 <TableCell>Списание</TableCell>
-                                <TableCell
-                                    css={css`
-                                        color: green;
-                                    `}
-                                >
-                                    Активно
-                                </TableCell>
+                                <ActiveTableCell>Активно</ActiveTableCell>
                                 <TableCellMoreIcon />
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell>Поездки в столицу</LinkTableCell>
+                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
+                                    Поездки в столицу
+                                </LinkTableCell>
                                 <TableCell>Начисление</TableCell>
-                                <TableCell
-                                    css={css`
-                                        color: green;
-                                    `}
-                                >
-                                    Активно
-                                </TableCell>
+                                <ActiveTableCell>Активно</ActiveTableCell>
                                 <TableCellMoreIcon />
                             </TableRow>
                         </TableBody>
@@ -187,6 +154,18 @@ function ExtraRolesTable() {
             </Grid>
             <FixedFab onClick={onFabClick} />
         </Grid>
+    );
+}
+
+function ActiveTableCell({ children }) {
+    return (
+        <TableCell
+            css={css`
+                color: #4caf50;
+            `}
+        >
+            {children}
+        </TableCell>
     );
 }
 
