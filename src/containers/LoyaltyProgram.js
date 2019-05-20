@@ -10,8 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+import FixedFab from "components/FixedFab";
 import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -130,22 +129,7 @@ function BaseRolesTable() {
                     </Table>
                 </Paper>
             </Grid>
-            <Fab
-                css={css`
-                    position: fixed;
-                    right: 50px;
-                    bottom: 50px;
-                    background-color: #263238;
-                    color: white;
-
-                    :hover {
-                        background-color: #455a64;
-                    }
-                `}
-                onClick={onFabClick}
-            >
-                <AddIcon />
-            </Fab>
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }
@@ -201,22 +185,7 @@ function ExtraRolesTable() {
                     </Table>
                 </Paper>
             </Grid>
-            <Fab
-                css={css`
-                    position: fixed;
-                    right: 50px;
-                    bottom: 50px;
-                    background-color: #263238;
-                    color: white;
-
-                    :hover {
-                        background-color: #455a64;
-                    }
-                `}
-                onClick={onFabClick}
-            >
-                <AddIcon />
-            </Fab>
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }

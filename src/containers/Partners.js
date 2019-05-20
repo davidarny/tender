@@ -7,14 +7,13 @@ import { observer } from "mobx-react-lite";
 import IconButton from "@material-ui/core/IconButton";
 import MoreIcon from "@material-ui/icons/MoreHoriz";
 import Layout from "components/Layout";
+import FixedFab from "components/FixedFab";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import { Link, navigate } from "@reach/router";
 import { BASE_PATH, StoreContext } from "context";
 import { useContext } from "react";
@@ -76,22 +75,7 @@ function Partners() {
                         </Table>
                     </Paper>
                 </Grid>
-                <Fab
-                    css={css`
-                        position: fixed;
-                        right: 50px;
-                        bottom: 50px;
-                        background-color: #263238;
-                        color: white;
-
-                        :hover {
-                            background-color: #455a64;
-                        }
-                    `}
-                    onClick={onFabClick}
-                >
-                    <AddIcon />
-                </Fab>
+                <FixedFab onClick={onFabClick} />
             </Grid>
         </Layout>
     );

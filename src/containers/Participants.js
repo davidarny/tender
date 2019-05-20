@@ -10,8 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
+import FixedFab from "components/FixedFab";
 import Typography from "@material-ui/core/Typography";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import LinkTableCell from "components/table/LinkTableCell";
@@ -80,21 +79,7 @@ function Participants() {
                         </Table>
                     </Paper>
                 </Grid>
-                <Fab
-                    css={css`
-                        position: fixed;
-                        right: 50px;
-                        bottom: 50px;
-                        background-color: #263238;
-                        color: white;
-
-                        :hover {
-                            background-color: #455a64;
-                        }
-                    `}
-                >
-                    <AddIcon />
-                </Fab>
+                <FixedFab />
             </Grid>
         </Layout>
     );
