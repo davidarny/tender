@@ -36,7 +36,7 @@ export default function PartnerProfile({ id }) {
         }
     }, [id, store.partner]);
 
-    function onTabChange(event, index) {
+    function onTabChange(_, index) {
         setTabIndex(index);
     }
 

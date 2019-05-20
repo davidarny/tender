@@ -16,8 +16,18 @@ import Typography from "@material-ui/core/Typography";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
+import { useContext } from "react";
+import { StoreContext, BASE_PATH } from "context";
+import { GET_PARTNER_BY_ID } from "actions/partner";
 
 function Participants() {
+    const store = useContext(StoreContext);
+    const types = {
+        personal: "Личный",
+        corporate: "Корпоративный",
+        family: "Семейный",
+    };
+
     return (
         <Layout>
             <Grid container>
@@ -49,36 +59,24 @@ function Participants() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <TableRow>
-                                    <LinkTableCell>Иванов Иван Иванович</LinkTableCell>
-                                    <TableCell>АО Альфа-Банк</TableCell>
-                                    <TableCell>Личный</TableCell>
-                                    <TableCellMoreIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <LinkTableCell>Мельников Рустам Фахитович</LinkTableCell>
-                                    <TableCell>ОАО Газпром</TableCell>
-                                    <TableCell>Корпоративный</TableCell>
-                                    <TableCellMoreIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <LinkTableCell>Меньшиков Владимир Александрович</LinkTableCell>
-                                    <TableCell>ООО "Омега-Софт"</TableCell>
-                                    <TableCell>Личный</TableCell>
-                                    <TableCellMoreIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <LinkTableCell>Дюжев Алексей Станиславович</LinkTableCell>
-                                    <TableCell>АО Альфа-Банк</TableCell>
-                                    <TableCell>Корпоративный</TableCell>
-                                    <TableCellMoreIcon />
-                                </TableRow>
-                                <TableRow>
-                                    <LinkTableCell>Лер Максим Евгеньевич</LinkTableCell>
-                                    <TableCell>АО Альфа-Банк</TableCell>
-                                    <TableCell>Семейный</TableCell>
-                                    <TableCellMoreIcon />
-                                </TableRow>
+                                {store.participant.participants.map(participant => {
+                                    const partner = store.partner[GET_PARTNER_BY_ID]({
+                                        id: participant.partner,
+                                    });
+                                    console.log(participant.partner);
+                                    return (
+                                        <TableRow key={participant.id}>
+                                            <LinkTableCell
+                                                to={BASE_PATH + `/participants/${partner.id}`}
+                                            >
+                                                {participant.fullName}
+                                            </LinkTableCell>
+                                            <TableCell>{partner.title}</TableCell>
+                                            <TableCell>{types[participant.type]}</TableCell>
+                                            <TableCellMoreIcon />
+                                        </TableRow>
+                                    );
+                                })}
                             </TableBody>
                         </Table>
                     </Paper>

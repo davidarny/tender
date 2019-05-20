@@ -5,7 +5,6 @@ import shortid from "shortid";
 import { getParticipantPayload, getPartnerPayload } from "utils";
 import ParticipantStore from "models/Participant";
 import PartnerStore from "models/Partner";
-import first from "lodash/first";
 import { types } from "mobx-state-tree";
 
 const expect = chai.expect;
@@ -27,24 +26,14 @@ describe("participant model", () => {
     });
 
     it("should handle ADD_PARTICIPANT and GET_PARTICIPANT_BY_ID", () => {
-        store.partner[ADD_PARTNER](getPartnerPayload());
-        const partnerId = first(store.partner.partners).id;
-
+        const partnerPayload = getPartnerPayload();
+        const { id: partnerId } = store.partner[ADD_PARTNER](partnerPayload);
         const participantPayload = getParticipantPayload(partnerId);
-        store.participant[ADD_PARTICIPANT](participantPayload);
-
-        const participantId = first(store.participant.participants).id;
+        const { id: participantId } = store.participant[ADD_PARTICIPANT](participantPayload);
         store.partner[ADD_PARTICIPANT_TO_PARTNER]({ id: partnerId, participant: participantId });
-
         const actual = store.participant[GET_PARTICIPANT_BY_ID]({ id: participantId });
-
-        expect(actual)
-            .to.have.property("id")
-            .to.be.a("string");
-        expect(actual.partner)
-            .to.be.an("object")
-            .to.have.property("id")
-            .to.be.a("string");
+        expect(actual.id).to.equal(participantId);
+        expect(actual.partner).to.equal(partnerId);
     });
 
     it("should get undefined if GET_PARTNER_BY_ID on empty array", () => {

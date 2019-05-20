@@ -9,20 +9,23 @@ import Drawer from "components/Drawer";
 import PrivateRoute from "components/PrivateRoute";
 import { StoreContext, BASE_PATH } from "context";
 import { TOGGLE_DRAWER, LOG_OUT } from "actions/ui";
-import { ADD_PARTNER } from "actions/partner";
+import { ADD_PARTNER, ADD_PARTICIPANT_TO_PARTNER } from "actions/partner";
 import { ADD_DEAL } from "actions/deal";
 import { observer } from "mobx-react-lite";
 import Loadable from "react-loadable";
 import Loading from "components/Loading";
 import Grid from "@material-ui/core/Grid";
-import { getPartnerPayload, getDealPayload } from "utils";
+import { getPartnerPayload, getDealPayload, getParticipantPayload } from "utils";
 import moment from "moment";
 import "moment/locale/ru";
 import cloneDeep from "lodash/cloneDeep";
+import find from "lodash/find";
+import { ADD_PARTICIPANT } from "actions/participant";
 
 // stub data
 import partners from "data/partner";
 import deals from "data/deal";
+import participants from "data/participant";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -236,21 +239,39 @@ function App() {
 function initStubData(store) {
     if (store.ui.isLoggedIn) {
         partners.forEach(partner => {
-            store.partner[ADD_PARTNER]({ ...getPartnerPayload(), ...cloneDeep(partner) });
+            const partnerPayload = {
+                ...getPartnerPayload(),
+                ...cloneDeep(partner),
+            };
+            store.partner[ADD_PARTNER](partnerPayload);
         });
 
         deals.forEach(deal => {
-            const payload = {
+            const dealPayload = {
                 ...getDealPayload(),
                 ...cloneDeep(deal),
             };
             if (deal.activePeriod.from) {
-                payload.activePeriod.from = moment(payload.activePeriod.from).toDate();
+                dealPayload.activePeriod.from = moment(dealPayload.activePeriod.from).toDate();
             }
             if (deal.activePeriod.to) {
-                payload.activePeriod.to = moment(payload.activePeriod.to).toDate();
+                dealPayload.activePeriod.to = moment(dealPayload.activePeriod.to).toDate();
             }
-            store.deal[ADD_DEAL](payload);
+            store.deal[ADD_DEAL](dealPayload);
+        });
+
+        participants.forEach(participant => {
+            const partner = find(store.partner.partners, { title: participant.partner });
+            const participantPayload = {
+                ...getParticipantPayload(),
+                ...cloneDeep(participant),
+                partner: partner.id,
+            };
+            const { id } = store.participant[ADD_PARTICIPANT](participantPayload);
+            store.partner[ADD_PARTICIPANT_TO_PARTNER]({
+                id: partner.id,
+                participant: id,
+            });
         });
     }
 }

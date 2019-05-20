@@ -39,7 +39,9 @@ const DealStore = types
     })
     .actions(self => ({
         [ADD_DEAL](deal) {
-            self.deals.push({ id: shortid(), ...deal });
+            const payload = { id: shortid(), ...deal };
+            self.deals.push(payload);
+            return payload;
         },
 
         [GET_DEAL_BY_ID]({ id }) {
