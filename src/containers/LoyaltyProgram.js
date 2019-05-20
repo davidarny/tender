@@ -52,24 +52,24 @@ function Catalog() {
                 </Tabs>
             </AppBar>
             {tabIndex === 0 && (
-                <TabContainer>
-                    <BaseRoulesTable />
-                </TabContainer>
+                <TabsContainer>
+                    <BaseRolesTable />
+                </TabsContainer>
             )}
             {tabIndex === 1 && (
-                <TabContainer>
-                    <ExtraRoulesTable />
-                </TabContainer>
+                <TabsContainer>
+                    <ExtraRolesTable />
+                </TabsContainer>
             )}
         </Layout>
     );
 }
 
-function TabContainer(props) {
+function TabsContainer(props) {
     return <Typography component="div">{props.children}</Typography>;
 }
 
-function BaseRoulesTable() {
+function BaseRolesTable() {
     function onFabClick() {
         navigate(BASE_PATH + "loyality/add-base");
     }
@@ -150,7 +150,7 @@ function BaseRoulesTable() {
     );
 }
 
-function ExtraRoulesTable() {
+function ExtraRolesTable() {
     function onFabClick() {
         navigate(BASE_PATH + "loyality/add-extra");
     }
