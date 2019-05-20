@@ -18,10 +18,11 @@ import IconButton from "@material-ui/core/IconButton";
 import { Link } from "@reach/router";
 import Tab from "@material-ui/core/Tab";
 import { useEffect, useContext, useState } from "react";
-import { StoreContext } from "context";
+import { StoreContext, BASE_PATH } from "context";
 import get from "lodash/get";
 import { GET_PARTNER_BY_ID } from "actions/partner";
 import PropTypes from "prop-types";
+import moment from "moment";
 
 export default function PartnerProfile({ id }) {
     const store = useContext(StoreContext);
@@ -113,39 +114,94 @@ export default function PartnerProfile({ id }) {
                                         <TableBody>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
-                                                <ParticipantsTableCell>
-                                                    Иванов Иван Иванович
-                                                </ParticipantsTableCell>
+                                                <LinkTableCell>Иванов Иван Иванович</LinkTableCell>
                                                 <TableCellIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
-                                                <ParticipantsTableCell>
+                                                <LinkTableCell>
                                                     Мельников Рустам Фахитович
-                                                </ParticipantsTableCell>
+                                                </LinkTableCell>
                                                 <TableCellIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
-                                                <ParticipantsTableCell>
+                                                <LinkTableCell>
                                                     Меньшиков Владимир Александрович
-                                                </ParticipantsTableCell>
+                                                </LinkTableCell>
                                                 <TableCellIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
-                                                <ParticipantsTableCell>
+                                                <LinkTableCell>
                                                     Дюжев Алексей Станиславович
-                                                </ParticipantsTableCell>
+                                                </LinkTableCell>
                                                 <TableCellIcon />
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>1545673513</TableCell>
-                                                <ParticipantsTableCell>
-                                                    Лер Максим Евгеньевич
-                                                </ParticipantsTableCell>
+                                                <LinkTableCell>Лер Максим Евгеньевич</LinkTableCell>
                                                 <TableCellIcon />
                                             </TableRow>
+                                        </TableBody>
+                                    </Table>
+                                )}
+                                {tabIndex === 2 && (
+                                    <Table>
+                                        <TableHead
+                                            css={css`
+                                                background-color: #b0bec5;
+                                            `}
+                                        >
+                                            <TableRow>
+                                                <HeaderTableCell>Название</HeaderTableCell>
+                                                <HeaderTableCell>Срок действия</HeaderTableCell>
+                                                <HeaderTableCell align="right" />
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {store.deal.deals.map(deal => {
+                                                const { from, to } = deal.activePeriod;
+                                                return (
+                                                    <TableRow key={deal.id}>
+                                                        <LinkTableCell
+                                                            to={BASE_PATH + `/deals/${deal.id}`}
+                                                        >
+                                                            {deal.title}
+                                                        </LinkTableCell>
+                                                        {from && !to && (
+                                                            <TableCell>
+                                                                от{" "}
+                                                                {moment(from).format(
+                                                                    "DD MMMM YYYY"
+                                                                )}
+                                                            </TableCell>
+                                                        )}
+                                                        {!from && to && (
+                                                            <TableCell>
+                                                                до{" "}
+                                                                {moment(to).format("DD MMMM YYYY")}
+                                                            </TableCell>
+                                                        )}
+                                                        {from && to && (
+                                                            <TableCell>
+                                                                <span>
+                                                                    {moment(from).format(
+                                                                        "DD MMMM YYYY"
+                                                                    )}
+                                                                </span>
+                                                                <span> - </span>
+                                                                <span>
+                                                                    {moment(to).format(
+                                                                        "DD MMMM YYYY"
+                                                                    )}
+                                                                </span>
+                                                            </TableCell>
+                                                        )}
+                                                        <TableCellIcon />
+                                                    </TableRow>
+                                                );
+                                            })}
                                         </TableBody>
                                     </Table>
                                 )}
@@ -171,7 +227,7 @@ function HeaderTableCell({ children }) {
     );
 }
 
-function ParticipantsTableCell({ children }) {
+function LinkTableCell({ to = "#", children }) {
     return (
         <TableCell>
             <Link
@@ -179,13 +235,17 @@ function ParticipantsTableCell({ children }) {
                     color: black;
                     font-weight: 500;
                 `}
-                to="#"
+                to={to}
             >
                 {children}
             </Link>
         </TableCell>
     );
 }
+
+LinkTableCell.propTypes = {
+    to: PropTypes.string,
+};
 
 function TableCellIcon() {
     return (
