@@ -60,7 +60,7 @@ function Catalog() {
 
 function RoutesInfo() {
     const store = useContext(StoreContext);
-    const routers = store.router.routers
+    const routs = store.rout.routs
     const statusNames = {
         1: 'Действует',
         2: 'Приостановлен'
@@ -77,9 +77,9 @@ function RoutesInfo() {
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        {routers && routers.length > 0 &&
+                        {routs && routs.length > 0 &&
                         <TableBody>
-                            {routers.map(rout => (
+                            {routs.map(rout => (
                                 <TableRow key={rout.id}>
                                     <LinkTableCell to={BASE_PATH + `/routes/${rout.id}`}>
                                         {rout.stationFrom} - {rout.stationTo}

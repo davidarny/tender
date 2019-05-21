@@ -1,7 +1,7 @@
 import { types } from "mobx-state-tree";
-import { ADD_ROUT } from "actions/routers";
+import { ADD_ROUT } from "actions/rout";
 
-const Router = types.model({
+const Rout = types.model({
     id: types.number,
 
     // Станция отправления
@@ -14,16 +14,16 @@ const Router = types.model({
     status: types.number,
 });
 
-const RoutersStore = types
+const RoutsStore = types
     .model({
-        routers: types.array(Router),
+        routs: types.array(Rout),
     })
     .actions(self => ({
         [ADD_ROUT](rout) {
-            const payload = { id: self.routers.length, ...rout };
-            self.routers.push(payload);
+            const payload = { id: self.routs.length, ...rout };
+            self.routs.push(payload);
             return payload;
         },
     }));
 
-export default RoutersStore;
+export default RoutsStore;
