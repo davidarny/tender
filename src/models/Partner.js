@@ -1,5 +1,10 @@
 import { types } from "mobx-state-tree";
-import { ADD_PARTNER, GET_PARTNER_BY_ID, ADD_PARTICIPANT_TO_PARTNER } from "actions/partner";
+import {
+    ADD_PARTNER,
+    GET_PARTNER_BY_ID,
+    ADD_PARTICIPANT_TO_PARTNER,
+    GET_PARTNER_BY_TITLE,
+} from "actions/partner";
 import shortid from "shortid";
 import find from "lodash/find";
 
@@ -14,14 +19,11 @@ const Partner = types.model({
 
     email: types.maybe(types.string),
 
-    // Идентификационные данные
-    idData: types.model({
-        // ИНН
-        INN: types.string,
+    // ИНН
+    INN: types.string,
 
-        // ОГРН
-        ORGN: types.string,
-    }),
+    // ОГРН
+    ORGN: types.string,
 
     // Язык коммуникации
     communicationLanguage: types.string,
@@ -49,6 +51,10 @@ const PartnerStore = types
 
         [GET_PARTNER_BY_ID]({ id }) {
             return find(self.partners, { id });
+        },
+
+        [GET_PARTNER_BY_TITLE]({ title }) {
+            return find(self.partners, { title });
         },
 
         [ADD_PARTICIPANT_TO_PARTNER]({ id, participant }) {

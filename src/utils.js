@@ -1,48 +1,38 @@
-import { getSnapshot } from "mobx-state-tree";
 import shortid from "shortid";
-import UserStore from "models/User";
-import UiStore from "models/UI";
-import PartnerStore from "models/Partner";
-import DealStore from "models/Deal";
+import random from "lodash/random";
 
 export function getUserPayload() {
     return {
-        appeal: "1053600591197",
         email: "john.doe@mail.com",
         phone: "+12345678910",
         password: shortid(),
-        fullName: "John Doe",
+        fullName: "Иванов Иван",
         birthDate: new Date(),
         preferredCommunicationMethod: "email",
-        idDocument: {
-            documentType: "passport",
-            documentId: "3664069397",
-        },
         consentToCommunication: true,
     };
 }
 
-export function getPartnerPayload() {
+export function getPartnerPayload(participants = []) {
     return {
-        title: "John Doe inc.",
-        phone: "john.doe@mail.com",
-        email: "+12345678910",
-        idData: {
-            INN: "3664069397",
-            ORGN: "1053600591197",
-        },
+        title: 'АО "Альфа-Банк"',
+        phone: "+12345678910",
+        email: "john.doe@mail.com",
+        INN: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
-        manager: "Иванов. И.И.",
-        participants: [],
+        manager: "Иванов Иван",
+        participants,
     };
 }
 
 export function getDealPayload() {
     return {
-        title: "Magic Deal",
-        subtitle: "Subtitle of Magic Deal",
-        text: "Long description of Magic Deal",
+        title: "Летний",
+        subtitle: "Театральный сезон в Александринском театре!",
+        text:
+            "Только для участников программы РЖД Бонус 10% скидки на репертуарные спектакли в мае по промо-коду RZHD10 при онлайн-покупке на сайте кинотеатра",
         activePeriod: {
             from: new Date(),
             to: new Date(),
@@ -55,15 +45,18 @@ export function getDealPayload() {
 
 export function getParticipantPayload(partner) {
     return {
-        number: "1053600591197",
-        fullName: "John Doe",
+        number: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        fullName: "Иванов Иван",
         partner,
-        type: "personal",
+        accountType: "personal",
         email: "john.doe@mail.com",
         phone: "+12345678910",
         birthDate: new Date(),
         citizenship: "RU",
-        passport: "8811090121",
+        passport: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        participantType: "individual",
+        INN: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
     };
 }
 
@@ -85,29 +78,4 @@ export function getExtraLoyaltyProgramPayload() {
         service: "vip",
         terms: "15 янв - 30 мар, ежегодно",
     };
-}
-
-export function getUserStoreSnapshot(state, action) {
-    return getStoreSnapshot(UserStore, state, action);
-}
-
-export function getUiStoreSnapshot(state, action) {
-    return getStoreSnapshot(UiStore, state, action);
-}
-
-export function getPartnerStoreSnapshot(state, action) {
-    return getStoreSnapshot(PartnerStore, state, action);
-}
-
-export function getDealStoreSnapshot(state, action) {
-    return getStoreSnapshot(DealStore, state, action);
-}
-
-function getStoreSnapshot(Store, state, action) {
-    let result = {};
-    const store = Store.create(state);
-    if (action.type) {
-        result = store[action.type](action.payload);
-    }
-    return { ...getSnapshot(store), result };
 }

@@ -97,6 +97,10 @@ const AsyncAccountProfile = Loadable({
     loader: () => import("containers/AccountProfile"),
     loading: Loading,
 });
+const AsyncAddParticipant = Loadable({
+    loader: () => import("containers/AddParticipant"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
@@ -208,6 +212,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="participants"
                                 render={() => <AsyncParticipants />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="participants/add"
+                                render={() => <AsyncAddParticipant />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}

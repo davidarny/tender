@@ -13,9 +13,6 @@ const User = types.model({
 
     password: types.maybe(types.string),
 
-    // Обращение
-    appeal: types.string,
-
     // ФИО, Имя (рус), Фамилия (рус)
     fullName: types.string,
 
@@ -24,15 +21,6 @@ const User = types.model({
 
     // Предпочтительный способ связи
     preferredCommunicationMethod: types.union(types.literal("email"), types.literal("phone")),
-
-    // Документы удостоверяющие личность
-    idDocument: types.model({
-        // Тип документа
-        documentType: types.string,
-
-        // Номер документа
-        documentId: types.string,
-    }),
 
     // Согласие на коммуникации
     consentToCommunication: types.boolean,
