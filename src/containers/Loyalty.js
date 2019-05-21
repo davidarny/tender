@@ -24,7 +24,7 @@ import StyledTableHead from "components/table/StyledTableHead";
 import FixedFab from "components/FixedFab";
 import PropTypes from "prop-types";
 
-function Catalog() {
+function Loyality() {
     const [tabIndex, setTabIndex] = useState(0);
 
     function onTabChange(_, index) {
@@ -45,7 +45,6 @@ function Catalog() {
                     Программа лояльности
                 </Typography>
             </Grid>
-
             <AppBar position="static">
                 <Tabs value={tabIndex} onChange={onTabChange}>
                     <Tab label="Базовые правила" />
@@ -156,4 +155,4 @@ StatusTableCell.propTypes = {
     active: PropTypes.bool,
 };
 
-export default observer(Catalog);
+export default observer(Loyality);

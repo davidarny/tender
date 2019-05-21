@@ -58,7 +58,7 @@ const AsyncCatalog = Loadable({
     loading: Loading,
 });
 const AsyncLoyaltyProgram = Loadable({
-    loader: () => import("containers/LoyaltyProgram"),
+    loader: () => import("containers/Loyalty"),
     loading: Loading,
 });
 const AsyncAddBaseLoyaltyProgram = Loadable({

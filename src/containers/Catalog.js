@@ -43,7 +43,6 @@ function Catalog() {
                     Каталог
                 </Typography>
             </Grid>
-
             <AppBar position="static">
                 <Tabs value={tabIndex} onChange={onTabChange}>
                     <Tab label="Маршруты следования" />
