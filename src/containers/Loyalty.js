@@ -9,7 +9,6 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import FixedFab from "components/FixedFab";
 import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -18,12 +17,17 @@ import Typography from "@material-ui/core/Typography";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
-import { BASE_PATH } from "context";
+import { BASE_PATH, StoreContext } from "context";
+import { useContext } from "react";
 import { navigate } from "@reach/router";
 import StyledTableHead from "components/table/StyledTableHead";
+import FixedFab from "components/FixedFab";
+import PropTypes from "prop-types";
 import shortid from "shortid";
+import { GET_LOYALTY_BY_TYPE } from "actions/loyalty";
 
-function Catalog() {
+function Loyalty() {
+    const store = useContext(StoreContext);
     const [tabIndex, setTabIndex] = useState(0);
 
     function onTabChange(_, index) {
@@ -44,22 +48,38 @@ function Catalog() {
                     Программа лояльности
                 </Typography>
             </Grid>
-
             <AppBar position="static">
                 <Tabs value={tabIndex} onChange={onTabChange}>
                     <Tab label="Базовые правила" />
                     <Tab label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && <BaseRolesInfo />}
-            {tabIndex === 1 && <ExtraRolesInfo />}
+            {tabIndex === 0 && (
+                <BaseRolesInfo loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "base" })} />
+            )}
+            {tabIndex === 1 && (
+                <ExtraRolesInfo loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "extra" })} />
+            )}
         </Layout>
     );
 }
 
-function BaseRolesInfo() {
+function BaseRolesInfo({ loyalties }) {
+    const transferTypeNamesMap = {
+        withdraw: "Списание",
+        income: "Начисление",
+    };
+    const conditionNamesMap = {
+        cost: "Стоимость",
+        distance: "Расстояние",
+    };
+    const statusNamesMap = {
+        active: "Активно",
+        nonActive: "Не активно",
+    };
+
     function onFabClick() {
-        navigate(BASE_PATH + "loyality/add-base");
+        navigate(BASE_PATH + "/loyalty/add/base");
     }
 
     return (
@@ -77,33 +97,21 @@ function BaseRolesInfo() {
                             </TableRow>
                         </StyledTableHead>
                         <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Стандартное правило
-                                </LinkTableCell>
-                                <TableCell>Списание</TableCell>
-                                <TableCell>Расстояние</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Дальние поездки
-                                </LinkTableCell>
-                                <TableCell>Начисление</TableCell>
-                                <TableCell>Стоимость</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Стандартное правлило
-                                </LinkTableCell>
-                                <TableCell>Начисление</TableCell>
-                                <TableCell>Стоимость</TableCell>
-                                <TableCell>Не активно</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
+                            {loyalties.map(loyalty => (
+                                <TableRow key={loyalty.id}>
+                                    <LinkTableCell to={BASE_PATH + `/loyalty/${shortid()}`}>
+                                        {loyalty.title}
+                                    </LinkTableCell>
+                                    <TableCell>
+                                        {transferTypeNamesMap[loyalty.transferType]}
+                                    </TableCell>
+                                    <TableCell>{conditionNamesMap[loyalty.condition]}</TableCell>
+                                    <StatusTableCell active={loyalty.status === "active"}>
+                                        {statusNamesMap[loyalty.status]}
+                                    </StatusTableCell>
+                                    <TableCellMoreIcon />
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </Paper>
@@ -113,9 +121,18 @@ function BaseRolesInfo() {
     );
 }
 
-function ExtraRolesInfo() {
+function ExtraRolesInfo({ loyalties: loyalty }) {
+    const transferTypeNamesMap = {
+        withdraw: "Списание",
+        income: "Начисление",
+    };
+    const statusNamesMap = {
+        active: "Активно",
+        nonActive: "Не активно",
+    };
+
     function onFabClick() {
-        navigate(BASE_PATH + "loyality/add-extra");
+        navigate(BASE_PATH + "/loyalty/add/extra");
     }
 
     return (
@@ -132,22 +149,20 @@ function ExtraRolesInfo() {
                             </TableRow>
                         </StyledTableHead>
                         <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Тестовое правило
-                                </LinkTableCell>
-                                <TableCell>Списание</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Поездки в столицу
-                                </LinkTableCell>
-                                <TableCell>Начисление</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
+                            {loyalty.map(loyalty => (
+                                <TableRow key={loyalty.id}>
+                                    <LinkTableCell to={BASE_PATH + `/loyalty/${shortid()}`}>
+                                        {loyalty.title}
+                                    </LinkTableCell>
+                                    <TableCell>
+                                        {transferTypeNamesMap[loyalty.transferType]}
+                                    </TableCell>
+                                    <StatusTableCell active={loyalty.status === "active"}>
+                                        {statusNamesMap[loyalty.status]}
+                                    </StatusTableCell>
+                                    <StatusTableCell />
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </Paper>
@@ -157,11 +172,11 @@ function ExtraRolesInfo() {
     );
 }
 
-function ActiveTableCell({ children }) {
+function StatusTableCell({ active = false, children }) {
     return (
         <TableCell
             css={css`
-                color: #4caf50;
+                color: ${active ? "#4CAF50" : "black"};
             `}
         >
             {children}
@@ -169,4 +184,8 @@ function ActiveTableCell({ children }) {
     );
 }
 
-export default observer(Catalog);
+StatusTableCell.propTypes = {
+    active: PropTypes.bool,
+};
+
+export default observer(Loyalty);

@@ -15,17 +15,19 @@ import { observer } from "mobx-react-lite";
 import Loadable from "react-loadable";
 import Loading from "components/Loading";
 import Grid from "@material-ui/core/Grid";
-import { getPartnerPayload, getDealPayload, getParticipantPayload } from "utils";
+import { getPartnerPayload, getDealPayload, getParticipantPayload, getLoyaltyPayload } from "utils";
 import moment from "moment";
 import "moment/locale/ru";
 import cloneDeep from "lodash/cloneDeep";
 import find from "lodash/find";
 import { ADD_PARTICIPANT } from "actions/participant";
+import { ADD_LOYALTY } from "actions/loyalty";
 
 // stub data
 import partners from "data/partner";
 import deals from "data/deal";
 import participants from "data/participant";
+import loyalties from "data/loyalty";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -48,15 +50,11 @@ const AsyncCatalog = Loadable({
     loading: Loading,
 });
 const AsyncLoyaltyProgram = Loadable({
-    loader: () => import("containers/LoyaltyProgram"),
+    loader: () => import("containers/Loyalty"),
     loading: Loading,
 });
-const AsyncAddBaseLoyaltyProgram = Loadable({
-    loader: () => import("containers/AddBaseLoyaltyProgram"),
-    loading: Loading,
-});
-const AsyncAddExtraLoyaltyProgram = Loadable({
-    loader: () => import("containers/AddExtraLoyaltyProgram"),
+const AsyncAddLoyalty = Loadable({
+    loader: () => import("containers/AddLoyalty"),
     loading: Loading,
 });
 const AsyncSignUp = Loadable({
@@ -235,18 +233,13 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="loyality"
+                                path="loyalty"
                                 render={() => <AsyncLoyaltyProgram />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="loyality/add-base"
-                                render={() => <AsyncAddBaseLoyaltyProgram />}
-                            />
-                            <PrivateRoute
-                                isLoggedIn={store.ui.isLoggedIn}
-                                path="loyality/add-extra"
-                                render={() => <AsyncAddExtraLoyaltyProgram />}
+                                path="loyalty/add/:type"
+                                render={props => <AsyncAddLoyalty {...props} />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
@@ -299,6 +292,14 @@ function initStubData(store) {
                 id: partner.id,
                 participant: id,
             });
+        });
+
+        loyalties.forEach(loyalty => {
+            const payload = {
+                ...getLoyaltyPayload(loyalty.loyaltyType),
+                ...cloneDeep(loyalty),
+            };
+            store.loyalty[ADD_LOYALTY](payload);
         });
     }
 }

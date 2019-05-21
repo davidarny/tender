@@ -59,3 +59,17 @@ export function getParticipantPayload(partner) {
         ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
     };
 }
+
+export function getLoyaltyPayload(type) {
+    return {
+        transferType: "income",
+        condition: "distance",
+        property: "property",
+        trains: "trains",
+        startStation: "moscow",
+        endStation: "kazan",
+        service: "vip",
+        terms: "terms",
+        loyaltyType: type,
+    };
+}
