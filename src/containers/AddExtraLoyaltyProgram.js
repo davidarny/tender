@@ -35,7 +35,7 @@ export default function AddExtraLoyaltyProgram() {
     function onTypeChange(event) {
         setFormValues({ ...form, type: event.target.value });
         console.log(
-            "%AddBaseLoyaltyProgram points type change",
+            "%сAddExtraLoyaltyProgram points type change",
             "color: #2E7D32",
             event.target.value
         );
