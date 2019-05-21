@@ -125,13 +125,13 @@ export default function AddExtraLoyaltyProgram() {
                                     />
                                 </FormControl>
                                 <FormControl required fullWidth margin="normal">
-                                    <InputLabel shrink htmlFor="type-label-placeholder">
+                                    <InputLabel shrink htmlFor="type">
                                         Тип
                                     </InputLabel>
                                     <Select
                                         value={form.type}
                                         onChange={onTypeChange}
-                                        input={<Input name="type" id="type-label-placeholder" />}
+                                        input={<Input name="type" id="type" />}
                                         displayEmpty
                                         name="type"
                                     >
@@ -140,18 +140,13 @@ export default function AddExtraLoyaltyProgram() {
                                     </Select>
                                 </FormControl>
                                 <FormControl required fullWidth margin="normal">
-                                    <InputLabel shrink htmlFor="stationStart-label-placeholder">
+                                    <InputLabel shrink htmlFor="stationStart">
                                         Начальная станция
                                     </InputLabel>
                                     <Select
                                         value={form.stationStart}
                                         onChange={onStationStartChange}
-                                        input={
-                                            <Input
-                                                name="stationStart"
-                                                id="stationStart-label-placeholder"
-                                            />
-                                        }
+                                        input={<Input name="stationStart" id="stationStart" />}
                                         displayEmpty
                                         name="stationStart"
                                     >
@@ -160,18 +155,13 @@ export default function AddExtraLoyaltyProgram() {
                                     </Select>
                                 </FormControl>
                                 <FormControl required fullWidth margin="normal">
-                                    <InputLabel shrink htmlFor="stationEnd-label-placeholder">
+                                    <InputLabel shrink htmlFor="stationEnd">
                                         Конечная станция
                                     </InputLabel>
                                     <Select
                                         value={form.stationEnd}
                                         onChange={onStationEndChange}
-                                        input={
-                                            <Input
-                                                name="stationEnd"
-                                                id="stationEnd-label-placeholder"
-                                            />
-                                        }
+                                        input={<Input name="stationEnd" id="stationEnd" />}
                                         displayEmpty
                                         name="stationEnd"
                                     >
@@ -180,13 +170,13 @@ export default function AddExtraLoyaltyProgram() {
                                     </Select>
                                 </FormControl>
                                 <FormControl required fullWidth margin="normal">
-                                    <InputLabel shrink htmlFor="train-label-placeholder">
+                                    <InputLabel shrink htmlFor="train">
                                         Номер поезда
                                     </InputLabel>
                                     <Select
                                         value={form.train}
                                         onChange={onTrainChange}
-                                        input={<Input name="train" id="train-label-placeholder" />}
+                                        input={<Input name="train" id="train" />}
                                         displayEmpty
                                         name="train"
                                     >
@@ -195,15 +185,13 @@ export default function AddExtraLoyaltyProgram() {
                                     </Select>
                                 </FormControl>
                                 <FormControl required fullWidth margin="normal">
-                                    <InputLabel shrink htmlFor="service-label-placeholder">
+                                    <InputLabel shrink htmlFor="service">
                                         Класс обслуживания
                                     </InputLabel>
                                     <Select
                                         value={form.service}
                                         onChange={onServiceChange}
-                                        input={
-                                            <Input name="service" id="service-label-placeholder" />
-                                        }
+                                        input={<Input name="service" id="service" />}
                                         displayEmpty
                                         name="service"
                                     >

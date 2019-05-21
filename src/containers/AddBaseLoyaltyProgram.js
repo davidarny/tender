@@ -124,13 +124,13 @@ export default function AddBaseLoyaltyProgram() {
                                 />
                             </FormControl>
                             <FormControl required fullWidth margin="normal">
-                                <InputLabel shrink htmlFor="type-label-placeholder">
+                                <InputLabel shrink htmlFor="type">
                                     Тип
                                 </InputLabel>
                                 <Select
                                     value={form.type}
                                     onChange={onTypeChange}
-                                    input={<Input name="type" id="type-label-placeholder" />}
+                                    input={<Input name="type" id="type" />}
                                     displayEmpty
                                     name="type"
                                 >
@@ -139,15 +139,13 @@ export default function AddBaseLoyaltyProgram() {
                                 </Select>
                             </FormControl>
                             <FormControl required fullWidth margin="normal">
-                                <InputLabel shrink htmlFor="condition-label-placeholder">
+                                <InputLabel shrink htmlFor="condition">
                                     Условие
                                 </InputLabel>
                                 <Select
                                     value={form.condition}
                                     onChange={onConditionChange}
-                                    input={
-                                        <Input name="condition" id="condition-label-placeholder" />
-                                    }
+                                    input={<Input name="condition" id="condition" />}
                                     displayEmpty
                                     name="condition"
                                 >
@@ -156,15 +154,13 @@ export default function AddBaseLoyaltyProgram() {
                                 </Select>
                             </FormControl>
                             <FormControl required fullWidth margin="normal">
-                                <InputLabel shrink htmlFor="property-label-placeholder">
+                                <InputLabel shrink htmlFor="property">
                                     Свойство
                                 </InputLabel>
                                 <Select
                                     value={form.property}
                                     onChange={onPropertyChange}
-                                    input={
-                                        <Input name="property" id="property-label-placeholder" />
-                                    }
+                                    input={<Input name="property" id="property" />}
                                     displayEmpty
                                     name="property"
                                 >
@@ -190,13 +186,13 @@ export default function AddBaseLoyaltyProgram() {
                                 />
                             </FormControl>
                             <FormControl required fullWidth margin="normal">
-                                <InputLabel shrink htmlFor="train-label-placeholder">
+                                <InputLabel shrink htmlFor="train">
                                     Список поездов
                                 </InputLabel>
                                 <Select
                                     value={form.train}
                                     onChange={onTrainChange}
-                                    input={<Input name="train" id="train-label-placeholder" />}
+                                    input={<Input name="train" id="train" />}
                                     displayEmpty
                                     name="train"
                                 >
