@@ -1,1 +1,0 @@
-export const ADD_EXTRA_LOYALTY = "ADD_EXTRA_LOYALTY";

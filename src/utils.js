@@ -60,22 +60,16 @@ export function getParticipantPayload(partner) {
     };
 }
 
-export function getBaseLoyaltyProgramPayload() {
+export function getLoyaltyPayload(type) {
     return {
-        type: "Начисление баллов",
-        condition: "Расстояние",
-        property: "30 баллов за каждые 500 км",
-        trains: "116C, 858A, 032A-Лев Толстой",
-    };
-}
-
-export function getExtraLoyaltyProgramPayload() {
-    return {
-        type: "Начисление баллов",
-        stationStart: "Москва",
-        stationEnd: "Казань",
-        train: "Толстой",
+        transferType: "income",
+        condition: "distance",
+        property: "property",
+        trains: "trains",
+        startStation: "moscow",
+        endStation: "kazan",
         service: "vip",
-        terms: "15 янв - 30 мар, ежегодно",
+        terms: "terms",
+        loyaltyType: type,
     };
 }

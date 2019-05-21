@@ -16,7 +16,7 @@ const UiStore = types
             { title: "Акции", url: "/deals" },
             { title: "Каталог", url: "/catalog" },
             { title: "Статистика", url: "/statistic" },
-            { title: "Программа лояльности", url: "/loyality" },
+            { title: "Программа лояльности", url: "/loyalty" },
         ]),
         isDrawerOpen: types.optional(types.boolean, false),
     })

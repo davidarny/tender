@@ -23,8 +23,11 @@ import { navigate } from "@reach/router";
 import StyledTableHead from "components/table/StyledTableHead";
 import FixedFab from "components/FixedFab";
 import PropTypes from "prop-types";
+import shortid from "shortid";
+import { GET_LOYALTY_BY_TYPE } from "actions/loyalty";
 
-function Loyality() {
+function Loyalty() {
+    const store = useContext(StoreContext);
     const [tabIndex, setTabIndex] = useState(0);
 
     function onTabChange(_, index) {
@@ -51,17 +54,32 @@ function Loyality() {
                     <Tab label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && <BaseRolesTable />}
-            {tabIndex === 1 && <ExtraRolesTable />}
+            {tabIndex === 0 && (
+                <BaseRolesInfo loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "base" })} />
+            )}
+            {tabIndex === 1 && (
+                <ExtraRolesInfo loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "extra" })} />
+            )}
         </Layout>
     );
 }
 
-function BaseRolesTable() {
-    const store = useContext(StoreContext);
+function BaseRolesInfo({ loyalties }) {
+    const transferTypeNamesMap = {
+        withdraw: "Списание",
+        income: "Начисление",
+    };
+    const conditionNamesMap = {
+        cost: "Стоимость",
+        distance: "Расстояние",
+    };
+    const statusNamesMap = {
+        active: "Активно",
+        nonActive: "Не активно",
+    };
 
     function onFabClick() {
-        navigate(BASE_PATH + "/loyality/add-base");
+        navigate(BASE_PATH + "/loyalty/add/base");
     }
 
     return (
@@ -79,13 +97,17 @@ function BaseRolesTable() {
                             </TableRow>
                         </StyledTableHead>
                         <TableBody>
-                            {store.baseLoyaltyProgram.programs.map(program => (
-                                <TableRow key={program.id}>
-                                    <LinkTableCell to="#">{program.title}</LinkTableCell>
-                                    <TableCell>{program.type}</TableCell>
-                                    <TableCell>{program.condition}</TableCell>
-                                    <StatusTableCell active={program.status === "Активно"}>
-                                        {program.status}
+                            {loyalties.map(loyalty => (
+                                <TableRow key={loyalty.id}>
+                                    <LinkTableCell to={BASE_PATH + `/loyalty/${shortid()}`}>
+                                        {loyalty.title}
+                                    </LinkTableCell>
+                                    <TableCell>
+                                        {transferTypeNamesMap[loyalty.transferType]}
+                                    </TableCell>
+                                    <TableCell>{conditionNamesMap[loyalty.condition]}</TableCell>
+                                    <StatusTableCell active={loyalty.status === "active"}>
+                                        {statusNamesMap[loyalty.status]}
                                     </StatusTableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
@@ -99,11 +121,18 @@ function BaseRolesTable() {
     );
 }
 
-function ExtraRolesTable() {
-    const store = useContext(StoreContext);
+function ExtraRolesInfo({ loyalties: loyalty }) {
+    const transferTypeNamesMap = {
+        withdraw: "Списание",
+        income: "Начисление",
+    };
+    const statusNamesMap = {
+        active: "Активно",
+        nonActive: "Не активно",
+    };
 
     function onFabClick() {
-        navigate(BASE_PATH + "/loyality/add-extra");
+        navigate(BASE_PATH + "/loyalty/add/extra");
     }
 
     return (
@@ -120,12 +149,16 @@ function ExtraRolesTable() {
                             </TableRow>
                         </StyledTableHead>
                         <TableBody>
-                            {store.extraLoyaltyProgram.programs.map(program => (
-                                <TableRow key={program.id}>
-                                    <LinkTableCell to="#">{program.title}</LinkTableCell>
-                                    <TableCell>{program.type}</TableCell>
-                                    <StatusTableCell active={program.status === "Активно"}>
-                                        {program.status}
+                            {loyalty.map(loyalty => (
+                                <TableRow key={loyalty.id}>
+                                    <LinkTableCell to={BASE_PATH + `/loyalty/${shortid()}`}>
+                                        {loyalty.title}
+                                    </LinkTableCell>
+                                    <TableCell>
+                                        {transferTypeNamesMap[loyalty.transferType]}
+                                    </TableCell>
+                                    <StatusTableCell active={loyalty.status === "active"}>
+                                        {statusNamesMap[loyalty.status]}
                                     </StatusTableCell>
                                     <StatusTableCell />
                                 </TableRow>
@@ -155,4 +188,4 @@ StatusTableCell.propTypes = {
     active: PropTypes.bool,
 };
 
-export default observer(Loyality);
+export default observer(Loyalty);

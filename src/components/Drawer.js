@@ -8,7 +8,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import HomeIcon from "@material-ui/icons/Home";
-import LoyalityIcon from "@material-ui/icons/Loyalty";
+import LoyaltyIcon from "@material-ui/icons/Loyalty";
 import PartnersIcon from "@material-ui/icons/People";
 import ParticipantsIcon from "@material-ui/icons/List";
 import CatalogIcon from "@material-ui/icons/LocalLibrary";
@@ -48,7 +48,7 @@ function Drawer({ items, isOpen = false, onToggle = noop }) {
         <DealIcon />,
         <CatalogIcon />,
         <StatisticIcon />,
-        <LoyalityIcon />,
+        <LoyaltyIcon />,
     ];
 
     return (
