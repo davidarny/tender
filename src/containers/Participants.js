@@ -18,6 +18,8 @@ import { useContext } from "react";
 import { StoreContext, BASE_PATH } from "context";
 import { GET_PARTNER_BY_ID } from "actions/partner";
 import StyledTableHead from "components/table/StyledTableHead";
+import { navigate } from "@reach/router";
+import get from "lodash/get";
 
 function Participants() {
     const store = useContext(StoreContext);
@@ -26,6 +28,10 @@ function Participants() {
         corporate: "Корпоративный",
         family: "Семейный",
     };
+
+    function onFabClick() {
+        navigate(BASE_PATH + "/participants/add");
+    }
 
     return (
         <Layout>
@@ -65,7 +71,7 @@ function Participants() {
                                             >
                                                 {participant.fullName}
                                             </LinkTableCell>
-                                            <TableCell>{partner.title}</TableCell>
+                                            <TableCell>{get(partner, "title")}</TableCell>
                                             <TableCell>{types[participant.type]}</TableCell>
                                             <TableCellMoreIcon />
                                         </TableRow>
@@ -75,7 +81,7 @@ function Participants() {
                         </Table>
                     </Paper>
                 </Grid>
-                <FixedFab />
+                <FixedFab onClick={onFabClick} />
             </Grid>
         </Layout>
     );

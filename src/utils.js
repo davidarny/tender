@@ -58,12 +58,15 @@ export function getParticipantPayload(partner) {
         number: "1053600591197",
         fullName: "John Doe",
         partner,
-        type: "personal",
+        accountType: "personal",
         email: "john.doe@mail.com",
         phone: "+12345678910",
         birthDate: new Date(),
         citizenship: "RU",
         passport: "8811090121",
+        participantType: "individual",
+        INN: "3664069397",
+        ORGN: "1053600591197",
     };
 }
 

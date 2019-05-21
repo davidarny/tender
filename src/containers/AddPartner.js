@@ -76,7 +76,7 @@ export default function AddPartner() {
     }
 
     function onFormSubmit(event) {
-        console.log("%AddPartner submit", "color: #2E7D32", form);
+        console.log("%cAddPartner submit", "color: #2E7D32", form);
         event.preventDefault();
         store.partner[ADD_PARTNER]({ ...getPartnerPayload(), ...form, manager: shortid() });
         navigate(BASE_PATH + "/partners");
