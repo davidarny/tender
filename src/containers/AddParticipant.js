@@ -117,8 +117,8 @@ export default function AddParticipant() {
                 >
                     <SignForm
                         noIcon
-                        title="Новый партнёр"
-                        button="ЗАРЕГИСТРИРОВАТЬ"
+                        title="Создание участника ПЛ"
+                        button="СОЗДАТЬ"
                         onSubmit={onFormSubmit}
                         controls={() => (
                             <Fragment>

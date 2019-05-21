@@ -26,10 +26,8 @@ export default function AddPartner() {
         title: undefined,
         phone: undefined,
         email: undefined,
-        idData: {
-            INN: undefined,
-            ORGN: undefined,
-        },
+        INN: undefined,
+        ORGN: undefined,
         communicationLanguage: "ru",
         preferredCommunicationMethod: "email",
         manager: undefined,
@@ -42,12 +40,12 @@ export default function AddPartner() {
     }
 
     function onINNChange(event) {
-        setFormValues({ ...form, idData: { ...form.idData, INN: event.target.value } });
+        setFormValues({ ...form, INN: event.target.value });
         console.log("%cAddPartner INN change", "color: #2E7D32", event.target.value);
     }
 
     function onORGNChange(event) {
-        setFormValues({ ...form, idData: { ...form.idData, ORGN: event.target.value } });
+        setFormValues({ ...form, ORGN: event.target.value });
         console.log("%cAddPartner ORGN change", "color: #2E7D32", event.target.value);
     }
 
@@ -136,10 +134,7 @@ export default function AddPartner() {
                                     />
                                 </FormControl>
                                 <FormControl required fullWidth>
-                                    <InputLabel
-                                        shrink
-                                        htmlFor="communicationLanguage-label-placeholder"
-                                    >
+                                    <InputLabel shrink htmlFor="communicationLanguage">
                                         Язык коммуникации
                                     </InputLabel>
                                     <Select
@@ -148,7 +143,7 @@ export default function AddPartner() {
                                         input={
                                             <Input
                                                 name="communicationLanguage"
-                                                id="communicationLanguage-label-placeholder"
+                                                id="communicationLanguage"
                                             />
                                         }
                                         displayEmpty
@@ -191,29 +186,16 @@ export default function AddPartner() {
                                         css={css`
                                             flex-direction: row;
                                         `}
+                                        defaultValue="email"
                                     >
                                         <FormControlLabel
                                             value="email"
-                                            control={
-                                                <Radio
-                                                    checked={
-                                                        form.preferredCommunicationMethod ===
-                                                        "email"
-                                                    }
-                                                />
-                                            }
+                                            control={<Radio />}
                                             label="Эл. адрес"
                                         />
                                         <FormControlLabel
                                             value="phone"
-                                            control={
-                                                <Radio
-                                                    checked={
-                                                        form.preferredCommunicationMethod ===
-                                                        "phone"
-                                                    }
-                                                />
-                                            }
+                                            control={<Radio />}
                                             label="Телефон"
                                         />
                                     </RadioGroup>

@@ -91,8 +91,8 @@ function MainInfo({ component: PartnerItem }) {
                 padding-top: 20px;
             `}
         >
-            <PartnerItem name="INN" pathToProp="idData.INN" title="ИНН" />
-            <PartnerItem name="ORGN" pathToProp="idData.ORGN" title="ОРГН" />
+            <PartnerItem name="INN" title="ИНН" />
+            <PartnerItem name="ORGN" title="ОРГН" />
             <PartnerItem name="manager" title="Менеджер" />
             <PartnerItem name="email" title="Эл. адрес" defaultValue="example@mail.com" />
             <PartnerItem name="phone" title="Телефон" defaultValue="+7 (111) 222-33-44" />

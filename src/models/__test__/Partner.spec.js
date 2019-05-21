@@ -1,45 +1,72 @@
 import chai from "chai";
-import omit from "lodash/omit";
-import { ADD_PARTNER, GET_PARTNER_BY_ID } from "actions/partner";
+import {
+    ADD_PARTNER,
+    GET_PARTNER_BY_ID,
+    ADD_PARTICIPANT_TO_PARTNER,
+    GET_PARTNER_BY_TITLE,
+} from "actions/partner";
+import { ADD_PARTICIPANT } from "actions/participant";
 import shortid from "shortid";
-import { getPartnerPayload, getPartnerStoreSnapshot } from "utils";
+import { getPartnerPayload, getParticipantPayload } from "utils";
 import find from "lodash/find";
+import PartnerStore from "models/Partner";
+import ParticipantStore from "models/Participant";
+import { types } from "mobx-state-tree";
 
 const expect = chai.expect;
 
 describe("partner model", () => {
-    const excludedFields = ["id"];
+    const model = types.model({
+        partner: PartnerStore,
+        participant: ParticipantStore,
+    });
+    const store = model.create({
+        partner: {},
+        participant: {},
+    });
 
     it("should handle initial state", () => {
-        const store = getPartnerStoreSnapshot(undefined, {});
-        expect(store.partners)
+        expect(store.partner.partners)
             .to.be.an("array")
             .and.to.have.lengthOf(0);
     });
 
     it("should handle ADD_PARTNER", () => {
-        const payload = getPartnerPayload();
-        const partners = getPartnerStoreSnapshot(undefined, { type: ADD_PARTNER, payload })
-            .partners;
-        const partner = find(partners, { title: payload.title });
-        expect(omit(partner, excludedFields)).to.deep.equal(payload);
+        const { id: partnerId } = store.partner[ADD_PARTNER](getPartnerPayload());
+        expect(partnerId).to.be.a("string");
+        expect(find(store.partner.partners, { id: partnerId })).to.have.property("id", partnerId);
     });
 
     it("should handle GET_PARTNER_BY_ID", () => {
-        const id = shortid();
-        const payload = getPartnerPayload();
-        const store = getPartnerStoreSnapshot(
-            { partners: [{ id, ...payload }] },
-            { type: GET_PARTNER_BY_ID, payload: { id } }
-        );
-        expect(store.result).to.have.property("id", id);
+        const { id: partnerId } = store.partner[ADD_PARTNER](getPartnerPayload());
+        const partner = store.partner[GET_PARTNER_BY_ID]({ id: partnerId });
+        expect(partner).to.have.property("id", partnerId);
     });
 
     it("should get undefined if GET_PARTNER_BY_ID on empty array", () => {
-        const store = getPartnerStoreSnapshot(undefined, {
-            type: GET_PARTNER_BY_ID,
-            payload: { id: shortid() },
+        const actual = store.partner[GET_PARTNER_BY_ID]({ id: shortid() });
+        expect(actual).to.equal(undefined);
+    });
+
+    it("should handle ADD_PARTICIPANT_TO_PARTNER", () => {
+        const participant = store.participant[ADD_PARTICIPANT](getParticipantPayload());
+        const partner = store.partner[ADD_PARTNER](getPartnerPayload());
+        store.partner[ADD_PARTICIPANT_TO_PARTNER]({ id: partner.id, participant: participant.id });
+        const updatedPartner = store.partner[GET_PARTNER_BY_ID]({ id: partner.id });
+        expect(updatedPartner).to.have.property("id", partner.id);
+        expect(updatedPartner)
+            .to.have.property("participants")
+            .to.have.length(1)
+            .and.to.have.all.members([participant.id]);
+    });
+
+    it("should handle GET_PARTNER_BY_TITLE", () => {
+        const { id: partnerId } = store.partner[ADD_PARTNER]({
+            ...getPartnerPayload(),
+            title: "Gazprom",
         });
-        expect(store.result).to.equal(undefined);
+        const partner = store.partner[GET_PARTNER_BY_TITLE]({ title: "Gazprom" });
+        expect(partner).to.have.property("id", partnerId);
+        expect(partner).to.have.property("title", "Gazprom");
     });
 });

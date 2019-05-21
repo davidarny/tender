@@ -3,7 +3,6 @@ import { ADD_PARTICIPANT, GET_PARTICIPANT_BY_ID } from "actions/participant";
 import shortid from "shortid";
 import { getParticipantPayload } from "utils";
 import ParticipantStore from "models/Participant";
-import PartnerStore from "models/Partner";
 import { types } from "mobx-state-tree";
 import find from "lodash/find";
 
@@ -11,11 +10,9 @@ const expect = chai.expect;
 
 describe("participant model", () => {
     const model = types.model({
-        partner: PartnerStore,
         participant: ParticipantStore,
     });
     const store = model.create({
-        partner: {},
         participant: {},
     });
 

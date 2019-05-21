@@ -19,14 +19,11 @@ const Partner = types.model({
 
     email: types.maybe(types.string),
 
-    // Идентификационные данные
-    idData: types.model({
-        // ИНН
-        INN: types.string,
+    // ИНН
+    INN: types.string,
 
-        // ОГРН
-        ORGN: types.string,
-    }),
+    // ОГРН
+    ORGN: types.string,
 
     // Язык коммуникации
     communicationLanguage: types.string,

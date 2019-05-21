@@ -2,47 +2,41 @@ import { getSnapshot } from "mobx-state-tree";
 import shortid from "shortid";
 import UserStore from "models/User";
 import UiStore from "models/UI";
-import PartnerStore from "models/Partner";
 import DealStore from "models/Deal";
+import random from "lodash/random";
 
 export function getUserPayload() {
     return {
-        appeal: "1053600591197",
         email: "john.doe@mail.com",
         phone: "+12345678910",
         password: shortid(),
-        fullName: "John Doe",
+        fullName: "Иванов Иван Иванович",
         birthDate: new Date(),
         preferredCommunicationMethod: "email",
-        idDocument: {
-            documentType: "passport",
-            documentId: "3664069397",
-        },
         consentToCommunication: true,
     };
 }
 
-export function getPartnerPayload() {
+export function getPartnerPayload(participants = []) {
     return {
-        title: "John Doe inc.",
+        title: 'АО "Альфа-Банк"',
         phone: "+12345678910",
         email: "john.doe@mail.com",
-        idData: {
-            INN: "3664069397",
-            ORGN: "1053600591197",
-        },
+        INN: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
-        manager: "Иванов. И.И.",
-        participants: [],
+        manager: "Иванов Иван Иванович",
+        participants,
     };
 }
 
 export function getDealPayload() {
     return {
-        title: "Magic Deal",
-        subtitle: "Subtitle of Magic Deal",
-        text: "Long description of Magic Deal",
+        title: "Летний",
+        subtitle: "Театральный сезон в Александринском театре!",
+        text:
+            "Только для участников программы РЖД Бонус 10% скидки на репертуарные спектакли в мае по промо-коду RZHD10 при онлайн-покупке на сайте кинотеатра",
         activePeriod: {
             from: new Date(),
             to: new Date(),
@@ -55,18 +49,18 @@ export function getDealPayload() {
 
 export function getParticipantPayload(partner) {
     return {
-        number: "1053600591197",
-        fullName: "John Doe",
+        number: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        fullName: "Иванов Иван Иванович",
         partner,
         accountType: "personal",
         email: "john.doe@mail.com",
         phone: "+12345678910",
         birthDate: new Date(),
         citizenship: "RU",
-        passport: "8811090121",
+        passport: random(0, Number.MAX_SAFE_INTEGER).toString(),
         participantType: "individual",
-        INN: "3664069397",
-        ORGN: "1053600591197",
+        INN: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
     };
 }
 
@@ -76,10 +70,6 @@ export function getUserStoreSnapshot(state, action) {
 
 export function getUiStoreSnapshot(state, action) {
     return getStoreSnapshot(UiStore, state, action);
-}
-
-export function getPartnerStoreSnapshot(state, action) {
-    return getStoreSnapshot(PartnerStore, state, action);
 }
 
 export function getDealStoreSnapshot(state, action) {
