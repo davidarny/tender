@@ -26,7 +26,6 @@ import { navigate } from "@reach/router";
 import { LOG_IN } from "actions/ui";
 import PropTypes from "prop-types";
 import isArray from "lodash/isArray";
-import shortid from "shortid";
 
 const actions = {
     INITIAL: "INITIAL",
@@ -50,10 +49,6 @@ export default function SignUp() {
         password: undefined,
         birthDate: moment(),
         preferredCommunicationMethod: "email",
-        idDocument: {
-            documentType: undefined,
-            documentId: undefined,
-        },
         consentToCommunication: false,
     });
     const [isPasswordShown, setPasswordShowState] = useState(false);
@@ -67,17 +62,17 @@ export default function SignUp() {
 
     function onEmailChange(event) {
         setFormValues({ ...form, phone: event.target.value });
-        console.log("%cSignUp email change", "color #3F51B5", event.target.value);
+        console.log("%cSignUp email change", "color: #3F51B5", event.target.value);
     }
 
     function onPhoneChange(event) {
         setFormValues({ ...form, phone: event.target.value });
-        console.log("%cSignUp phone change", "color #3F51B5", event.target.value);
+        console.log("%cSignUp phone change", "color: #3F51B5", event.target.value);
     }
 
     function onPasswordChange(event) {
         setFormValues({ ...form, password: event.target.value });
-        console.log("%cSignUp password change", "color #3F51B5", event.target.value);
+        console.log("%cSignUp password change", "color: #3F51B5", event.target.value);
     }
 
     function onBirthDateChange(date) {
@@ -92,28 +87,6 @@ export default function SignUp() {
             "color: #3F51B5",
             event.target.value
         );
-    }
-
-    function onDocumentTypeChange(event) {
-        setFormValues({
-            ...form,
-            idDocument: {
-                ...form.idDocument,
-                documentType: event.target.value,
-            },
-        });
-        console.log("%cSignIn ID document type change", "color: #3F51B5", event.target.value);
-    }
-
-    function onDocumentIdChange(event) {
-        setFormValues({
-            ...form,
-            idDocument: {
-                ...form.idDocument,
-                documentId: event.target.value,
-            },
-        });
-        console.log("%cSignIn ID document number change", "color: #3F51B5", event.target.value);
     }
 
     function onConsentToCommunicationChange(event) {
@@ -134,15 +107,15 @@ export default function SignUp() {
         setPasswordShowState(!isPasswordShown);
     }
 
-    function onFormSuccess() {
-        console.log("%cSignUp submit", "color: #3F51B5", form);
-        store.user[SET_CURRENT_USER]({
+    function onFormSuccess(event) {
+        event.preventDefault();
+        const payload = {
             ...form,
             birthDate: form.birthDate.toDate(),
-            appeal: shortid(),
-        });
+        };
+        console.log("%cSignUp submit", "color: #3F51B5", payload);
+        store.user[SET_CURRENT_USER](payload);
         store.ui[LOG_IN]();
-        console.log(BASE_PATH === "" ? "/" : BASE_PATH);
         navigate(BASE_PATH === "" ? "/" : BASE_PATH);
     }
 
@@ -225,59 +198,19 @@ export default function SignUp() {
                                             css={css`
                                                 flex-direction: row;
                                             `}
+                                            defaultValue="email"
                                         >
                                             <FormControlLabel
                                                 value="email"
-                                                control={
-                                                    <Radio
-                                                        checked={
-                                                            form.preferredCommunicationMethod ===
-                                                            "email"
-                                                        }
-                                                    />
-                                                }
+                                                control={<Radio />}
                                                 label="Эл. адрес"
                                             />
                                             <FormControlLabel
                                                 value="phone"
-                                                control={
-                                                    <Radio
-                                                        checked={
-                                                            form.preferredCommunicationMethod ===
-                                                            "phone"
-                                                        }
-                                                    />
-                                                }
+                                                control={<Radio />}
                                                 label="Телефон"
                                             />
                                         </RadioGroup>
-                                    </FormControl>
-                                    <FormControl margin="normal" required fullWidth>
-                                        <FormLabel component="legend">
-                                            Документы удостоверяющие личность
-                                        </FormLabel>
-                                        <FormControl required fullWidth>
-                                            <InputLabel htmlFor="documentType">
-                                                Тип документа
-                                            </InputLabel>
-                                            <Input
-                                                id="documentType"
-                                                name="documentType"
-                                                autoComplete="documentType"
-                                                onChange={onDocumentTypeChange}
-                                            />
-                                        </FormControl>
-                                        <FormControl required fullWidth>
-                                            <InputLabel htmlFor="documentNumber">
-                                                Номер документа
-                                            </InputLabel>
-                                            <Input
-                                                id="documentNumber"
-                                                name="documentNumber"
-                                                autoComplete="documentNumber"
-                                                onChange={onDocumentIdChange}
-                                            />
-                                        </FormControl>
                                     </FormControl>
                                     <FormControlLabel
                                         required

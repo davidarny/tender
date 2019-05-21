@@ -43,7 +43,6 @@ function Catalog() {
                     Каталог
                 </Typography>
             </Grid>
-
             <AppBar position="static">
                 <Tabs value={tabIndex} onChange={onTabChange}>
                     <Tab label="Маршруты следования" />
@@ -60,11 +59,11 @@ function Catalog() {
 
 function RoutesInfo() {
     const store = useContext(StoreContext);
-    const routs = store.rout.routs
+    const routs = store.rout.routs;
     const statusNames = {
-        1: 'Действует',
-        2: 'Приостановлен'
-    }
+        1: "Действует",
+        2: "Приостановлен",
+    };
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -77,22 +76,25 @@ function RoutesInfo() {
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        {routs && routs.length > 0 &&
-                        <TableBody>
-                            {routs.map(rout => (
-                                <TableRow key={rout.id}>
-                                    <LinkTableCell to={BASE_PATH + `/routes/${rout.id}`}>
-                                        {rout.stationFrom} - {rout.stationTo}
-                                    </LinkTableCell>
-                                    <TableCell css={css`
-                                   ${rout.status === 1 ? 'color: green;' : ''}
-                                `}>{statusNames[rout.status]}</TableCell>
-                                    <TableCellMoreIcon />
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                        }
-
+                        {routs && routs.length > 0 && (
+                            <TableBody>
+                                {routs.map(rout => (
+                                    <TableRow key={rout.id}>
+                                        <LinkTableCell to={BASE_PATH + `/routes/${rout.id}`}>
+                                            {rout.stationFrom} - {rout.stationTo}
+                                        </LinkTableCell>
+                                        <TableCell
+                                            css={css`
+                                                ${rout.status === 1 ? "color: green;" : ""}
+                                            `}
+                                        >
+                                            {statusNames[rout.status]}
+                                        </TableCell>
+                                        <TableCellMoreIcon />
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
                 </Paper>
             </Grid>

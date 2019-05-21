@@ -1,0 +1,51 @@
+[
+    {
+        "title": "Стандартное правило",
+        "transferType": "withdraw",
+        "property": "30 баллов за каждые 500 км",
+        "trains": "116C, 858A, 032A-Лев Толстой",
+        "condition": "distance",
+        "status": "active",
+        "loyaltyType": "base"
+    },
+    {
+        "title": "Дальние поездки",
+        "transferType": "income",
+        "property": "30 баллов за каждые 500 км",
+        "trains": "116C, 858A, 032A-Лев Толстой",
+        "condition": "cost",
+        "status": "active",
+        "loyaltyType": "base"
+    },
+    {
+        "title": "Стандартное неактивное правило",
+        "transferType": "income",
+        "property": "30 баллов за каждые 500 км",
+        "trains": "116C, 858A, 032A-Лев Толстой",
+        "condition": "cost",
+        "status": "nonActive",
+        "loyaltyType": "base"
+    },
+    {
+        "title": "Дополнительное правило",
+        "transferType": "withdraw",
+        "status": "active",
+        "loyaltyType": "extra",
+        "startStation": "Москва",
+        "terms": "15 янв - 30 мар, ежегодно",
+        "service": "vip",
+        "endStation": "Казань",
+        "train": "032A-Лев Толстой"
+    },
+    {
+        "title": "Поездки в столицу",
+        "transferType": "income",
+        "status": "active",
+        "loyaltyType": "extra",
+        "startStation": "Москва",
+        "service": "nonVip",
+        "terms": "15 янв - 30 мар, ежегодно",
+        "endStation": "Казань",
+        "train": "032A-Лев Толстой"
+    }
+]

@@ -12,31 +12,30 @@ const Participant = types.model({
     // ФИО
     fullName: types.string,
 
-    // Ref to Partner
-    partner: types.maybe(types.string),
-
-    // Тип участника
-    type: types.union(
-        types.literal("personal"),
-        types.literal("corporate"),
-        types.literal("family")
-    ),
+    participantType: types.union(types.literal("individual"), types.literal("legalEntity")),
 
     email: types.string,
 
     phone: types.string,
 
-    birthDate: types.Date,
+    // Ref to Partner
+    partner: types.maybe(types.string),
 
-    citizenship: types.string,
+    // Тип участника
+    accountType: types.maybe(
+        types.union(types.literal("personal"), types.literal("corporate"), types.literal("family"))
+    ),
+
+    birthDate: types.maybe(types.Date),
+
+    citizenship: types.maybe(types.string),
 
     // Паспортные данные
-    passport: types.string,
+    passport: types.maybe(types.string),
 
-    // TODO: references
-    // - bonus account
-    // - trips
-    // - tickets
+    INN: types.maybe(types.string),
+
+    ORGN: types.maybe(types.string),
 });
 
 const ParticipantStore = types

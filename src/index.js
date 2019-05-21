@@ -11,6 +11,7 @@ import { setStoreContext } from "context";
 import DealStore from "models/Deal";
 import ParticipantStore from "models/Participant";
 import RoutsStore from "models/Rout";
+import LoyaltyStore from "models/Loyalty";
 
 const model = types.model({
     user: UserStore,
@@ -18,7 +19,8 @@ const model = types.model({
     partner: PartnerStore,
     participant: ParticipantStore,
     deal: DealStore,
-    rout: RoutsStore
+    rout: RoutsStore,
+    loyalty: LoyaltyStore,
 });
 
 const store = model.create({
@@ -29,7 +31,8 @@ const store = model.create({
     partner: {},
     participant: {},
     deal: {},
-    rout: {}
+    rout: {},
+    loyalty: {},
 });
 
 const StoreContext = React.createContext(store);

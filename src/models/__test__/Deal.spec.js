@@ -1,44 +1,40 @@
 import chai from "chai";
-import omit from "lodash/omit";
 import { ADD_DEAL, GET_DEAL_BY_ID } from "actions/deal";
 import shortid from "shortid";
-import { getDealPayload, getDealStoreSnapshot } from "utils";
+import { getDealPayload } from "utils";
 import find from "lodash/find";
+import DealStore from "models/Deal";
+import { types } from "mobx-state-tree";
 
 const expect = chai.expect;
 
 describe("deal model", () => {
-    const excludedFields = ["id", "activePeriod", "startStation", "endStation"];
+    const model = types.model({
+        deal: DealStore,
+    });
+    const store = model.create({
+        deal: {},
+    });
 
     it("should handle initial state", () => {
-        const store = getDealStoreSnapshot(undefined, {});
-        expect(store.deals)
+        expect(store.deal.deals)
             .to.be.an("array")
             .and.to.have.lengthOf(0);
     });
-
     it("should handle ADD_DEAL", () => {
-        const payload = getDealPayload();
-        const deals = getDealStoreSnapshot(undefined, { type: ADD_DEAL, payload }).deals;
-        const deal = find(deals, { title: payload.title });
-        expect(omit(deal, excludedFields)).to.deep.equal(omit(payload, excludedFields));
+        const { id: dealId } = store.deal[ADD_DEAL](getDealPayload());
+        expect(dealId).to.be.a("string");
+        expect(find(store.deal.deals, { id: dealId })).to.have.property("id", dealId);
     });
 
     it("should handle GET_DEAL_BY_ID", () => {
-        const id = shortid();
-        const payload = getDealPayload();
-        const store = getDealStoreSnapshot(
-            { deals: [{ id, ...payload }] },
-            { type: GET_DEAL_BY_ID, payload: { id } }
-        );
-        expect(store.result).to.have.property("id", id);
+        const { id: dealId } = store.deal[ADD_DEAL](getDealPayload());
+        const deal = store.deal[GET_DEAL_BY_ID]({ id: dealId });
+        expect(deal).to.have.property("id", dealId);
     });
 
     it("should get undefined if GET_DEAL_BY_ID on empty array", () => {
-        const store = getDealStoreSnapshot(undefined, {
-            type: GET_DEAL_BY_ID,
-            payload: { id: shortid() },
-        });
-        expect(store.result).to.equal(undefined);
+        const actual = store.deal[GET_DEAL_BY_ID]({ id: shortid() });
+        expect(actual).to.equal(undefined);
     });
 });
