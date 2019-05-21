@@ -14,7 +14,7 @@ const Loyalty = types.model({
 
     loyaltyType: types.union(types.literal("base"), types.literal("extra")),
 
-    status: types.union(types.literal("active"), types.literal("nonActive")),
+    status: types.union(types.literal(1), types.literal(2)),
 
     // Базовые правила
     property: types.maybe(types.string),

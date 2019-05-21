@@ -74,8 +74,8 @@ function BaseRolesInfo({ loyalties }) {
         distance: "Расстояние",
     };
     const statusNamesMap = {
-        active: "Активно",
-        nonActive: "Не активно",
+        1: "Активно",
+        2: "Не активно",
     };
 
     function onFabClick() {
@@ -106,7 +106,7 @@ function BaseRolesInfo({ loyalties }) {
                                         {transferTypeNamesMap[loyalty.transferType]}
                                     </TableCell>
                                     <TableCell>{conditionNamesMap[loyalty.condition]}</TableCell>
-                                    <StatusTableCell active={loyalty.status === "active"}>
+                                    <StatusTableCell active={loyalty.status === 1}>
                                         {statusNamesMap[loyalty.status]}
                                     </StatusTableCell>
                                     <TableCellMoreIcon />
@@ -121,14 +121,18 @@ function BaseRolesInfo({ loyalties }) {
     );
 }
 
-function ExtraRolesInfo({ loyalties: loyalty }) {
+BaseRolesInfo.propTypes = {
+    loyalties: PropTypes.array.isRequired,
+};
+
+function ExtraRolesInfo({ loyalties }) {
     const transferTypeNamesMap = {
         withdraw: "Списание",
         income: "Начисление",
     };
     const statusNamesMap = {
-        active: "Активно",
-        nonActive: "Не активно",
+        1: "Активно",
+        2: "Не активно",
     };
 
     function onFabClick() {
@@ -149,7 +153,7 @@ function ExtraRolesInfo({ loyalties: loyalty }) {
                             </TableRow>
                         </StyledTableHead>
                         <TableBody>
-                            {loyalty.map(loyalty => (
+                            {loyalties.map(loyalty => (
                                 <TableRow key={loyalty.id}>
                                     <LinkTableCell to={BASE_PATH + `/loyalty/${shortid()}`}>
                                         {loyalty.title}
@@ -157,7 +161,7 @@ function ExtraRolesInfo({ loyalties: loyalty }) {
                                     <TableCell>
                                         {transferTypeNamesMap[loyalty.transferType]}
                                     </TableCell>
-                                    <StatusTableCell active={loyalty.status === "active"}>
+                                    <StatusTableCell active={loyalty.status === 1}>
                                         {statusNamesMap[loyalty.status]}
                                     </StatusTableCell>
                                     <StatusTableCell />
@@ -171,6 +175,10 @@ function ExtraRolesInfo({ loyalties: loyalty }) {
         </Grid>
     );
 }
+
+ExtraRolesInfo.propTypes = {
+    loyalties: PropTypes.array.isRequired,
+};
 
 function StatusTableCell({ active = false, children }) {
     return (

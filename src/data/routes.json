@@ -1,17 +1,17 @@
 [
     {
-        "stationFrom": "Санкт-Петербург",
-        "stationTo": "Москва",
+        "startStation": "Санкт-Петербург",
+        "endStation": "Москва",
         "status": 1
     },
     {
-        "stationFrom": "Москва",
-        "stationTo": "Владивосток",
+        "startStation": "Москва",
+        "endStation": "Владивосток",
         "status": 2
     },
     {
-        "stationFrom": "Санкт-Петербург",
-        "stationTo": "Чебоксары",
+        "startStation": "Санкт-Петербург",
+        "endStation": "Чебоксары",
         "status": 1
     }
 ]

@@ -21,8 +21,11 @@ import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import shortid from "shortid";
 import { BASE_PATH, StoreContext } from "context";
+import { navigate } from "@reach/router";
+import PropTypes from "prop-types";
 
 function Catalog() {
+    const store = useContext(StoreContext);
     const [tabIndex, setTabIndex] = useState(0);
 
     function onTabChange(_, index) {
@@ -50,20 +53,23 @@ function Catalog() {
                     <Tab label="Каталог вагонов" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && <RoutesInfo />}
+            {tabIndex === 0 && <RoutesInfo routes={store.route.routes} />}
             {tabIndex === 1 && <TrainsInfo />}
             {tabIndex === 2 && <WagonsInfo />}
         </Layout>
     );
 }
 
-function RoutesInfo() {
-    const store = useContext(StoreContext);
-    const routs = store.rout.routs;
-    const statusNames = {
+function RoutesInfo({ routes }) {
+    const statusNamesMap = {
         1: "Действует",
         2: "Приостановлен",
     };
+
+    function onFabClick() {
+        navigate(BASE_PATH + "/routes/add");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -76,19 +82,19 @@ function RoutesInfo() {
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        {routs && routs.length > 0 && (
+                        {routes && (
                             <TableBody>
-                                {routs.map(rout => (
-                                    <TableRow key={rout.id}>
-                                        <LinkTableCell to={BASE_PATH + `/routes/${rout.id}`}>
-                                            {rout.stationFrom} - {rout.stationTo}
+                                {routes.map(route => (
+                                    <TableRow key={route.id}>
+                                        <LinkTableCell to={BASE_PATH + `/routes/${route.id}`}>
+                                            {route.startStation} - {route.endStation}
                                         </LinkTableCell>
                                         <TableCell
                                             css={css`
-                                                ${rout.status === 1 ? "color: green;" : ""}
+                                                color: ${route.status === 1 ? "#4CAF50" : "black"};
                                             `}
                                         >
-                                            {statusNames[rout.status]}
+                                            {statusNamesMap[route.status]}
                                         </TableCell>
                                         <TableCellMoreIcon />
                                     </TableRow>
@@ -98,12 +104,20 @@ function RoutesInfo() {
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab />
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }
 
+RoutesInfo.propTypes = {
+    routes: PropTypes.array.isRequired,
+};
+
 function TrainsInfo() {
+    function onFabClick() {
+        navigate(BASE_PATH + "/trains/add");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -150,12 +164,16 @@ function TrainsInfo() {
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab />
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }
 
 function WagonsInfo() {
+    function onFabClick() {
+        navigate(BASE_PATH + "/trains/add");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -222,7 +240,7 @@ function WagonsInfo() {
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab />
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }

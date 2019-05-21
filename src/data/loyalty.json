@@ -5,7 +5,7 @@
         "property": "30 баллов за каждые 500 км",
         "trains": "116C, 858A, 032A-Лев Толстой",
         "condition": "distance",
-        "status": "active",
+        "status": 1,
         "loyaltyType": "base"
     },
     {
@@ -14,7 +14,7 @@
         "property": "30 баллов за каждые 500 км",
         "trains": "116C, 858A, 032A-Лев Толстой",
         "condition": "cost",
-        "status": "active",
+        "status": 1,
         "loyaltyType": "base"
     },
     {
@@ -23,13 +23,13 @@
         "property": "30 баллов за каждые 500 км",
         "trains": "116C, 858A, 032A-Лев Толстой",
         "condition": "cost",
-        "status": "nonActive",
+        "status": 2,
         "loyaltyType": "base"
     },
     {
         "title": "Дополнительное правило",
         "transferType": "withdraw",
-        "status": "active",
+        "status": 1,
         "loyaltyType": "extra",
         "startStation": "Москва",
         "terms": "15 янв - 30 мар, ежегодно",
@@ -40,7 +40,7 @@
     {
         "title": "Поездки в столицу",
         "transferType": "income",
-        "status": "active",
+        "status": 1,
         "loyaltyType": "extra",
         "startStation": "Москва",
         "service": "nonVip",

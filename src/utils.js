@@ -73,3 +73,11 @@ export function getLoyaltyPayload(type) {
         loyaltyType: type,
     };
 }
+
+export function getRoutePayload() {
+    return {
+        startStation: "from",
+        endStation: "to",
+        status: 1,
+    };
+}
