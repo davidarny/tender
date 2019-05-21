@@ -10,7 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import FixedFab from "components/FixedFab";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -20,7 +20,7 @@ import HeaderTableCell from "components/table/HeaderTableCell";
 import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import shortid from "shortid";
-import { BASE_PATH } from "context";
+import { BASE_PATH, StoreContext } from "context";
 
 function Catalog() {
     const [tabIndex, setTabIndex] = useState(0);
@@ -59,6 +59,12 @@ function Catalog() {
 }
 
 function RoutesInfo() {
+    const store = useContext(StoreContext);
+    const routers = store.router.routers
+    const statusNames = {
+        1: 'Действует',
+        2: 'Приостановлен'
+    }
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -67,29 +73,26 @@ function RoutesInfo() {
                         <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Маршрут</HeaderTableCell>
+                                <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
+                        {routers && routers.length > 0 &&
                         <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                    Санкт-Петербург - Москва
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                    Москва - Владивосток
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                    Санкт-Петербург - Чебоксары
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
+                            {routers.map(rout => (
+                                <TableRow key={rout.id}>
+                                    <LinkTableCell to={BASE_PATH + `/routes/${rout.id}`}>
+                                        {rout.stationFrom} - {rout.stationTo}
+                                    </LinkTableCell>
+                                    <TableCell css={css`
+                                   ${rout.status === 1 ? 'color: green;' : ''}
+                                `}>{statusNames[rout.status]}</TableCell>
+                                    <TableCellMoreIcon />
+                                </TableRow>
+                            ))}
                         </TableBody>
+                        }
+
                     </Table>
                 </Paper>
             </Grid>

@@ -10,6 +10,7 @@ import UiStore from "models/UI";
 import { setStoreContext } from "context";
 import DealStore from "models/Deal";
 import ParticipantStore from "models/Participant";
+import RoutersStore from "models/Router";
 
 const model = types.model({
     user: UserStore,
@@ -17,6 +18,7 @@ const model = types.model({
     partner: PartnerStore,
     participant: ParticipantStore,
     deal: DealStore,
+    router: RoutersStore
 });
 
 const store = model.create({
@@ -27,6 +29,7 @@ const store = model.create({
     partner: {},
     participant: {},
     deal: {},
+    router: {}
 });
 
 const StoreContext = React.createContext(store);

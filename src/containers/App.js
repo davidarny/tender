@@ -26,6 +26,8 @@ import { ADD_PARTICIPANT } from "actions/participant";
 import partners from "data/partner";
 import deals from "data/deal";
 import participants from "data/participant";
+import routers from 'data/routers'
+import { ADD_ROUT } from "actions/routers";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -291,6 +293,8 @@ function initStubData(store) {
                 participant: id,
             });
         });
+
+        routers.forEach(store.router[ADD_ROUT])
     }
 }
 
