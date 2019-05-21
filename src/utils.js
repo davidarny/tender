@@ -25,8 +25,8 @@ export function getUserPayload() {
 export function getPartnerPayload() {
     return {
         title: "John Doe inc.",
-        phone: "john.doe@mail.com",
-        email: "+12345678910",
+        phone: "+12345678910",
+        email: "john.doe@mail.com",
         idData: {
             INN: "3664069397",
             ORGN: "1053600591197",
