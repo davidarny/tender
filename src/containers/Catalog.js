@@ -10,7 +10,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import FixedFab from "components/FixedFab";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -20,9 +20,12 @@ import HeaderTableCell from "components/table/HeaderTableCell";
 import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import shortid from "shortid";
-import { BASE_PATH } from "context";
+import { BASE_PATH, StoreContext } from "context";
+import { navigate } from "@reach/router";
+import PropTypes from "prop-types";
 
 function Catalog() {
+    const store = useContext(StoreContext);
     const [tabIndex, setTabIndex] = useState(0);
 
     function onTabChange(_, index) {
@@ -50,14 +53,23 @@ function Catalog() {
                     <Tab label="Каталог вагонов" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && <RoutesInfo />}
+            {tabIndex === 0 && <RoutesInfo routes={store.route.routes} />}
             {tabIndex === 1 && <TrainsInfo />}
             {tabIndex === 2 && <WagonsInfo />}
         </Layout>
     );
 }
 
-function RoutesInfo() {
+function RoutesInfo({ routes }) {
+    const statusNamesMap = {
+        1: "Действует",
+        2: "Приостановлен",
+    };
+
+    function onFabClick() {
+        navigate(BASE_PATH + "/routes/add");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -66,38 +78,46 @@ function RoutesInfo() {
                         <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Маршрут</HeaderTableCell>
+                                <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                    Санкт-Петербург - Москва
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                    Москва - Владивосток
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                    Санкт-Петербург - Чебоксары
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                        </TableBody>
+                        {routes && (
+                            <TableBody>
+                                {routes.map(route => (
+                                    <TableRow key={route.id}>
+                                        <LinkTableCell to={BASE_PATH + `/routes/${route.id}`}>
+                                            {route.startStation} - {route.endStation}
+                                        </LinkTableCell>
+                                        <TableCell
+                                            css={css`
+                                                color: ${route.status === 1 ? "#4CAF50" : "black"};
+                                            `}
+                                        >
+                                            {statusNamesMap[route.status]}
+                                        </TableCell>
+                                        <TableCellMoreIcon />
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab />
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }
 
+RoutesInfo.propTypes = {
+    routes: PropTypes.array.isRequired,
+};
+
 function TrainsInfo() {
+    function onFabClick() {
+        navigate(BASE_PATH + "/trains/add");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -144,12 +164,16 @@ function TrainsInfo() {
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab />
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }
 
 function WagonsInfo() {
+    function onFabClick() {
+        navigate(BASE_PATH + "/trains/add");
+    }
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -216,7 +240,7 @@ function WagonsInfo() {
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab />
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }

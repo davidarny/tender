@@ -95,7 +95,7 @@ export default function AddLoyalty({ type }) {
             ...getLoyaltyPayload(type),
             ...form,
             loyaltyType: type,
-            status: "nonActive",
+            status: 2,
         });
         navigate(BASE_PATH + "/loyalty");
     }

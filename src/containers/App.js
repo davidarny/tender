@@ -15,18 +15,26 @@ import { observer } from "mobx-react-lite";
 import Loadable from "react-loadable";
 import Loading from "components/Loading";
 import Grid from "@material-ui/core/Grid";
-import { getPartnerPayload, getDealPayload, getParticipantPayload, getLoyaltyPayload } from "utils";
+import {
+    getPartnerPayload,
+    getDealPayload,
+    getParticipantPayload,
+    getLoyaltyPayload,
+    getRoutePayload,
+} from "utils";
 import moment from "moment";
 import "moment/locale/ru";
 import cloneDeep from "lodash/cloneDeep";
 import find from "lodash/find";
 import { ADD_PARTICIPANT } from "actions/participant";
 import { ADD_LOYALTY } from "actions/loyalty";
+import { ADD_ROUTE } from "actions/route";
 
 // stub data
 import partners from "data/partner";
 import deals from "data/deal";
 import participants from "data/participant";
+import routes from "data/routes";
 import loyalties from "data/loyalty";
 
 const AsyncPartners = Loadable({
@@ -292,6 +300,14 @@ function initStubData(store) {
                 id: partner.id,
                 participant: id,
             });
+        });
+
+        routes.forEach(route => {
+            const payload = {
+                ...getRoutePayload(),
+                ...cloneDeep(route),
+            };
+            store.route[ADD_ROUTE](payload);
         });
 
         loyalties.forEach(loyalty => {

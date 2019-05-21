@@ -10,6 +10,7 @@ import UiStore from "models/UI";
 import { setStoreContext } from "context";
 import DealStore from "models/Deal";
 import ParticipantStore from "models/Participant";
+import RouteStore from "models/Route";
 import LoyaltyStore from "models/Loyalty";
 
 const model = types.model({
@@ -18,6 +19,7 @@ const model = types.model({
     partner: PartnerStore,
     participant: ParticipantStore,
     deal: DealStore,
+    route: RouteStore,
     loyalty: LoyaltyStore,
 });
 
@@ -29,6 +31,7 @@ const store = model.create({
     partner: {},
     participant: {},
     deal: {},
+    route: {},
     loyalty: {},
 });
 

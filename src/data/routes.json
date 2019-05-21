@@ -1,0 +1,17 @@
+[
+    {
+        "startStation": "Санкт-Петербург",
+        "endStation": "Москва",
+        "status": 1
+    },
+    {
+        "startStation": "Москва",
+        "endStation": "Владивосток",
+        "status": 2
+    },
+    {
+        "startStation": "Санкт-Петербург",
+        "endStation": "Чебоксары",
+        "status": 1
+    }
+]
