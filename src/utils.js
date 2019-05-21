@@ -1,8 +1,4 @@
-import { getSnapshot } from "mobx-state-tree";
 import shortid from "shortid";
-import UserStore from "models/User";
-import UiStore from "models/UI";
-import DealStore from "models/Deal";
 import random from "lodash/random";
 
 export function getUserPayload() {
@@ -62,25 +58,4 @@ export function getParticipantPayload(partner) {
         INN: random(0, Number.MAX_SAFE_INTEGER).toString(),
         ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
     };
-}
-
-export function getUserStoreSnapshot(state, action) {
-    return getStoreSnapshot(UserStore, state, action);
-}
-
-export function getUiStoreSnapshot(state, action) {
-    return getStoreSnapshot(UiStore, state, action);
-}
-
-export function getDealStoreSnapshot(state, action) {
-    return getStoreSnapshot(DealStore, state, action);
-}
-
-function getStoreSnapshot(Store, state, action) {
-    let result = {};
-    const store = Store.create(state);
-    if (action.type) {
-        result = store[action.type](action.payload);
-    }
-    return { ...getSnapshot(store), result };
 }
