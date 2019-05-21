@@ -7,11 +7,8 @@ import Layout from "components/Layout";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -23,11 +20,14 @@ import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import { BASE_PATH, StoreContext } from "context";
 import { useContext } from "react";
 import { navigate } from "@reach/router";
+import StyledTableHead from "components/table/StyledTableHead";
+import FixedFab from "components/FixedFab";
+import PropTypes from "prop-types";
 
 function Catalog() {
     const [tabIndex, setTabIndex] = useState(0);
 
-    function onTabChange(event, index) {
+    function onTabChange(_, index) {
         setTabIndex(index);
     }
 
@@ -52,25 +52,13 @@ function Catalog() {
                     <Tab label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && (
-                <TabContainer>
-                    <BaseRoulesTable />
-                </TabContainer>
-            )}
-            {tabIndex === 1 && (
-                <TabContainer>
-                    <ExtraRoulesTable />
-                </TabContainer>
-            )}
+            {tabIndex === 0 && <BaseRolesTable />}
+            {tabIndex === 1 && <ExtraRolesTable />}
         </Layout>
     );
 }
 
-function TabContainer(props) {
-    return <Typography component="div">{props.children}</Typography>;
-}
-
-function BaseRoulesTable() {
+function BaseRolesTable() {
     const store = useContext(StoreContext);
 
     function onFabClick() {
@@ -82,11 +70,7 @@ function BaseRoulesTable() {
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Название</HeaderTableCell>
                                 <HeaderTableCell>Тип</HeaderTableCell>
@@ -94,56 +78,29 @@ function BaseRoulesTable() {
                                 <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
-                            {store.baseLoyaltyProgram.programs.map(program => {
-                                let style = "";
-
-                                if (program.status === "Активно") {
-                                    style = "color: green;";
-                                }
-
-                                return (
-                                    <TableRow key={program.id}>
-                                        <LinkTableCell to="#">{program.title}</LinkTableCell>
-                                        <TableCell>{program.type}</TableCell>
-                                        <TableCell>{program.condition}</TableCell>
-                                        <TableCell
-                                            css={css`
-                                                ${style}
-                                            `}
-                                        >
-                                            {program.status}
-                                        </TableCell>
-                                        <TableCellMoreIcon />
-                                    </TableRow>
-                                );
-                            })}
+                            {store.baseLoyaltyProgram.programs.map(program => (
+                                <TableRow key={program.id}>
+                                    <LinkTableCell to="#">{program.title}</LinkTableCell>
+                                    <TableCell>{program.type}</TableCell>
+                                    <TableCell>{program.condition}</TableCell>
+                                    <StatusTableCell active={program.status === "Активно"}>
+                                        {program.status}
+                                    </StatusTableCell>
+                                    <TableCellMoreIcon />
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </Paper>
             </Grid>
-            <Fab
-                css={css`
-                    position: absolute;
-                    right: 50px;
-                    bottom: 50px;
-                    background-color: #263238;
-                    color: white;
-
-                    :hover {
-                        background-color: #455a64;
-                    }
-                `}
-                onClick={onFabClick}
-            >
-                <AddIcon />
-            </Fab>
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }
 
-function ExtraRoulesTable() {
+function ExtraRolesTable() {
     const store = useContext(StoreContext);
 
     function onFabClick() {
@@ -155,63 +112,48 @@ function ExtraRoulesTable() {
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <TableHead
-                            css={css`
-                                background-color: #b0bec5;
-                            `}
-                        >
+                        <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Название</HeaderTableCell>
                                 <HeaderTableCell>Тип</HeaderTableCell>
                                 <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </TableHead>
+                        </StyledTableHead>
                         <TableBody>
-                            {store.extraLoyaltyProgram.programs.map(program => {
-                                let style = "";
-
-                                if (program.status === "Активно") {
-                                    style = "color: green;";
-                                }
-
-                                return (
-                                    <TableRow key={program.id}>
-                                        <LinkTableCell to="#">{program.title}</LinkTableCell>
-                                        <TableCell>{program.type}</TableCell>
-                                        <TableCell
-                                            css={css`
-                                                ${style}
-                                            `}
-                                        >
-                                            {program.status}
-                                        </TableCell>
-                                        <TableCellMoreIcon />
-                                    </TableRow>
-                                );
-                            })}
+                            {store.extraLoyaltyProgram.programs.map(program => (
+                                <TableRow key={program.id}>
+                                    <LinkTableCell to="#">{program.title}</LinkTableCell>
+                                    <TableCell>{program.type}</TableCell>
+                                    <StatusTableCell active={program.status === "Активно"}>
+                                        {program.status}
+                                    </StatusTableCell>
+                                    <StatusTableCell />
+                                </TableRow>
+                            ))}
                         </TableBody>
                     </Table>
                 </Paper>
             </Grid>
-            <Fab
-                css={css`
-                    position: absolute;
-                    right: 50px;
-                    bottom: 50px;
-                    background-color: #263238;
-                    color: white;
-
-                    :hover {
-                        background-color: #455a64;
-                    }
-                `}
-                onClick={onFabClick}
-            >
-                <AddIcon />
-            </Fab>
+            <FixedFab onClick={onFabClick} />
         </Grid>
     );
 }
+
+function StatusTableCell({ active = false, children }) {
+    return (
+        <TableCell
+            css={css`
+                color: ${active ? "#4CAF50" : "black"};
+            `}
+        >
+            {children}
+        </TableCell>
+    );
+}
+
+StatusTableCell.propTypes = {
+    active: PropTypes.bool,
+};
 
 export default observer(Catalog);
