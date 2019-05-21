@@ -7,9 +7,11 @@ import Layout from "components/Layout";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import FixedFab from "components/FixedFab";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 import { useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -18,15 +20,14 @@ import Typography from "@material-ui/core/Typography";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
-import { BASE_PATH } from "context";
+import { BASE_PATH, StoreContext } from "context";
+import { useContext } from "react";
 import { navigate } from "@reach/router";
-import StyledTableHead from "components/table/StyledTableHead";
-import shortid from "shortid";
 
 function Catalog() {
     const [tabIndex, setTabIndex] = useState(0);
 
-    function onTabChange(_, index) {
+    function onTabChange(event, index) {
         setTabIndex(index);
     }
 
@@ -51,15 +52,29 @@ function Catalog() {
                     <Tab label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && <BaseRolesInfo />}
-            {tabIndex === 1 && <ExtraRolesInfo />}
+            {tabIndex === 0 && (
+                <TabContainer>
+                    <BaseRoulesTable />
+                </TabContainer>
+            )}
+            {tabIndex === 1 && (
+                <TabContainer>
+                    <ExtraRoulesTable />
+                </TabContainer>
+            )}
         </Layout>
     );
 }
 
-function BaseRolesInfo() {
+function TabContainer(props) {
+    return <Typography component="div">{props.children}</Typography>;
+}
+
+function BaseRoulesTable() {
+    const store = useContext(StoreContext);
+
     function onFabClick() {
-        navigate(BASE_PATH + "loyality/add-base");
+        navigate(BASE_PATH + "/loyality/add-base");
     }
 
     return (
@@ -67,7 +82,11 @@ function BaseRolesInfo() {
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <StyledTableHead>
+                        <TableHead
+                            css={css`
+                                background-color: #b0bec5;
+                            `}
+                        >
                             <TableRow>
                                 <HeaderTableCell>Название</HeaderTableCell>
                                 <HeaderTableCell>Тип</HeaderTableCell>
@@ -75,47 +94,60 @@ function BaseRolesInfo() {
                                 <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </StyledTableHead>
+                        </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Стандартное правило
-                                </LinkTableCell>
-                                <TableCell>Списание</TableCell>
-                                <TableCell>Расстояние</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Дальние поездки
-                                </LinkTableCell>
-                                <TableCell>Начисление</TableCell>
-                                <TableCell>Стоимость</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Стандартное правлило
-                                </LinkTableCell>
-                                <TableCell>Начисление</TableCell>
-                                <TableCell>Стоимость</TableCell>
-                                <TableCell>Не активно</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
+                            {store.baseLoyaltyProgram.programs.map(program => {
+                                let style = "";
+
+                                if (program.status === "Активно") {
+                                    style = "color: green;";
+                                }
+
+                                return (
+                                    <TableRow key={program.id}>
+                                        <LinkTableCell to="#">{program.title}</LinkTableCell>
+                                        <TableCell>{program.type}</TableCell>
+                                        <TableCell>{program.condition}</TableCell>
+                                        <TableCell
+                                            css={css`
+                                                ${style}
+                                            `}
+                                        >
+                                            {program.status}
+                                        </TableCell>
+                                        <TableCellMoreIcon />
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab onClick={onFabClick} />
+            <Fab
+                css={css`
+                    position: absolute;
+                    right: 50px;
+                    bottom: 50px;
+                    background-color: #263238;
+                    color: white;
+
+                    :hover {
+                        background-color: #455a64;
+                    }
+                `}
+                onClick={onFabClick}
+            >
+                <AddIcon />
+            </Fab>
         </Grid>
     );
 }
 
-function ExtraRolesInfo() {
+function ExtraRoulesTable() {
+    const store = useContext(StoreContext);
+
     function onFabClick() {
-        navigate(BASE_PATH + "loyality/add-extra");
+        navigate(BASE_PATH + "/loyality/add-extra");
     }
 
     return (
@@ -123,49 +155,62 @@ function ExtraRolesInfo() {
             <Grid item xs={12}>
                 <Paper>
                     <Table>
-                        <StyledTableHead>
+                        <TableHead
+                            css={css`
+                                background-color: #b0bec5;
+                            `}
+                        >
                             <TableRow>
                                 <HeaderTableCell>Название</HeaderTableCell>
                                 <HeaderTableCell>Тип</HeaderTableCell>
                                 <HeaderTableCell>Статус</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
-                        </StyledTableHead>
+                        </TableHead>
                         <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Тестовое правило
-                                </LinkTableCell>
-                                <TableCell>Списание</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `rules/${shortid()}`}>
-                                    Поездки в столицу
-                                </LinkTableCell>
-                                <TableCell>Начисление</TableCell>
-                                <ActiveTableCell>Активно</ActiveTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
+                            {store.extraLoyaltyProgram.programs.map(program => {
+                                let style = "";
+
+                                if (program.status === "Активно") {
+                                    style = "color: green;";
+                                }
+
+                                return (
+                                    <TableRow key={program.id}>
+                                        <LinkTableCell to="#">{program.title}</LinkTableCell>
+                                        <TableCell>{program.type}</TableCell>
+                                        <TableCell
+                                            css={css`
+                                                ${style}
+                                            `}
+                                        >
+                                            {program.status}
+                                        </TableCell>
+                                        <TableCellMoreIcon />
+                                    </TableRow>
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </Paper>
             </Grid>
-            <FixedFab onClick={onFabClick} />
-        </Grid>
-    );
-}
+            <Fab
+                css={css`
+                    position: absolute;
+                    right: 50px;
+                    bottom: 50px;
+                    background-color: #263238;
+                    color: white;
 
-function ActiveTableCell({ children }) {
-    return (
-        <TableCell
-            css={css`
-                color: #4caf50;
-            `}
-        >
-            {children}
-        </TableCell>
+                    :hover {
+                        background-color: #455a64;
+                    }
+                `}
+                onClick={onFabClick}
+            >
+                <AddIcon />
+            </Fab>
+        </Grid>
     );
 }
 

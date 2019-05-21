@@ -8,24 +8,37 @@ import InputLabel from "@material-ui/core/InputLabel";
 import SignForm from "components/SignForm";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Fragment, useState } from "react";
-import { BASE_PATH } from "context";
+import { Fragment, useState, useContext } from "react";
+import { StoreContext, BASE_PATH } from "context";
+import { ADD_EXTRA_LOYALTY } from "actions/extraLoyalty";
+import { getExtraLoyaltyProgramPayload } from "utils";
 import { navigate } from "@reach/router";
 import Layout from "components/Layout";
 
 export default function AddExtraLoyaltyProgram() {
     const [form, setFormValues] = useState({
         title: undefined,
-        stationStart: "moscow",
-        stationEnd: "kazan",
+        type: "Начисление",
+        stationStart: "Москва",
+        stationEnd: "Казань",
         train: "tolstoy",
         service: "vip",
         terms: undefined,
     });
+    const store = useContext(StoreContext);
 
     function onTitleChange(event) {
         setFormValues({ ...form, title: event.target.value });
         console.log("%cAddExtraLoyaltyProgram title change", "color: #2E7D32", event.target.value);
+    }
+
+    function onTypeChange(event) {
+        setFormValues({ ...form, type: event.target.value });
+        console.log(
+            "%AddBaseLoyaltyProgram points type change",
+            "color: #2E7D32",
+            event.target.value
+        );
     }
 
     function onStationStartChange(event) {
@@ -68,7 +81,11 @@ export default function AddExtraLoyaltyProgram() {
     function onFormSubmit(event) {
         console.log("%cAddExtraLoyaltyProgram submit", "color: #2E7D32", form);
         event.preventDefault();
-        // TODO: save data
+        store.extraLoyaltyProgram[ADD_EXTRA_LOYALTY]({
+            ...getExtraLoyaltyProgramPayload(),
+            ...form,
+            status: "Не активно",
+        });
         navigate(BASE_PATH + "/loyality");
     }
 
@@ -108,6 +125,21 @@ export default function AddExtraLoyaltyProgram() {
                                     />
                                 </FormControl>
                                 <FormControl required fullWidth margin="normal">
+                                    <InputLabel shrink htmlFor="type-label-placeholder">
+                                        Тип
+                                    </InputLabel>
+                                    <Select
+                                        value={form.type}
+                                        onChange={onTypeChange}
+                                        input={<Input name="type" id="type-label-placeholder" />}
+                                        displayEmpty
+                                        name="type"
+                                    >
+                                        <MenuItem value="Начисление">Начисление баллов</MenuItem>
+                                        <MenuItem value="Списание">Списание баллов</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl required fullWidth margin="normal">
                                     <InputLabel shrink htmlFor="stationStart-label-placeholder">
                                         Начальная станция
                                     </InputLabel>
@@ -123,8 +155,8 @@ export default function AddExtraLoyaltyProgram() {
                                         displayEmpty
                                         name="stationStart"
                                     >
-                                        <MenuItem value="moscow">Москва</MenuItem>
-                                        <MenuItem value="kazan">Казань</MenuItem>
+                                        <MenuItem value="Москва">Москва</MenuItem>
+                                        <MenuItem value="Казань">Казань</MenuItem>
                                     </Select>
                                 </FormControl>
                                 <FormControl required fullWidth margin="normal">

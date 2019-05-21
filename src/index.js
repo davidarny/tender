@@ -10,6 +10,8 @@ import UiStore from "models/UI";
 import { setStoreContext } from "context";
 import DealStore from "models/Deal";
 import ParticipantStore from "models/Participant";
+import BaseLoyaltyStore from "models/BaseLoyalty";
+import ExtraLoyaltyStore from "models/ExtraLoyalty";
 
 const model = types.model({
     user: UserStore,
@@ -17,6 +19,8 @@ const model = types.model({
     partner: PartnerStore,
     participant: ParticipantStore,
     deal: DealStore,
+    baseLoyaltyProgram: BaseLoyaltyStore,
+    extraLoyaltyProgram: ExtraLoyaltyStore,
 });
 
 const store = model.create({
@@ -27,6 +31,8 @@ const store = model.create({
     partner: {},
     participant: {},
     deal: {},
+    baseLoyaltyProgram: {},
+    extraLoyaltyProgram: {},
 });
 
 const StoreContext = React.createContext(store);

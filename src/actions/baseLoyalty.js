@@ -1,0 +1,1 @@
+export const ADD_BASE_LOYALTY = "ADD_BASE_LOYALTY";

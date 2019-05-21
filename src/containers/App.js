@@ -15,17 +15,27 @@ import { observer } from "mobx-react-lite";
 import Loadable from "react-loadable";
 import Loading from "components/Loading";
 import Grid from "@material-ui/core/Grid";
-import { getPartnerPayload, getDealPayload, getParticipantPayload } from "utils";
+import {
+    getPartnerPayload,
+    getDealPayload,
+    getParticipantPayload,
+    getBaseLoyaltyProgramPayload,
+    getExtraLoyaltyProgramPayload,
+} from "utils";
 import moment from "moment";
 import "moment/locale/ru";
 import cloneDeep from "lodash/cloneDeep";
 import find from "lodash/find";
 import { ADD_PARTICIPANT } from "actions/participant";
+import { ADD_BASE_LOYALTY } from "actions/baseLoyalty";
+import { ADD_EXTRA_LOYALTY } from "actions/extraLoyalty";
 
 // stub data
 import partners from "data/partner";
 import deals from "data/deal";
 import participants from "data/participant";
+import baseLoyaltyPrograms from "data/baseLoyalty";
+import extraLoyaltyPrograms from "data/extraLoyalty";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -290,6 +300,22 @@ function initStubData(store) {
                 id: partner.id,
                 participant: id,
             });
+        });
+
+        baseLoyaltyPrograms.forEach(baseLoyaltyProgram => {
+            const baseLoyaltyProgramPayload = {
+                ...getBaseLoyaltyProgramPayload(),
+                ...cloneDeep(baseLoyaltyProgram),
+            };
+            store.baseLoyaltyProgram[ADD_BASE_LOYALTY](baseLoyaltyProgramPayload);
+        });
+
+        extraLoyaltyPrograms.forEach(extraLoyaltyProgram => {
+            const extraLoyaltyProgramPayload = {
+                ...getExtraLoyaltyProgramPayload(),
+                ...cloneDeep(extraLoyaltyProgram),
+            };
+            store.extraLoyaltyProgram[ADD_EXTRA_LOYALTY](extraLoyaltyProgramPayload);
         });
     }
 }
