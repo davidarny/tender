@@ -6,7 +6,7 @@ export function getUserPayload() {
         email: "john.doe@mail.com",
         phone: "+12345678910",
         password: shortid(),
-        fullName: "Иванов Иван Иванович",
+        fullName: "Иванов Иван",
         birthDate: new Date(),
         preferredCommunicationMethod: "email",
         consentToCommunication: true,
@@ -22,7 +22,7 @@ export function getPartnerPayload(participants = []) {
         ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
-        manager: "Иванов Иван Иванович",
+        manager: "Иванов Иван",
         participants,
     };
 }
@@ -46,7 +46,7 @@ export function getDealPayload() {
 export function getParticipantPayload(partner) {
     return {
         number: random(0, Number.MAX_SAFE_INTEGER).toString(),
-        fullName: "Иванов Иван Иванович",
+        fullName: "Иванов Иван",
         partner,
         accountType: "personal",
         email: "john.doe@mail.com",
