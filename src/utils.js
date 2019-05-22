@@ -82,3 +82,10 @@ export function getRoutePayload() {
         status: 1,
     };
 }
+
+export function getTrainPayload(type) {
+    return {
+        number: shortid(),
+        type: type
+    };
+}
