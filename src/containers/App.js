@@ -20,7 +20,8 @@ import {
     getDealPayload,
     getParticipantPayload,
     getLoyaltyPayload,
-    getRoutePayload, getWagonPayload,
+    getRoutePayload,
+    getWagonPayload,
 } from "utils";
 import moment from "moment";
 import "moment/locale/ru";
@@ -97,6 +98,10 @@ const AsyncAccountProfile = Loadable({
 });
 const AsyncAddParticipant = Loadable({
     loader: () => import("containers/AddParticipant"),
+    loading: Loading,
+});
+const AsyncAddWagon = Loadable({
+    loader: () => import("containers/AddWagon"),
     loading: Loading,
 });
 
@@ -240,6 +245,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="catalog"
                                 render={() => <AsyncCatalog />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="wagons/add"
+                                render={() => <AsyncAddWagon />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}

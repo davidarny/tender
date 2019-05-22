@@ -86,6 +86,7 @@ export function getWagonPayload(type, subClass) {
     return {
         id: shortid(),
         publicId: shortid(),
+        number: shortid(),
         type: type,
         subClass: subClass,
     };

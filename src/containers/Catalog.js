@@ -171,7 +171,7 @@ function TrainsInfo() {
 
 function WagonsInfo({ wagons }) {
     function onFabClick() {
-        navigate(BASE_PATH + "/trains/add");
+        navigate(BASE_PATH + "/wagons/add");
     }
 
     const wagonTypesMap = {
@@ -210,9 +210,9 @@ function WagonsInfo({ wagons }) {
                             <TableBody>
                                 {wagons.map(wagon => (
                                     <TableRow key={wagon.id}>
-                                        <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                        <TableCell to={BASE_PATH + `/wagons/${shortid()}`}>
                                             {wagon.publicId}
-                                        </LinkTableCell>
+                                        </TableCell>
                                         <TableCell>{wagonTypesMap[wagon.type]}</TableCell>
                                         <TableCell>{wagonSubClassMap[wagon.subClass]}</TableCell>
                                     </TableRow>

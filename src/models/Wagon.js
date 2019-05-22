@@ -9,7 +9,10 @@ const Wagon = types.model({
     // ID который будет показан пользователям
     publicId: types.string,
 
-    // Тип вагона
+    // Номер вагона
+    number: types.string,
+
+    // Класс вагона
     type: types.union(
         types.literal(1), // Купейный
         types.literal(2), // Плацкартный
