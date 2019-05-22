@@ -86,7 +86,12 @@ export default function ParticipantProfile({ id }) {
                             </Tabs>
                         </AppBar>
                     </Grid>
-                    {tabIndex === 0 && <MainInfo component={ParticipantItem} />}
+                    {tabIndex === 0 && (
+                        <MainInfo
+                            component={ParticipantItem}
+                            type={get(participant, "participantType")}
+                        />
+                    )}
                     {tabIndex === 1 && <BonusCardInfo />}
                     {tabIndex === 2 && <TripsInfo />}
                 </Grid>
@@ -95,7 +100,8 @@ export default function ParticipantProfile({ id }) {
     );
 }
 
-function MainInfo({ component: ParticipantItem }) {
+function MainInfo({ component: ParticipantItem, type }) {
+    console.log(type);
     return (
         <Grid item xs={12}>
             <Paper>
@@ -109,13 +115,23 @@ function MainInfo({ component: ParticipantItem }) {
                     <ParticipantItem name="number" title="Номер участника ПЛ" />
                     <ParticipantItem name="email" title="Эл. адрес" />
                     <ParticipantItem name="phone" title="Телефон" />
-                    <ParticipantItem
-                        name="birthDate"
-                        title="Дата рождения"
-                        render={data => moment(data).format("DD MMMM YYYY")}
-                    />
-                    <ParticipantItem name="citizenship" title="Гражданство" />
-                    <ParticipantItem name="passport" title="Паспортные данные" />
+                    {type === "individual" && (
+                        <Fragment>
+                            <ParticipantItem
+                                name="birthDate"
+                                title="Дата рождения"
+                                render={data => moment(data).format("DD MMMM YYYY")}
+                            />
+                            <ParticipantItem name="citizenship" title="Гражданство" />
+                            <ParticipantItem name="passport" title="Паспортные данные" />
+                        </Fragment>
+                    )}
+                    {type === "legalEntity" && (
+                        <Fragment>
+                            <ParticipantItem name="INN" title="ИНН" />
+                            <ParticipantItem name="ORGN" title="ОРГН" />
+                        </Fragment>
+                    )}
                 </Grid>
             </Paper>
         </Grid>
@@ -124,6 +140,7 @@ function MainInfo({ component: ParticipantItem }) {
 
 MainInfo.propTypes = {
     component: PropTypes.elementType.isRequired,
+    type: PropTypes.string,
 };
 
 function BonusCardInfo() {
