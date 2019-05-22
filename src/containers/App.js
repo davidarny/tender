@@ -30,7 +30,7 @@ import find from "lodash/find";
 import { ADD_PARTICIPANT } from "actions/participant";
 import { ADD_LOYALTY } from "actions/loyalty";
 import { ADD_ROUTE } from "actions/route";
-import { ADD_TRAIN } from 'actions/train'
+import { ADD_TRAIN } from "actions/train";
 
 // stub data
 import partners from "data/partner";
@@ -38,7 +38,7 @@ import deals from "data/deal";
 import participants from "data/participant";
 import routes from "data/routes";
 import loyalties from "data/loyalty";
-import trains from 'data/train'
+import trains from "data/train";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -326,8 +326,8 @@ function initStubData(store) {
                 ...getTrainPayload(train.type),
                 ...cloneDeep(train),
             };
-            store.train[ADD_TRAIN](payload)
-        })
+            store.train[ADD_TRAIN](payload);
+        });
     }
 }
 

@@ -118,6 +118,14 @@ function TrainsInfo({ trains }) {
         navigate(BASE_PATH + "/trains/add");
     }
 
+    const trainTypesMap = {
+        1: "Скорый круглогодичный",
+        2: "Скорый сезонного и разового обращения",
+        3: "Пассажирский круглогодичный",
+        4: "Высокоскоростной",
+        5: "Скоростной",
+    };
+
     return (
         <Grid container>
             <Grid item xs={12}>
@@ -130,19 +138,19 @@ function TrainsInfo({ trains }) {
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        {trains &&
-                        <TableBody>
-                            {trains.map(train => (
-                                <TableRow key={train.id}>
-                                    <LinkTableCell to={BASE_PATH + `/trains/${train.id}`}>
-                                        {train.number}
-                                    </LinkTableCell>
-                                    <TableCell>{train.type}</TableCell>
-                                    <TableCellMoreIcon />
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                        }
+                        {trains && (
+                            <TableBody>
+                                {trains.map(train => (
+                                    <TableRow key={train.id}>
+                                        <LinkTableCell to={BASE_PATH + `/trains/${train.id}`}>
+                                            {train.number}
+                                        </LinkTableCell>
+                                        <TableCell>{trainTypesMap[train.type]}</TableCell>
+                                        <TableCellMoreIcon />
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
                 </Paper>
             </Grid>
