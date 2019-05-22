@@ -105,7 +105,6 @@ export default function ParticipantProfile({ id }) {
 }
 
 function MainInfo({ component: ParticipantItem, type }) {
-    console.log(type);
     return (
         <Grid item xs={12}>
             <Paper>

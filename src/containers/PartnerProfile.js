@@ -131,7 +131,7 @@ function ParticipantsInfo({ participants }) {
             <TableBody>
                 {participants.map(participant => {
                     return (
-                        <TableRow>
+                        <TableRow key={participant.id}>
                             <LinkTableCell to={BASE_PATH + `/participants/${participant.id}`}>
                                 {participant.fullName}
                             </LinkTableCell>
