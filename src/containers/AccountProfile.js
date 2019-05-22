@@ -18,7 +18,7 @@ import TableRow from "@material-ui/core/TableRow";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import StyledTableHead from "components/table/StyledTableHead";
-import { getUniqueIdOfLength, getRandomLetter } from "utils";
+import { getUniqueIdOfLength } from "utils";
 
 export default function AccountProfile({ id }) {
     const [tabIndex, setTabIndex] = useState(0);
@@ -40,7 +40,7 @@ export default function AccountProfile({ id }) {
                         `}
                     >
                         <span>Счёт №</span>
-                        <span>{getRandomLetter()}</span>
+                        <span>P</span>
                         <span>{getUniqueIdOfLength(2)}</span>
                         <span>_</span>
                         <span>{getUniqueIdOfLength(12)}</span>
