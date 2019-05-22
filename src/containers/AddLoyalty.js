@@ -96,6 +96,8 @@ export default function AddLoyalty({ type }) {
             ...form,
             loyaltyType: type,
             status: 2,
+            property: `${form.points} балов за каждые ${form.distance} км`,
+            trains: "116C, 858A, 032A-Лев Толстой",
         });
         navigate(BASE_PATH + "/loyalty");
     }
