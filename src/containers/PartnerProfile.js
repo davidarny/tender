@@ -23,6 +23,7 @@ import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
+import { GET_PARTICIPANTS_OF_PARTNER } from "actions/partner";
 
 export default function PartnerProfile({ id }) {
     const store = useContext(StoreContext);
@@ -71,7 +72,14 @@ export default function PartnerProfile({ id }) {
                         <Grid item xs={12}>
                             <Paper>
                                 {tabIndex === 0 && <MainInfo component={PartnerItem} />}
-                                {tabIndex === 1 && <ParticipantsInfo />}
+                                {tabIndex === 1 && (
+                                    <ParticipantsInfo
+                                        participants={store.partner[GET_PARTICIPANTS_OF_PARTNER]({
+                                            partnerId: id,
+                                            model: store.participant,
+                                        })}
+                                    />
+                                )}
                                 {tabIndex === 2 && <DealsInfo deals={store.deal.deals} />}
                             </Paper>
                         </Grid>
@@ -105,41 +113,33 @@ MainInfo.propTypes = {
 };
 
 function ParticipantsInfo({ participants }) {
+    const accountTypesMap = {
+        personal: "Личный",
+        corporate: "Корпоративный",
+        family: "Семейный",
+    };
+
     return (
         <Table>
             <StyledTableHead>
                 <TableRow>
-                    <HeaderTableCell>Номер УПЛ</HeaderTableCell>
                     <HeaderTableCell>ФИО</HeaderTableCell>
+                    <HeaderTableCell>Тип</HeaderTableCell>
                     <HeaderTableCell align="right" />
                 </TableRow>
             </StyledTableHead>
             <TableBody>
-                <TableRow>
-                    <TableCell>1545673513</TableCell>
-                    <LinkTableCell>Иванов Иван Иванович</LinkTableCell>
-                    <TableCellMoreIcon />
-                </TableRow>
-                <TableRow>
-                    <TableCell>1545673513</TableCell>
-                    <LinkTableCell>Мельников Рустам Фахитович</LinkTableCell>
-                    <TableCellMoreIcon />
-                </TableRow>
-                <TableRow>
-                    <TableCell>1545673513</TableCell>
-                    <LinkTableCell>Меньшиков Владимир Александрович</LinkTableCell>
-                    <TableCellMoreIcon />
-                </TableRow>
-                <TableRow>
-                    <TableCell>1545673513</TableCell>
-                    <LinkTableCell>Дюжев Алексей Станиславович</LinkTableCell>
-                    <TableCellMoreIcon />
-                </TableRow>
-                <TableRow>
-                    <TableCell>1545673513</TableCell>
-                    <LinkTableCell>Лер Максим Евгеньевич</LinkTableCell>
-                    <TableCellMoreIcon />
-                </TableRow>
+                {participants.map(participant => {
+                    return (
+                        <TableRow>
+                            <LinkTableCell to={BASE_PATH + `/participants/${participant.id}`}>
+                                {participant.fullName}
+                            </LinkTableCell>
+                            <TableCell>{accountTypesMap[participant.accountType]}</TableCell>
+                            <TableCellMoreIcon />
+                        </TableRow>
+                    );
+                })}
             </TableBody>
         </Table>
     );
