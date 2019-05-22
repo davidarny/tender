@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, css } from "@emotion/core";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { StoreContext, BASE_PATH } from "context";
 import { GET_PARTICIPANT_BY_ID } from "actions/participant";
 import Grid from "@material-ui/core/Grid";
@@ -151,13 +151,13 @@ MainInfo.propTypes = {
 
 function BonusCardInfo({ type }) {
     const prefix = getAccountPrefix(type);
-    const accounts = [
+    const accounts = useRef([
         prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
         prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
         prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
         prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-    ];
-    const [account, setAccount] = useState(first(accounts));
+    ]);
+    const [account, setAccount] = useState(first(accounts.current));
 
     function onAccountChange(event) {
         console.log("%cBonusCardInfo account change", "color: #795548", event.target.value);
@@ -205,8 +205,10 @@ function BonusCardInfo({ type }) {
                                     name="accountNumber"
                                     onChange={onAccountChange}
                                 >
-                                    {accounts.map(account => (
-                                        <MenuItem value={account}>{account}</MenuItem>
+                                    {accounts.current.map(account => (
+                                        <MenuItem key={account} value={account}>
+                                            {account}
+                                        </MenuItem>
                                     ))}
                                 </Select>
                             )}
@@ -376,9 +378,13 @@ ParticipantProfile.propTypes = {
 
 function getAccountPrefix(type) {
     if (type === "individual") {
+        // Префикс личного счёта
         return "P";
     }
     if (type === "legalEntity") {
+        // Префикс корпоративного счёта
         return "C";
     }
+    // Неопределённый префикс
+    return "U";
 }
