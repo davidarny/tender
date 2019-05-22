@@ -55,7 +55,7 @@ function Catalog() {
             </AppBar>
             {tabIndex === 0 && <RoutesInfo routes={store.route.routes} />}
             {tabIndex === 1 && <TrainsInfo trains={store.train.trains} />}
-            {tabIndex === 2 && <WagonsInfo />}
+            {tabIndex === 2 && <WagonsInfo wagons={store.wagon.wagons} />}
         </Layout>
     );
 }
@@ -163,10 +163,29 @@ TrainsInfo.propTypes = {
     trains: PropTypes.array.isRequired,
 };
 
-function WagonsInfo() {
+function WagonsInfo({ wagons }) {
     function onFabClick() {
-        navigate(BASE_PATH + "/trains/add");
+        navigate(BASE_PATH + "/wagons/add");
     }
+
+    const wagonTypesMap = {
+        1: "Купейный",
+        2: "Плацкартный",
+        3: "Сидячий",
+        4: "Люкс (СВ)",
+        5: "Мягкий",
+        6: "Общий",
+        7: "«Стриж»",
+    };
+    const wagonSubClassMap = {
+        1: "2Э",
+        2: "2Т",
+        3: "1Р",
+        4: "1Э",
+        5: "1А",
+        6: "3В",
+        7: "1Е",
+    };
 
     return (
         <Grid container>
@@ -177,60 +196,23 @@ function WagonsInfo() {
                             <TableRow>
                                 <HeaderTableCell>Идентификатор</HeaderTableCell>
                                 <HeaderTableCell>Класс</HeaderTableCell>
+                                <HeaderTableCell>Подкласс</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    558875
-                                </LinkTableCell>
-                                <TableCell>Купейный</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    993121
-                                </LinkTableCell>
-                                <TableCell>Плацкартный</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    2123312
-                                </LinkTableCell>
-                                <TableCell>Сидячий</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    5588917
-                                </LinkTableCell>
-                                <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    1128917
-                                </LinkTableCell>
-                                <TableCell>Мягкий</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    5588917
-                                </LinkTableCell>
-                                <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    1128917
-                                </LinkTableCell>
-                                <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                        </TableBody>
+                        {wagons && (
+                            <TableBody>
+                                {wagons.map(wagon => (
+                                    <TableRow key={wagon.id}>
+                                        <TableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                            {wagon.publicId}
+                                        </TableCell>
+                                        <TableCell>{wagonTypesMap[wagon.type]}</TableCell>
+                                        <TableCell>{wagonSubClassMap[wagon.subClass]}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
                 </Paper>
             </Grid>
@@ -238,5 +220,9 @@ function WagonsInfo() {
         </Grid>
     );
 }
+
+WagonsInfo.propTypes = {
+    wagons: PropTypes.array.isRequired,
+};
 
 export default observer(Catalog);

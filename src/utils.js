@@ -83,9 +83,19 @@ export function getRoutePayload() {
     };
 }
 
+export function getWagonPayload(type, subClass) {
+    return {
+        id: shortid(),
+        publicId: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        number: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        type: type,
+        subClass: subClass,
+    };
+}
+
 export function getTrainPayload(type) {
     return {
         number: shortid(),
-        type: type
+        type: type,
     };
 }

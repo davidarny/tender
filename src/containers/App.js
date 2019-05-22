@@ -21,6 +21,7 @@ import {
     getParticipantPayload,
     getLoyaltyPayload,
     getRoutePayload,
+    getWagonPayload,
     getTrainPayload,
 } from "utils";
 import moment from "moment";
@@ -30,6 +31,7 @@ import find from "lodash/find";
 import { ADD_PARTICIPANT } from "actions/participant";
 import { ADD_LOYALTY } from "actions/loyalty";
 import { ADD_ROUTE } from "actions/route";
+import { ADD_WAGON } from "actions/wagon";
 import { ADD_TRAIN } from "actions/train";
 
 // stub data
@@ -38,6 +40,7 @@ import deals from "data/deal";
 import participants from "data/participant";
 import routes from "data/routes";
 import loyalties from "data/loyalty";
+import wagons from "data/wagon";
 import trains from "data/train";
 
 const AsyncPartners = Loadable({
@@ -106,6 +109,10 @@ const AsyncAddParticipant = Loadable({
 });
 const AsyncAddTrain = Loadable({
     loader: () => import("containers/AddTrain"),
+    loading: Loading,
+});
+const AsyncAddWagon = Loadable({
+    loader: () => import("containers/AddWagon"),
     loading: Loading,
 });
 
@@ -252,6 +259,11 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
+                                path="wagons/add"
+                                render={() => <AsyncAddWagon />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
                                 path="trains/add"
                                 render={() => <AsyncAddTrain />}
                             />
@@ -337,6 +349,14 @@ function initStubData(store) {
                 ...cloneDeep(loyalty),
             };
             store.loyalty[ADD_LOYALTY](payload);
+        });
+
+        wagons.forEach(wagon => {
+            const payload = {
+                ...getWagonPayload(wagon.type, wagon.subClass),
+                ...cloneDeep(wagon),
+            };
+            store.wagon[ADD_WAGON](payload);
         });
 
         trains.forEach(train => {
