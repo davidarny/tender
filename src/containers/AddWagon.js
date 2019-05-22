@@ -72,41 +72,40 @@ export default function AddWagon() {
                     <SignForm
                         noIcon
                         title="Добавление вагона"
-                        button="Добавить"
+                        button="ДОБАВИТЬ"
                         onSubmit={onFormSubmit}
                         controls={() => (
                             <Fragment>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel htmlFor="wagon-public-id">
+                                    <InputLabel htmlFor="wagonPublicId">
                                         Идентификатор вагона
                                     </InputLabel>
                                     <Input
-                                        id="wagon-public-id"
-                                        name="wagon-public-id"
-                                        autoComplete="wagon-public-id"
+                                        id="wagonPublicId"
+                                        name="wagonPublicId"
+                                        autoComplete="wagonPublicId"
                                         autoFocus
                                         onChange={onPublicIdChange}
                                     />
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel htmlFor="wagon-number">Номер вагона</InputLabel>
+                                    <InputLabel htmlFor="wagonNumber">Номер вагона</InputLabel>
                                     <Input
-                                        id="wagon-number"
-                                        name="wagon-number"
-                                        autoComplete="wagon-number"
+                                        id="wagonNumber"
+                                        name="wagonNumber"
+                                        autoComplete="wagonNumber"
                                         onChange={onNumberChange}
                                     />
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel shrink htmlFor="wagon-type">
+                                    <InputLabel shrink htmlFor="wagonType">
                                         Класс
                                     </InputLabel>
                                     <Select
                                         value={form.type}
                                         onChange={onTypeChange}
-                                        input={<Input name="wagon-type" id="wagon-type" />}
-                                        displayEmpty
-                                        name="wagon-type"
+                                        input={<Input name="wagonType" id="wagonType" />}
+                                        name="wagonType"
                                     >
                                         <MenuItem value="1">Купейный</MenuItem>
                                         <MenuItem value="2">Плацкартный</MenuItem>
@@ -118,15 +117,14 @@ export default function AddWagon() {
                                     </Select>
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel shrink htmlFor="wagon-subclass">
+                                    <InputLabel shrink htmlFor="wagonSubclass">
                                         Подкласс
                                     </InputLabel>
                                     <Select
                                         value={form.subClass}
                                         onChange={onSubClassChange}
-                                        input={<Input name="wagon-subclass" id="wagon-subclass" />}
-                                        displayEmpty
-                                        name="wagon-subclass"
+                                        input={<Input name="wagonSubclass" id="wagonSubclass" />}
+                                        name="wagonSubclass"
                                     >
                                         <MenuItem value="1">2Э</MenuItem>
                                         <MenuItem value="2">2Т</MenuItem>
