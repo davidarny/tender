@@ -254,7 +254,7 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="catalog"
+                                path="catalog/*"
                                 render={() => <AsyncCatalog />}
                             />
                             <PrivateRoute

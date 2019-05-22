@@ -21,19 +21,32 @@ import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import shortid from "shortid";
 import { BASE_PATH, StoreContext } from "context";
-import { navigate } from "@reach/router";
+import { navigate, Router, Link } from "@reach/router";
 import PropTypes from "prop-types";
+import RouteMatcher from "components/RouteMatcher";
 
 function Catalog() {
     const store = useContext(StoreContext);
     const [tabIndex, setTabIndex] = useState(0);
 
-    function onTabChange(_, index) {
-        setTabIndex(index);
-    }
-
     return (
         <Layout>
+            <RouteMatcher
+                routes={[
+                    {
+                        paths: ["", "routes"],
+                        render: () => setTabIndex(0),
+                    },
+                    {
+                        path: "trains",
+                        render: () => setTabIndex(1),
+                    },
+                    {
+                        path: "wagons",
+                        render: () => setTabIndex(2),
+                    },
+                ]}
+            />
             <Grid container>
                 <Typography
                     variant="h2"
@@ -47,15 +60,17 @@ function Catalog() {
                 </Typography>
             </Grid>
             <AppBar position="static">
-                <Tabs value={tabIndex} onChange={onTabChange}>
-                    <Tab label="Маршруты следования" />
-                    <Tab label="Каталог поездов" />
-                    <Tab label="Каталог вагонов" />
+                <Tabs value={tabIndex}>
+                    <Tab component={Link} to="routes" label="Маршруты следования" />
+                    <Tab component={Link} to="trains" label="Каталог поездов" />
+                    <Tab component={Link} to="wagons" label="Каталог вагонов" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && <RoutesInfo routes={store.route.routes} />}
-            {tabIndex === 1 && <TrainsInfo trains={store.train.trains} />}
-            {tabIndex === 2 && <WagonsInfo wagons={store.wagon.wagons} />}
+            <Router>
+                <RoutesInfo path="routes" default routes={store.route.routes} />
+                <TrainsInfo path="trains" trains={store.train.trains} />
+                <WagonsInfo path="wagons" wagons={store.wagon.wagons} />
+            </Router>
         </Layout>
     );
 }
