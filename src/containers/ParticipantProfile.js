@@ -219,6 +219,7 @@ function BonusCardInfo() {
                             <TableRow>
                                 <HeaderTableCell>Дата и время</HeaderTableCell>
                                 <HeaderTableCell>Баллы</HeaderTableCell>
+                                <HeaderTableCell>Метки</HeaderTableCell>
                                 <HeaderTableCell>Комментарий</HeaderTableCell>
                             </TableRow>
                         </StyledTableHead>
@@ -226,21 +227,25 @@ function BonusCardInfo() {
                             <TableRow>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
                                 <PointsTableCell add>+ 350</PointsTableCell>
+                                <TableCell>Баллы АО "Альфа-Банк"</TableCell>
                                 <TableCell>Начисление при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
                                 <PointsTableCell>- 350</PointsTableCell>
+                                <TableCell>Баллы RADISSON HOTEL GROUP</TableCell>
                                 <TableCell>Списание при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
                                 <PointsTableCell add>+ 80</PointsTableCell>
+                                <TableCell>Баллы Окко</TableCell>
                                 <TableCell>По акции "На майские в Питер"</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
                                 <PointsTableCell add>+ 700</PointsTableCell>
+                                <TableCell>Баллы РФСО "Локомотив"</TableCell>
                                 <TableCell>Трансфер баллов</TableCell>
                             </TableRow>
                         </TableBody>
