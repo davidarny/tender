@@ -101,7 +101,7 @@ function MainInfo({ component: PartnerItem }) {
         >
             <PartnerItem name="INN" title="ИНН" />
             <PartnerItem name="ORGN" title="ОРГН" />
-            <PartnerItem name="manager" title="Менеджер" />
+            <PartnerItem name="manager" title="Контактное лицо" />
             <PartnerItem name="email" title="Эл. адрес" defaultValue="example@mail.com" />
             <PartnerItem name="phone" title="Телефон" defaultValue="+7 (111) 222-33-44" />
         </Grid>
