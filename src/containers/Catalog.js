@@ -55,7 +55,7 @@ function Catalog() {
             </AppBar>
             {tabIndex === 0 && <RoutesInfo routes={store.route.routes} />}
             {tabIndex === 1 && <TrainsInfo />}
-            {tabIndex === 2 && <WagonsInfo wagons={store.wagon.wagons}/>}
+            {tabIndex === 2 && <WagonsInfo wagons={store.wagon.wagons} />}
         </Layout>
     );
 }
@@ -169,10 +169,29 @@ function TrainsInfo() {
     );
 }
 
-function WagonsInfo({wagons}) {
+function WagonsInfo({ wagons }) {
     function onFabClick() {
         navigate(BASE_PATH + "/trains/add");
     }
+
+    const wagonTypesMap = {
+        1: "Купейный",
+        2: "Плацкартный",
+        3: "Сидячий",
+        4: "Люкс (СВ)",
+        5: "Мягкий",
+        6: "Общий",
+        7: "«Стриж»",
+    };
+    const wagonSubClassMap = {
+        1: "2Э",
+        2: "2Т",
+        3: "1Р",
+        4: "1Э",
+        5: "1А",
+        6: "3В",
+        7: "1Е",
+    };
 
     return (
         <Grid container>
@@ -187,19 +206,19 @@ function WagonsInfo({wagons}) {
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        {wagons &&
-                        <TableBody>
-                            {wagons.map(wagon => (
-                                <TableRow key={wagon.id}>
-                                    <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                        {wagon.publicId}
-                                    </LinkTableCell>
-                                    <TableCell>{wagon.type}</TableCell>
-                                    <TableCell>{wagon.subClass}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                        }
+                        {wagons && (
+                            <TableBody>
+                                {wagons.map(wagon => (
+                                    <TableRow key={wagon.id}>
+                                        <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                            {wagon.publicId}
+                                        </LinkTableCell>
+                                        <TableCell>{wagonTypesMap[wagon.type]}</TableCell>
+                                        <TableCell>{wagonSubClassMap[wagon.subClass]}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
                 </Paper>
             </Grid>

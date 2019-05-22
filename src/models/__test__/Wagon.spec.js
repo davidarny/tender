@@ -23,8 +23,8 @@ describe("wagon model", () => {
     });
 
     it("should handle ADD_WAGON", () => {
-        const type = "Купейный";
-        const subClass = "some sub class";
+        const type = 1;
+        const subClass = 1;
         const { id: wagonId } = store.wagon[ADD_WAGON](getWagonPayload(type, subClass));
 
         const addedWagon = find(store.wagon.wagons, { id: wagonId });
@@ -35,8 +35,8 @@ describe("wagon model", () => {
     });
 
     it("should handle GET_WAGON_BY_ID", () => {
-        const type = "Купейный";
-        const subClass = "some sub class";
+        const type = 1;
+        const subClass = 1;
         const { id: wagonId } = store.wagon[ADD_WAGON](getWagonPayload(type, subClass));
         const wagon = store.wagon[GET_WAGON_BY_ID]({ id: wagonId });
         expect(wagon).to.have.property("id", wagonId);

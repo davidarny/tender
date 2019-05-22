@@ -9,17 +9,27 @@ const Wagon = types.model({
     // ID который будет показан пользователям
     publicId: types.string,
 
+    // Тип вагона
     type: types.union(
-        types.literal("Купейный"),
-        types.literal("Плацкартный"),
-        types.literal("Сидячий"),
-        types.literal("Люкс (СВ)"),
-        types.literal("Мягкий"),
-        types.literal("Общий"),
-        types.literal("«Стриж»")
+        types.literal(1), // Купейный
+        types.literal(2), // Плацкартный
+        types.literal(3), // Сидячий
+        types.literal(4), // Люкс (СВ)
+        types.literal(5), // Мягкий
+        types.literal(6), // Общий
+        types.literal(7) // «Стриж»
     ),
 
-    subClass: types.string,
+    // Подкласс
+    subClass: types.union(
+        types.literal(1), // 2Э
+        types.literal(2), // 2Т
+        types.literal(3), // 1Р
+        types.literal(4), // 1Э
+        types.literal(5), // 1А
+        types.literal(6), // 3В
+        types.literal(7) // 1Е
+    ),
 });
 
 const WagonStore = types
