@@ -14,7 +14,6 @@ import Paper from "@material-ui/core/Paper";
 import { navigate } from "@reach/router";
 import { BASE_PATH, StoreContext } from "context";
 import { useContext } from "react";
-import sample from "lodash/sample";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import HeaderTableCell from "components/table/HeaderTableCell";
@@ -22,7 +21,12 @@ import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 
 function Partners() {
     const store = useContext(StoreContext);
-    const categories = ["Банки", "Отели", "Отдых и развлечения", "Другие"];
+    const categoryNamesMap = {
+        banks: "Банки",
+        hotels: "Отели",
+        relax: "Отдых и развлечения",
+        other: "Другие",
+    };
 
     function onFabClick() {
         navigate(BASE_PATH + "/partners/add");
@@ -62,7 +66,9 @@ function Partners() {
                                             >
                                                 {partner.title}
                                             </LinkTableCell>
-                                            <TableCell>{sample(categories)}</TableCell>
+                                            <TableCell>
+                                                {categoryNamesMap[partner.category]}
+                                            </TableCell>
                                             <TableCellMoreIcon />
                                         </TableRow>
                                     );

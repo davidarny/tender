@@ -54,7 +54,7 @@ function Catalog() {
                 </Tabs>
             </AppBar>
             {tabIndex === 0 && <RoutesInfo routes={store.route.routes} />}
-            {tabIndex === 1 && <TrainsInfo />}
+            {tabIndex === 1 && <TrainsInfo trains={store.train.trains} />}
             {tabIndex === 2 && <WagonsInfo wagons={store.wagon.wagons} />}
         </Layout>
     );
@@ -113,10 +113,18 @@ RoutesInfo.propTypes = {
     routes: PropTypes.array.isRequired,
 };
 
-function TrainsInfo() {
+function TrainsInfo({ trains }) {
     function onFabClick() {
         navigate(BASE_PATH + "/trains/add");
     }
+
+    const trainTypesMap = {
+        1: "Скорый круглогодичный",
+        2: "Скорый сезонного и разового обращения",
+        3: "Пассажирский круглогодичный",
+        4: "Высокоскоростной",
+        5: "Скоростной",
+    };
 
     return (
         <Grid container>
@@ -126,41 +134,23 @@ function TrainsInfo() {
                         <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Номер поезда</HeaderTableCell>
+                                <HeaderTableCell>Тип поезда</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
-                        <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
-                                    116С
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
-                                    858А
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
-                                    032А-Лев Толстой
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
-                                    100Э
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/trains/${shortid()}`}>
-                                    133А
-                                </LinkTableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                        </TableBody>
+                        {trains && (
+                            <TableBody>
+                                {trains.map(train => (
+                                    <TableRow key={train.id}>
+                                        <LinkTableCell to={BASE_PATH + `/trains/${train.id}`}>
+                                            {train.number}
+                                        </LinkTableCell>
+                                        <TableCell>{trainTypesMap[train.type]}</TableCell>
+                                        <TableCellMoreIcon />
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
                 </Paper>
             </Grid>
@@ -168,6 +158,10 @@ function TrainsInfo() {
         </Grid>
     );
 }
+
+TrainsInfo.propTypes = {
+    trains: PropTypes.array.isRequired,
+};
 
 function WagonsInfo({ wagons }) {
     function onFabClick() {

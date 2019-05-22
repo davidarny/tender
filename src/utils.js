@@ -24,6 +24,7 @@ export function getPartnerPayload(participants = []) {
         preferredCommunicationMethod: "phone",
         manager: "Иванов Иван",
         participants,
+        category: "relax",
     };
 }
 
@@ -89,5 +90,12 @@ export function getWagonPayload(type, subClass) {
         number: random(0, Number.MAX_SAFE_INTEGER).toString(),
         type: type,
         subClass: subClass,
+    };
+}
+
+export function getTrainPayload(type) {
+    return {
+        number: shortid(),
+        type: type,
     };
 }

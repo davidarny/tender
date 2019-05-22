@@ -29,6 +29,7 @@ import shortid from "shortid";
 import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
+import { GET_PARTNER_BY_ID } from "actions/partner";
 
 export default function ParticipantProfile({ id }) {
     const store = useContext(StoreContext);
@@ -44,9 +45,12 @@ export default function ParticipantProfile({ id }) {
             if ("citizenship" in document) {
                 document.citizenship = get(translations, document.citizenship);
             }
+            if ("partner" in document) {
+                document.partner = store.partner[GET_PARTNER_BY_ID]({ id: document.partner }).title;
+            }
             setParticipant(document);
         }
-    }, [id, store.participant]);
+    }, [id, store.participant, store.partner]);
 
     function onTabChange(_, index) {
         setTabIndex(index);
@@ -86,7 +90,12 @@ export default function ParticipantProfile({ id }) {
                             </Tabs>
                         </AppBar>
                     </Grid>
-                    {tabIndex === 0 && <MainInfo component={ParticipantItem} />}
+                    {tabIndex === 0 && (
+                        <MainInfo
+                            component={ParticipantItem}
+                            type={get(participant, "participantType")}
+                        />
+                    )}
                     {tabIndex === 1 && <BonusCardInfo />}
                     {tabIndex === 2 && <TripsInfo />}
                 </Grid>
@@ -95,7 +104,7 @@ export default function ParticipantProfile({ id }) {
     );
 }
 
-function MainInfo({ component: ParticipantItem }) {
+function MainInfo({ component: ParticipantItem, type }) {
     return (
         <Grid item xs={12}>
             <Paper>
@@ -109,13 +118,24 @@ function MainInfo({ component: ParticipantItem }) {
                     <ParticipantItem name="number" title="Номер участника ПЛ" />
                     <ParticipantItem name="email" title="Эл. адрес" />
                     <ParticipantItem name="phone" title="Телефон" />
-                    <ParticipantItem
-                        name="birthDate"
-                        title="Дата рождения"
-                        render={data => moment(data).format("DD MMMM YYYY")}
-                    />
-                    <ParticipantItem name="citizenship" title="Гражданство" />
-                    <ParticipantItem name="passport" title="Паспортные данные" />
+                    {type === "individual" && (
+                        <Fragment>
+                            <ParticipantItem
+                                name="birthDate"
+                                title="Дата рождения"
+                                render={data => moment(data).format("DD MMMM YYYY")}
+                            />
+                            <ParticipantItem name="citizenship" title="Гражданство" />
+                            <ParticipantItem name="passport" title="Паспортные данные" />
+                        </Fragment>
+                    )}
+                    {type === "legalEntity" && (
+                        <Fragment>
+                            <ParticipantItem name="partner" title="Компания" />
+                            <ParticipantItem name="INN" title="ИНН" />
+                            <ParticipantItem name="ORGN" title="ОРГН" />
+                        </Fragment>
+                    )}
                 </Grid>
             </Paper>
         </Grid>
@@ -124,6 +144,7 @@ function MainInfo({ component: ParticipantItem }) {
 
 MainInfo.propTypes = {
     component: PropTypes.elementType.isRequired,
+    type: PropTypes.string,
 };
 
 function BonusCardInfo() {
@@ -219,6 +240,7 @@ function BonusCardInfo() {
                             <TableRow>
                                 <HeaderTableCell>Дата и время</HeaderTableCell>
                                 <HeaderTableCell>Баллы</HeaderTableCell>
+                                <HeaderTableCell>Метки</HeaderTableCell>
                                 <HeaderTableCell>Комментарий</HeaderTableCell>
                             </TableRow>
                         </StyledTableHead>
@@ -226,21 +248,25 @@ function BonusCardInfo() {
                             <TableRow>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
                                 <PointsTableCell add>+ 350</PointsTableCell>
+                                <TableCell>Баллы АО "Альфа-Банк"</TableCell>
                                 <TableCell>Начисление при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
                                 <PointsTableCell>- 350</PointsTableCell>
+                                <TableCell>Баллы RADISSON HOTEL GROUP</TableCell>
                                 <TableCell>Списание при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
                                 <PointsTableCell add>+ 80</PointsTableCell>
+                                <TableCell>Баллы Окко</TableCell>
                                 <TableCell>По акции "На майские в Питер"</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
                                 <PointsTableCell add>+ 700</PointsTableCell>
+                                <TableCell>Баллы РФСО "Локомотив"</TableCell>
                                 <TableCell>Трансфер баллов</TableCell>
                             </TableRow>
                         </TableBody>

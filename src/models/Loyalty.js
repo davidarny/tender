@@ -1,6 +1,7 @@
 import { types } from "mobx-state-tree";
-import { ADD_LOYALTY, GET_LOYALTY_BY_TYPE } from "actions/loyalty";
+import { ADD_LOYALTY, GET_LOYALTY_BY_TYPE, GET_LOYALTY_BY_ID } from "actions/loyalty";
 import shortid from "shortid";
+import find from "lodash/find";
 
 const Loyalty = types.model({
     id: types.identifier,
@@ -46,6 +47,10 @@ const LoyaltyStore = types
             const payload = { id: shortid(), ...program };
             self.loyalties.push(payload);
             return payload;
+        },
+
+        [GET_LOYALTY_BY_ID]({ id }) {
+            return find(self.loyalties, { id });
         },
 
         [GET_LOYALTY_BY_TYPE]({ type }) {

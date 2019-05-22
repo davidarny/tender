@@ -23,7 +23,7 @@ import get from "lodash/get";
 
 function Participants() {
     const store = useContext(StoreContext);
-    const types = {
+    const accountTypesMap = {
         personal: "Личный",
         corporate: "Корпоративный",
         family: "Семейный",
@@ -72,7 +72,9 @@ function Participants() {
                                                 {participant.fullName}
                                             </LinkTableCell>
                                             <TableCell>{get(partner, "title")}</TableCell>
-                                            <TableCell>{types[participant.type]}</TableCell>
+                                            <TableCell>
+                                                {accountTypesMap[participant.accountType]}
+                                            </TableCell>
                                             <TableCellMoreIcon />
                                         </TableRow>
                                     );

@@ -4,9 +4,11 @@ import {
     GET_PARTNER_BY_ID,
     ADD_PARTICIPANT_TO_PARTNER,
     GET_PARTNER_BY_TITLE,
+    GET_PARTICIPANTS_OF_PARTNER,
 } from "actions/partner";
 import shortid from "shortid";
 import find from "lodash/find";
+import { GET_PARTICIPANT_BY_ID } from "actions/participant";
 
 const Partner = types.model({
     // ID
@@ -36,6 +38,13 @@ const Partner = types.model({
 
     // Ref to Participants
     participants: types.array(types.string),
+
+    category: types.union(
+        types.literal("banks"),
+        types.literal("relax"),
+        types.literal("other"),
+        types.literal("hotels")
+    ),
 });
 
 const PartnerStore = types
@@ -60,6 +69,18 @@ const PartnerStore = types
         [ADD_PARTICIPANT_TO_PARTNER]({ id, participant }) {
             const partner = find(self.partners, { id });
             partner.participants.push(participant);
+        },
+
+        [GET_PARTICIPANTS_OF_PARTNER]({ partnerId, model }) {
+            const partner = find(self.partners, { id: partnerId });
+            if (partner) {
+                return partner.participants.map(participantId => {
+                    const participant = model[GET_PARTICIPANT_BY_ID]({ id: participantId });
+                    return participant;
+                });
+            } else {
+                return [];
+            }
         },
     }));
 

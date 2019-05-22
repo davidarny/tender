@@ -1,14 +1,18 @@
 [
     {
-        "title": "АО \"Альфа-Банк\""
+        "title": "АО \"Альфа-Банк\"",
+        "category": "banks"
     },
     {
-        "title": "RADISSON HOTEL GROUP"
+        "title": "RADISSON HOTEL GROUP",
+        "category": "hotels"
     },
     {
-        "title": "Окко"
+        "title": "Окко",
+        "category": "relax"
     },
     {
-        "title": "РФСО \"Локомотив\""
+        "title": "РФСО \"Локомотив\"",
+        "category": "other"
     }
 ]
