@@ -60,30 +60,29 @@ export default function AddTrain() {
                     <SignForm
                         noIcon
                         title="Добавление номера поезда"
-                        button="Добавить"
+                        button="ДОБАВИТЬ"
                         onSubmit={onFormSubmit}
                         controls={() => (
                             <Fragment>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel htmlFor="train-number">Номер поезда</InputLabel>
+                                    <InputLabel htmlFor="trainNumber">Номер поезда</InputLabel>
                                     <Input
-                                        id="train-number"
-                                        name="train-number"
-                                        autoComplete="train-number"
+                                        id="trainNumber"
+                                        name="trainNumber"
+                                        autoComplete="trainNumber"
                                         autoFocus
                                         onChange={onNumberChange}
                                     />
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel shrink htmlFor="train-type">
+                                    <InputLabel shrink htmlFor="trainType">
                                         Тип поезда
                                     </InputLabel>
                                     <Select
                                         value={form.type}
                                         onChange={onTypeChange}
-                                        input={<Input name="train-type" id="train-type" />}
-                                        displayEmpty
-                                        name="train-type"
+                                        input={<Input name="trainType" id="trainType" />}
+                                        name="trainType"
                                     >
                                         <MenuItem value="1">Скорый круглогодичный</MenuItem>
                                         <MenuItem value="2">
