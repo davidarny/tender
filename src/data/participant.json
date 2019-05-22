@@ -2,21 +2,21 @@
     {
         "fullName": "Иванов Иван Иванович",
         "partner": "АО \"Альфа-Банк\"",
-        "type": "personal"
+        "accountType": "personal"
     },
     {
         "fullName": "Мельников Рустам Фахитович",
         "partner": "RADISSON HOTEL GROUP",
-        "type": "corporate"
+        "accountType": "corporate"
     },
     {
         "fullName": "Меньшиков Владимир Александрович",
         "partner": "Окко",
-        "type": "personal"
+        "accountType": "personal"
     },
     {
         "fullName": "Дюжев Алексей Станиславович",
         "partner": "РФСО \"Локомотив\"",
-        "type": "family"
+        "accountType": "family"
     }
 ]
