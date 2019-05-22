@@ -16,6 +16,7 @@ import get from "lodash/get";
 import first from "lodash/first";
 import PropTypes from "prop-types";
 import { BASE_PATH } from "context";
+import BackButton from "components/BackButton";
 
 function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
     return (
@@ -44,17 +45,24 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
                 `}
             >
                 <Grid item>
-                    <Hidden mdUp implementation="css">
-                        {isLoggedIn && (
-                            <IconButton
-                                color="inherit"
-                                aria-label="Open drawer"
-                                onClick={onDrawerToggle}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                        )}
-                    </Hidden>
+                    {isLoggedIn && (
+                        <Grid container alignItems="center">
+                            <Grid item>
+                                <Hidden mdUp implementation="css">
+                                    <IconButton
+                                        color="inherit"
+                                        aria-label="Open drawer"
+                                        onClick={onDrawerToggle}
+                                    >
+                                        <MenuIcon />
+                                    </IconButton>
+                                </Hidden>
+                            </Grid>
+                            <Grid item>
+                                <BackButton />
+                            </Grid>
+                        </Grid>
+                    )}
                 </Grid>
                 <Grid item>
                     <Button
