@@ -104,7 +104,7 @@ MainInfo.propTypes = {
     component: PropTypes.elementType.isRequired,
 };
 
-function ParticipantsInfo() {
+function ParticipantsInfo({ participants }) {
     return (
         <Table>
             <StyledTableHead>
@@ -144,6 +144,10 @@ function ParticipantsInfo() {
         </Table>
     );
 }
+
+ParticipantsInfo.propTypes = {
+    participants: PropTypes.array.isRequired,
+};
 
 function DealsInfo({ deals }) {
     return (
