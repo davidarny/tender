@@ -30,7 +30,7 @@ import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import { GET_PARTNER_BY_ID } from "actions/partner";
-import { getUniqueIdOfLength, getRandomLetter } from "utils";
+import { getUniqueIdOfLength } from "utils";
 import first from "lodash/first";
 
 export default function ParticipantProfile({ id }) {
@@ -98,7 +98,7 @@ export default function ParticipantProfile({ id }) {
                             type={get(participant, "participantType")}
                         />
                     )}
-                    {tabIndex === 1 && <BonusCardInfo />}
+                    {tabIndex === 1 && <BonusCardInfo type={get(participant, "participantType")} />}
                     {tabIndex === 2 && <TripsInfo />}
                 </Grid>
             </Grid>
@@ -149,13 +149,21 @@ MainInfo.propTypes = {
     type: PropTypes.string,
 };
 
-function BonusCardInfo() {
+function BonusCardInfo({ type }) {
+    const prefix = getAccountPrefix(type);
     const accounts = [
-        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
     ];
+    const [account, setAccount] = useState(first(accounts));
+
+    function onAccountChange(event) {
+        console.log("%cBonusCardInfo account change", "color: #795548", event.target.value);
+        setAccount(event.target.value);
+    }
+
     return (
         <Fragment>
             <div
@@ -192,9 +200,10 @@ function BonusCardInfo() {
                             title="Номер счёта"
                             render={value => (
                                 <Select
-                                    value={first(accounts)}
+                                    value={account}
                                     input={<Input name="accountNumber" id="accountNumber" />}
                                     name="accountNumber"
+                                    onChange={onAccountChange}
                                 >
                                     {accounts.map(account => (
                                         <MenuItem value={account}>{account}</MenuItem>
@@ -283,6 +292,10 @@ function BonusCardInfo() {
     );
 }
 
+BonusCardInfo.propTypes = {
+    type: PropTypes.string,
+};
+
 function TripsInfo() {
     return (
         <Grid item xs={12}>
@@ -360,3 +373,12 @@ function withParticipant(participant) {
 ParticipantProfile.propTypes = {
     id: PropTypes.string,
 };
+
+function getAccountPrefix(type) {
+    if (type === "individual") {
+        return "P";
+    }
+    if (type === "legalEntity") {
+        return "C";
+    }
+}

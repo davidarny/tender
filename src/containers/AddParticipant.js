@@ -41,7 +41,19 @@ export default function AddParticipant() {
     }
 
     function onAccountTypeChange(event) {
-        setFormValues({ ...form, accountType: event.target.value });
+        if (event.target.value === "corporate") {
+            setFormValues({
+                ...form,
+                participantType: "legalEntity",
+                accountType: event.target.value,
+            });
+        } else {
+            setFormValues({
+                ...form,
+                participantType: "individual",
+                accountType: event.target.value,
+            });
+        }
         console.log("%cAddParticipant account type change", "color: #795548", event.target.value);
     }
 
@@ -188,23 +200,6 @@ export default function AddParticipant() {
                                                 />
                                             </MuiPickersUtilsProvider>
                                         </FormControl>
-                                        <FormControl required fullWidth>
-                                            <InputLabel shrink htmlFor="accountType">
-                                                Тип счёта
-                                            </InputLabel>
-                                            <Select
-                                                value={form.accountType}
-                                                onChange={onAccountTypeChange}
-                                                input={
-                                                    <Input name="accountType" id="accountType" />
-                                                }
-                                                name="communicationLanguage"
-                                            >
-                                                <MenuItem value="personal">Личный</MenuItem>
-                                                <MenuItem value="corporate">Корпоративный</MenuItem>
-                                                <MenuItem value="family">Семейный</MenuItem>
-                                            </Select>
-                                        </FormControl>
                                     </Fragment>
                                 )}
                                 {form.participantType === "legalEntity" && (
@@ -238,6 +233,21 @@ export default function AddParticipant() {
                                         </FormControl>
                                     </Fragment>
                                 )}
+                                <FormControl required fullWidth>
+                                    <InputLabel shrink htmlFor="accountType">
+                                        Тип счёта
+                                    </InputLabel>
+                                    <Select
+                                        value={form.accountType}
+                                        onChange={onAccountTypeChange}
+                                        input={<Input name="accountType" id="accountType" />}
+                                        name="communicationLanguage"
+                                    >
+                                        <MenuItem value="personal">Личный</MenuItem>
+                                        <MenuItem value="corporate">Корпоративный</MenuItem>
+                                        <MenuItem value="family">Семейный</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </Fragment>
                         )}
                     />
