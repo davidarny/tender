@@ -1,10 +1,54 @@
 import shortid from "shortid";
-import random from "lodash/random";
+
+export function getUniqueId() {
+    return getUniqueIdOfLength(10);
+}
+
+export function getUniqueIdOfLength(length) {
+    return Math.floor(10 ** (length - 1) + Math.random() * 9 ** (length - 1)).toString();
+}
+
+export function getRandomLetter(capital = true) {
+    const letters = [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+    ];
+    const letter = letters[Math.floor(Math.random() * letters.length)];
+    if (capital) {
+        return letter.toUpperCase();
+    } else {
+        return letter;
+    }
+}
 
 export function getUserPayload() {
     return {
         email: "john.doe@mail.com",
-        phone: "+12345678910",
+        phone: "+" + getUniqueIdOfLength(12),
         password: shortid(),
         fullName: "Иванов Иван",
         birthDate: new Date(),
@@ -16,10 +60,10 @@ export function getUserPayload() {
 export function getPartnerPayload(participants = []) {
     return {
         title: 'АО "Альфа-Банк"',
-        phone: "+12345678910",
+        phone: "+" + getUniqueIdOfLength(12),
         email: "john.doe@mail.com",
-        INN: random(0, Number.MAX_SAFE_INTEGER).toString(),
-        ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        INN: getUniqueId(),
+        ORGN: getUniqueId(),
         communicationLanguage: "en",
         preferredCommunicationMethod: "phone",
         manager: "Иванов Иван",
@@ -46,18 +90,18 @@ export function getDealPayload() {
 
 export function getParticipantPayload(partner) {
     return {
-        number: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        number: getUniqueId(),
         fullName: "Иванов Иван",
         partner,
         accountType: "personal",
         email: "john.doe@mail.com",
-        phone: "+12345678910",
+        phone: "+" + getUniqueIdOfLength(12),
         birthDate: new Date(),
         citizenship: "RU",
-        passport: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        passport: getUniqueId(),
         participantType: "individual",
-        INN: random(0, Number.MAX_SAFE_INTEGER).toString(),
-        ORGN: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        INN: getUniqueId(),
+        ORGN: getUniqueId(),
     };
 }
 
@@ -86,8 +130,8 @@ export function getRoutePayload() {
 export function getWagonPayload(type, subClass) {
     return {
         id: shortid(),
-        publicId: random(0, Number.MAX_SAFE_INTEGER).toString(),
-        number: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        publicId: getUniqueId(),
+        number: getUniqueId(),
         type: type,
         subClass: subClass,
     };

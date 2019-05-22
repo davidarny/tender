@@ -30,6 +30,8 @@ import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import { GET_PARTNER_BY_ID } from "actions/partner";
+import { getUniqueIdOfLength, getRandomLetter } from "utils";
+import first from "lodash/first";
 
 export default function ParticipantProfile({ id }) {
     const store = useContext(StoreContext);
@@ -148,6 +150,12 @@ MainInfo.propTypes = {
 };
 
 function BonusCardInfo() {
+    const accounts = [
+        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+        getRandomLetter() + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
+    ];
     return (
         <Fragment>
             <div
@@ -182,24 +190,22 @@ function BonusCardInfo() {
                         <GridItem
                             name="accountNumber"
                             title="Номер счёта"
-                            defaultValue="0000000045652"
                             render={value => (
                                 <Select
-                                    value={value + 1}
+                                    value={first(accounts)}
                                     input={<Input name="accountNumber" id="accountNumber" />}
                                     name="accountNumber"
                                 >
-                                    <MenuItem value={value + 1}>{value + 1}</MenuItem>
-                                    <MenuItem value={value + 2}>{value + 2}</MenuItem>
-                                    <MenuItem value={value + 3}>{value + 3}</MenuItem>
-                                    <MenuItem value={value + 4}>{value + 4}</MenuItem>
+                                    {accounts.map(account => (
+                                        <MenuItem value={account}>{account}</MenuItem>
+                                    ))}
                                 </Select>
                             )}
                         />
                         <GridItem
                             name="bonusCard"
                             title="Бонусная карта"
-                            defaultValue="9002 4873 1650 (Активная)"
+                            defaultValue="9002 4873 1650 1235 (Активная)"
                         />
                         <GridItem
                             name="balance"
