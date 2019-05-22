@@ -55,7 +55,7 @@ function Catalog() {
             </AppBar>
             {tabIndex === 0 && <RoutesInfo routes={store.route.routes} />}
             {tabIndex === 1 && <TrainsInfo />}
-            {tabIndex === 2 && <WagonsInfo />}
+            {tabIndex === 2 && <WagonsInfo wagons={store.wagon.wagons}/>}
         </Layout>
     );
 }
@@ -169,7 +169,7 @@ function TrainsInfo() {
     );
 }
 
-function WagonsInfo() {
+function WagonsInfo({wagons}) {
     function onFabClick() {
         navigate(BASE_PATH + "/trains/add");
     }
@@ -183,60 +183,23 @@ function WagonsInfo() {
                             <TableRow>
                                 <HeaderTableCell>Идентификатор</HeaderTableCell>
                                 <HeaderTableCell>Класс</HeaderTableCell>
+                                <HeaderTableCell>Подкласс</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
+                        {wagons &&
                         <TableBody>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    558875
-                                </LinkTableCell>
-                                <TableCell>Купейный</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    993121
-                                </LinkTableCell>
-                                <TableCell>Плацкартный</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    2123312
-                                </LinkTableCell>
-                                <TableCell>Сидячий</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    5588917
-                                </LinkTableCell>
-                                <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    1128917
-                                </LinkTableCell>
-                                <TableCell>Мягкий</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    5588917
-                                </LinkTableCell>
-                                <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
-                            <TableRow>
-                                <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                    1128917
-                                </LinkTableCell>
-                                <TableCell>Люкс (СВ)</TableCell>
-                                <TableCellMoreIcon />
-                            </TableRow>
+                            {wagons.map(wagon => (
+                                <TableRow key={wagon.id}>
+                                    <LinkTableCell to={BASE_PATH + `/wagons/${shortid()}`}>
+                                        {wagon.publicId}
+                                    </LinkTableCell>
+                                    <TableCell>{wagon.type}</TableCell>
+                                    <TableCell>{wagon.subClass}</TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
+                        }
                     </Table>
                 </Paper>
             </Grid>
@@ -244,5 +207,9 @@ function WagonsInfo() {
         </Grid>
     );
 }
+
+WagonsInfo.propTypes = {
+    wagons: PropTypes.array.isRequired,
+};
 
 export default observer(Catalog);

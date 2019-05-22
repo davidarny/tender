@@ -81,3 +81,12 @@ export function getRoutePayload() {
         status: 1,
     };
 }
+
+export function getWagonPayload(type, subClass) {
+    return {
+        id: shortid(),
+        publicId: shortid(),
+        type: type,
+        subClass: subClass,
+    };
+}

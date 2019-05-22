@@ -20,7 +20,7 @@ import {
     getDealPayload,
     getParticipantPayload,
     getLoyaltyPayload,
-    getRoutePayload,
+    getRoutePayload, getWagonPayload,
 } from "utils";
 import moment from "moment";
 import "moment/locale/ru";
@@ -36,6 +36,8 @@ import deals from "data/deal";
 import participants from "data/participant";
 import routes from "data/routes";
 import loyalties from "data/loyalty";
+import wagons from "data/wagon";
+import { ADD_WAGON } from "actions/wagon";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -316,6 +318,14 @@ function initStubData(store) {
                 ...cloneDeep(loyalty),
             };
             store.loyalty[ADD_LOYALTY](payload);
+        });
+
+        wagons.forEach(wagon => {
+            const payload = {
+                ...getWagonPayload(wagon.type, wagon.subClass),
+                ...cloneDeep(wagon),
+            };
+            store.wagon[ADD_WAGON](payload);
         });
     }
 }

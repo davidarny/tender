@@ -1,0 +1,37 @@
+[
+    {
+        "publicId": "558875",
+        "type": "Купейный",
+        "subClass": "2Э"
+    },
+    {
+        "publicId": "993121",
+        "type": "Плацкартный",
+        "subClass": "2Т"
+    },
+    {
+        "publicId": "2123312",
+        "type": "Сидячий",
+        "subClass": "1Р"
+    },
+    {
+        "publicId": "5588917",
+        "type": "Люкс (СВ)",
+        "subClass": "1Э"
+    },
+    {
+        "publicId": "1128917",
+        "type": "Мягкий",
+        "subClass": "1А"
+    },
+    {
+        "publicId": "5588917",
+        "type": "Общий",
+        "subClass": "3В"
+    },
+    {
+        "publicId": "1128917",
+        "type": "«Стриж»",
+        "subClass": "1Е"
+    }
+]
