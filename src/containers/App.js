@@ -100,6 +100,10 @@ const AsyncAddParticipant = Loadable({
     loader: () => import("containers/AddParticipant"),
     loading: Loading,
 });
+const AsyncAddTrain = Loadable({
+    loader: () => import("containers/AddTrain"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
@@ -241,6 +245,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="catalog"
                                 render={() => <AsyncCatalog />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="trains/add"
+                                render={() => <AsyncAddTrain />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
