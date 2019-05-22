@@ -24,6 +24,7 @@ export function getPartnerPayload(participants = []) {
         preferredCommunicationMethod: "phone",
         manager: "Иванов Иван",
         participants,
+        category: "relax",
     };
 }
 

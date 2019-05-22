@@ -38,6 +38,13 @@ const Partner = types.model({
 
     // Ref to Participants
     participants: types.array(types.string),
+
+    category: types.union(
+        types.literal("banks"),
+        types.literal("relax"),
+        types.literal("other"),
+        types.literal("hotels")
+    ),
 });
 
 const PartnerStore = types
