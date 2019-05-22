@@ -23,7 +23,6 @@ import { navigate } from "@reach/router";
 import StyledTableHead from "components/table/StyledTableHead";
 import FixedFab from "components/FixedFab";
 import PropTypes from "prop-types";
-import shortid from "shortid";
 import { GET_LOYALTY_BY_TYPE } from "actions/loyalty";
 
 function Loyalty() {
@@ -99,7 +98,7 @@ function BaseRolesInfo({ loyalties }) {
                         <TableBody>
                             {loyalties.map(loyalty => (
                                 <TableRow key={loyalty.id}>
-                                    <LinkTableCell to={BASE_PATH + `/loyalty/${shortid()}`}>
+                                    <LinkTableCell to={BASE_PATH + `/loyalty/${loyalty.id}`}>
                                         {loyalty.title}
                                     </LinkTableCell>
                                     <TableCell>
@@ -155,7 +154,7 @@ function ExtraRolesInfo({ loyalties }) {
                         <TableBody>
                             {loyalties.map(loyalty => (
                                 <TableRow key={loyalty.id}>
-                                    <LinkTableCell to={BASE_PATH + `/loyalty/${shortid()}`}>
+                                    <LinkTableCell to={BASE_PATH + `/loyalty/${loyalty.id}`}>
                                         {loyalty.title}
                                     </LinkTableCell>
                                     <TableCell>
