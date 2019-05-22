@@ -1,36 +1,29 @@
 [
     {
-        "publicId": "558875",
         "type": 1,
         "subClass": 1
     },
     {
-        "publicId": "993121",
         "type": 2,
         "subClass": 2
     },
     {
-        "publicId": "2123312",
         "type": 3,
         "subClass": 3
     },
     {
-        "publicId": "5588917",
         "type": 4,
         "subClass": 4
     },
     {
-        "publicId": "1128917",
         "type": 5,
         "subClass": 5
     },
     {
-        "publicId": "5588917",
         "type": 6,
         "subClass": 6
     },
     {
-        "publicId": "1128917",
         "type": 7,
         "subClass": 7
     }

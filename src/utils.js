@@ -85,8 +85,8 @@ export function getRoutePayload() {
 export function getWagonPayload(type, subClass) {
     return {
         id: shortid(),
-        publicId: shortid(),
-        number: shortid(),
+        publicId: random(0, Number.MAX_SAFE_INTEGER).toString(),
+        number: random(0, Number.MAX_SAFE_INTEGER).toString(),
         type: type,
         subClass: subClass,
     };
