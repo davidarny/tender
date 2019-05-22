@@ -29,6 +29,7 @@ import shortid from "shortid";
 import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
+import { GET_PARTNER_BY_ID } from "actions/partner";
 
 export default function ParticipantProfile({ id }) {
     const store = useContext(StoreContext);
@@ -44,9 +45,12 @@ export default function ParticipantProfile({ id }) {
             if ("citizenship" in document) {
                 document.citizenship = get(translations, document.citizenship);
             }
+            if ("partner" in document) {
+                document.partner = store.partner[GET_PARTNER_BY_ID]({ id: document.partner }).title;
+            }
             setParticipant(document);
         }
-    }, [id, store.participant]);
+    }, [id, store.participant, store.partner]);
 
     function onTabChange(_, index) {
         setTabIndex(index);
@@ -128,6 +132,7 @@ function MainInfo({ component: ParticipantItem, type }) {
                     )}
                     {type === "legalEntity" && (
                         <Fragment>
+                            <ParticipantItem name="partner" title="Компания" />
                             <ParticipantItem name="INN" title="ИНН" />
                             <ParticipantItem name="ORGN" title="ОРГН" />
                         </Fragment>
