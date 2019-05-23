@@ -45,6 +45,9 @@ const Partner = types.model({
         types.literal("other"),
         types.literal("hotels")
     ),
+
+    // Иконка банка
+    icon: types.maybe(types.string),
 });
 
 const PartnerStore = types

@@ -24,6 +24,7 @@ import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import { GET_PARTICIPANTS_OF_PARTNER } from "actions/partner";
+import AlphaBankBigIcon from "assets/alpha-bank-big.png";
 
 export default function PartnerProfile({ id }) {
     const store = useContext(StoreContext);
@@ -71,7 +72,9 @@ export default function PartnerProfile({ id }) {
                         </Grid>
                         <Grid item xs={12}>
                             <Paper>
-                                {tabIndex === 0 && <MainInfo component={PartnerItem} />}
+                                {tabIndex === 0 && (
+                                    <MainInfo icon={get(partner, "icon")} component={PartnerItem} />
+                                )}
                                 {tabIndex === 1 && (
                                     <ParticipantsInfo
                                         participants={store.partner[GET_PARTICIPANTS_OF_PARTNER]({
@@ -90,7 +93,11 @@ export default function PartnerProfile({ id }) {
     );
 }
 
-function MainInfo({ component: PartnerItem }) {
+function MainInfo({ component: PartnerItem, icon }) {
+    const partnerIconsMap = {
+        alpha: AlphaBankBigIcon,
+    };
+
     return (
         <Grid
             container
@@ -99,11 +106,28 @@ function MainInfo({ component: PartnerItem }) {
                 padding-top: 20px;
             `}
         >
-            <PartnerItem name="INN" title="ИНН" />
-            <PartnerItem name="ORGN" title="ОРГН" />
-            <PartnerItem name="manager" title="Контактное лицо" />
-            <PartnerItem name="email" title="Эл. адрес" defaultValue="example@mail.com" />
-            <PartnerItem name="phone" title="Телефон" defaultValue="+7 (111) 222-33-44" />
+            <Grid item xs={6}>
+                <Grid container>
+                    <PartnerItem name="INN" title="ИНН" />
+                    <PartnerItem name="ORGN" title="ОРГН" />
+                    <PartnerItem name="manager" title="Контактное лицо" />
+                    <PartnerItem name="email" title="Эл. адрес" defaultValue="example@mail.com" />
+                    <PartnerItem name="phone" title="Телефон" defaultValue="+7 (111) 222-33-44" />
+                </Grid>
+            </Grid>
+            <Grid item xs={6}>
+                {icon && (
+                    <div
+                        css={css`
+                            border: 1px dashed #ccc;
+                            display: inline-block;
+                            padding: 10px;
+                        `}
+                    >
+                        <img src={partnerIconsMap[icon]} alt="" />
+                    </div>
+                )}
+            </Grid>
         </Grid>
     );
 }

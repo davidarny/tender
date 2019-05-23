@@ -32,6 +32,8 @@ import LinkTableCell from "components/table/LinkTableCell";
 import { GET_PARTNER_BY_ID } from "actions/partner";
 import { getUniqueIdOfLength } from "utils";
 import first from "lodash/first";
+import AlphaBankIcon from "assets/alpha-bank.png";
+import TreeIcon from "assets/tree-icon.png";
 
 export default function ParticipantProfile({ id }) {
     const store = useContext(StoreContext);
@@ -255,36 +257,74 @@ function BonusCardInfo({ type }) {
                     <Table>
                         <StyledTableHead>
                             <TableRow>
-                                <HeaderTableCell>Дата и время</HeaderTableCell>
+                                <HeaderTableCell />
+                                <HeaderTableCell>№ транзакции</HeaderTableCell>
+                                <HeaderTableCell>Дата транзакции</HeaderTableCell>
+                                <HeaderTableCell>Сумма транзакции</HeaderTableCell>
                                 <HeaderTableCell>Баллы</HeaderTableCell>
-                                <HeaderTableCell>Метки</HeaderTableCell>
                                 <HeaderTableCell>Комментарий</HeaderTableCell>
                             </TableRow>
                         </StyledTableHead>
                         <TableBody>
                             <TableRow>
+                                <TableCell>
+                                    <img src={AlphaBankIcon} alt="" />
+                                </TableCell>
+                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
+                                    00240441222
+                                </LinkTableCell>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
+                                <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 350</PointsTableCell>
-                                <TableCell>Баллы АО "Альфа-Банк"</TableCell>
                                 <TableCell>Начисление при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
+                                <TableCell>
+                                    <img src={AlphaBankIcon} alt="" />
+                                </TableCell>
+                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
+                                    00240441222
+                                </LinkTableCell>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
+                                <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell>- 350</PointsTableCell>
-                                <TableCell>Баллы RADISSON HOTEL GROUP</TableCell>
                                 <TableCell>Списание при покупке билета №124578</TableCell>
                             </TableRow>
                             <TableRow>
+                                <TableCell>
+                                    <img src={AlphaBankIcon} alt="" />
+                                </TableCell>
+                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
+                                    00240441222
+                                </LinkTableCell>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
+                                <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 80</PointsTableCell>
-                                <TableCell>Баллы Окко</TableCell>
                                 <TableCell>По акции "На майские в Питер"</TableCell>
                             </TableRow>
                             <TableRow>
+                                <TableCell>
+                                    <img src={TreeIcon} alt="" />
+                                </TableCell>
+                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
+                                    00240441222
+                                </LinkTableCell>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
+                                <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 700</PointsTableCell>
-                                <TableCell>Баллы РФСО "Локомотив"</TableCell>
                                 <TableCell>Трансфер баллов</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>
+                                    <img src={AlphaBankIcon} alt="" />
+                                </TableCell>
+                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
+                                    00240441222
+                                </LinkTableCell>
+                                <TableCell>1 мая 2019, 15:30</TableCell>
+                                <TableCell>2 500 руб.</TableCell>
+                                <PointsTableCell>- 40</PointsTableCell>
+                                <TableCell>Списание при покупке билета №124578</TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
