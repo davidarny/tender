@@ -24,12 +24,12 @@ export default function AddRoute() {
 
     function onStartStationChange(event) {
         setFormValues({ ...form, startStation: event.target.value });
-        console.log("%cStart station change", "color: #2E7D32", event.target.value);
+        console.log("%cAddRoute start station change", "color: #2E7D32", event.target.value);
     }
 
     function onEndStationChange(event) {
         setFormValues({ ...form, endStation: event.target.value });
-        console.log("%cEnd station change", "color: #2E7D32", event.target.value);
+        console.log("%cAddRoute end station change", "color: #2E7D32", event.target.value);
     }
 
     function onFormSubmit(event) {
