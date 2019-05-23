@@ -101,9 +101,9 @@ function RoutesInfo({ routes }) {
                             <TableBody>
                                 {routes.map(route => (
                                     <TableRow key={route.id}>
-                                        <LinkTableCell to={BASE_PATH + `/routes/${route.id}`}>
+                                        <TableCell>
                                             {route.startStation} - {route.endStation}
-                                        </LinkTableCell>
+                                        </TableCell>
                                         <TableCell
                                             css={css`
                                                 color: ${route.status === 1 ? "#4CAF50" : "black"};
@@ -157,9 +157,7 @@ function TrainsInfo({ trains }) {
                             <TableBody>
                                 {trains.map(train => (
                                     <TableRow key={train.id}>
-                                        <LinkTableCell to={BASE_PATH + `/trains/${train.id}`}>
-                                            {train.number}
-                                        </LinkTableCell>
+                                        <TableCell>{train.number}</TableCell>
                                         <TableCell>{trainTypesMap[train.type]}</TableCell>
                                         <TableCellMoreIcon />
                                     </TableRow>
