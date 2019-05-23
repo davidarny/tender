@@ -19,11 +19,12 @@ import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import { BASE_PATH, StoreContext } from "context";
 import { useContext } from "react";
-import { navigate } from "@reach/router";
+import { navigate, Router, Link } from "@reach/router";
 import StyledTableHead from "components/table/StyledTableHead";
 import FixedFab from "components/FixedFab";
 import PropTypes from "prop-types";
 import { GET_LOYALTY_BY_TYPE } from "actions/loyalty";
+import RouteMatcher from "components/RouteMatcher";
 
 function Loyalty() {
     const store = useContext(StoreContext);
@@ -35,6 +36,18 @@ function Loyalty() {
 
     return (
         <Layout>
+            <RouteMatcher
+                routes={[
+                    {
+                        paths: ["", "tab/base"],
+                        render: () => setTabIndex(0),
+                    },
+                    {
+                        path: "tab/extra",
+                        render: () => setTabIndex(1),
+                    },
+                ]}
+            />
             <Grid container>
                 <Typography
                     variant="h2"
@@ -49,16 +62,21 @@ function Loyalty() {
             </Grid>
             <AppBar position="static">
                 <Tabs value={tabIndex} onChange={onTabChange}>
-                    <Tab label="Базовые правила" />
-                    <Tab label="Дополнительные правила" />
+                    <Tab component={Link} to="tab/base" label="Базовые правила" />
+                    <Tab component={Link} to="tab/extra" label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
-            {tabIndex === 0 && (
-                <BaseRolesInfo loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "base" })} />
-            )}
-            {tabIndex === 1 && (
-                <ExtraRolesInfo loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "extra" })} />
-            )}
+            <Router>
+                <BaseRolesInfo
+                    path="tab/base"
+                    default
+                    loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "base" })}
+                />
+                <ExtraRolesInfo
+                    path="tab/extra"
+                    loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "extra" })}
+                />
+            </Router>
         </Layout>
     );
 }

@@ -278,7 +278,7 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="loyalty"
+                                path="loyalty/*"
                                 render={() => <AsyncLoyaltyProgram />}
                             />
                             <PrivateRoute
