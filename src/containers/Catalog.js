@@ -17,7 +17,6 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import StyledTableHead from "components/table/StyledTableHead";
 import HeaderTableCell from "components/table/HeaderTableCell";
-import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import shortid from "shortid";
 import { BASE_PATH, StoreContext } from "context";
@@ -101,9 +100,9 @@ function RoutesInfo({ routes }) {
                             <TableBody>
                                 {routes.map(route => (
                                     <TableRow key={route.id}>
-                                        <LinkTableCell to={BASE_PATH + `/routes/${route.id}`}>
+                                        <TableCell>
                                             {route.startStation} - {route.endStation}
-                                        </LinkTableCell>
+                                        </TableCell>
                                         <TableCell
                                             css={css`
                                                 color: ${route.status === 1 ? "#4CAF50" : "black"};
@@ -157,9 +156,7 @@ function TrainsInfo({ trains }) {
                             <TableBody>
                                 {trains.map(train => (
                                     <TableRow key={train.id}>
-                                        <LinkTableCell to={BASE_PATH + `/trains/${train.id}`}>
-                                            {train.number}
-                                        </LinkTableCell>
+                                        <TableCell>{train.number}</TableCell>
                                         <TableCell>{trainTypesMap[train.type]}</TableCell>
                                         <TableCellMoreIcon />
                                     </TableRow>
