@@ -17,7 +17,6 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import StyledTableHead from "components/table/StyledTableHead";
 import HeaderTableCell from "components/table/HeaderTableCell";
-import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import shortid from "shortid";
 import { BASE_PATH, StoreContext } from "context";
