@@ -115,6 +115,10 @@ const AsyncAddWagon = Loadable({
     loader: () => import("containers/AddWagon"),
     loading: Loading,
 });
+const AsyncAddRoute = Loadable({
+    loader: () => import("containers/AddRoute"),
+    loading: Loading,
+});
 
 function App() {
     const store = useContext(StoreContext);
@@ -266,6 +270,11 @@ function App() {
                                 isLoggedIn={store.ui.isLoggedIn}
                                 path="trains/add"
                                 render={() => <AsyncAddTrain />}
+                            />
+                            <PrivateRoute
+                                isLoggedIn={store.ui.isLoggedIn}
+                                path="routes/add"
+                                render={() => <AsyncAddRoute />}
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
