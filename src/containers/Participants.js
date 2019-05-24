@@ -71,7 +71,6 @@ function Participants() {
                                             >
                                                 {participant.fullName}
                                             </LinkTableCell>
-                                            <TableCell>{get(partner, "title")}</TableCell>
                                             <TableCell>
                                                 {accountTypesMap[participant.accountType]}
                                             </TableCell>
