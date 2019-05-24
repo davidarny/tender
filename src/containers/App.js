@@ -23,6 +23,8 @@ import {
     getRoutePayload,
     getWagonPayload,
     getTrainPayload,
+    getWagonTypePayload,
+    getWagonClassPayload,
 } from "utils";
 import moment from "moment";
 import "moment/locale/ru";
@@ -42,6 +44,10 @@ import routes from "data/routes";
 import loyalties from "data/loyalty";
 import wagons from "data/wagon";
 import trains from "data/train";
+import wagonTypes from "data/wagonType";
+import wagonClasses from "data/wagonClass";
+import { ADD_WAGON_TYPE } from "actions/wagonType";
+import { ADD_WAGON_CLASS } from "actions/wagonClass";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -360,10 +366,32 @@ function initStubData(store) {
             store.loyalty[ADD_LOYALTY](payload);
         });
 
-        wagons.forEach(wagon => {
+        wagonTypes.forEach(wagonType => {
             const payload = {
-                ...getWagonPayload(wagon.type, wagon.subClass),
+                ...getWagonTypePayload(),
+                ...cloneDeep(wagonType),
+            };
+            store.wagonType[ADD_WAGON_TYPE](payload);
+        });
+
+        wagonClasses.forEach(wagonClass => {
+            const wagonType = find(store.wagonType.wagonTypes, { type: wagonClass.type });
+            const payload = {
+                ...getWagonClassPayload(),
+                ...cloneDeep(wagonClass),
+                type: wagonType ? wagonType.id : "",
+            };
+            store.wagonClass[ADD_WAGON_CLASS](payload);
+        });
+
+        wagons.forEach(wagon => {
+            const wagonType = find(store.wagonType.wagonTypes, { type: wagon.type });
+            const wagonClass = find(store.wagonClass.wagonClasses, { name: wagon.class });
+            const payload = {
+                ...getWagonPayload(),
                 ...cloneDeep(wagon),
+                type: wagonType ? wagonType.id : "",
+                class: wagonClass ? wagonClass.id : "",
             };
             store.wagon[ADD_WAGON](payload);
         });

@@ -36,7 +36,7 @@ export default function AddRoute() {
         console.log("%cAddRoute submit", "color: #2E7D32", form);
         event.preventDefault();
         store.route[ADD_ROUTE]({ ...getRoutePayload(), ...form });
-        navigate(BASE_PATH + "/catalog");
+        navigate(BASE_PATH + "/catalog/routes");
     }
 
     return (

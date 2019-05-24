@@ -14,6 +14,8 @@ import RouteStore from "models/Route";
 import LoyaltyStore from "models/Loyalty";
 import WagonStore from "models/Wagon";
 import TrainStore from "models/Train";
+import WagonTypeStore from "models/WagonType";
+import WagonClassStore from "models/WagonClass";
 
 const model = types.model({
     user: UserStore,
@@ -23,6 +25,8 @@ const model = types.model({
     deal: DealStore,
     route: RouteStore,
     loyalty: LoyaltyStore,
+    wagonType: WagonTypeStore,
+    wagonClass: WagonClassStore,
     wagon: WagonStore,
     train: TrainStore,
 });
@@ -37,6 +41,8 @@ const store = model.create({
     deal: {},
     route: {},
     loyalty: {},
+    wagonType: {},
+    wagonClass: {},
     wagon: {},
     train: {},
 });

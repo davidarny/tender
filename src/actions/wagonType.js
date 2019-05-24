@@ -1,0 +1,2 @@
+export const ADD_WAGON_TYPE = "ADD_WAGON_TYPE";
+export const GET_WAGON_TYPE_BY_ID = "GET_WAGON_TYPE_BY_ID";
