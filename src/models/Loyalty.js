@@ -33,7 +33,9 @@ const Loyalty = types.model({
 
     service: types.maybe(types.union(types.literal("vip"), types.literal("nonVip"))),
 
-    terms: types.maybe(types.string),
+    termsStart: types.maybe(types.string),
+
+    termsEnd: types.maybe(types.string),
 
     train: types.maybe(types.string),
 });

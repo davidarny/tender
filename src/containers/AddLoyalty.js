@@ -14,6 +14,8 @@ import { ADD_LOYALTY } from "actions/loyalty";
 import { getLoyaltyPayload } from "utils";
 import { navigate } from "@reach/router";
 import Layout from "components/Layout";
+import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
+import MomentUtils from "@date-io/moment";
 
 export default function AddLoyalty({ type }) {
     const [form, setFormValues] = useState({
@@ -28,7 +30,8 @@ export default function AddLoyalty({ type }) {
         startStation: undefined,
         endStation: undefined,
         service: "vip",
-        terms: undefined,
+        termsStart: undefined,
+        termsEnd: undefined,
         loyaltyType: type,
     });
     const store = useContext(StoreContext);
@@ -68,9 +71,14 @@ export default function AddLoyalty({ type }) {
         console.log("%cAddLoyalty condition change", "color: #3F51B5", event.target.value);
     }
 
-    function onTermsChange(event) {
-        setFormValues({ ...form, terms: event.target.value });
-        console.log("%cAddLoyalty terms change", "color: #3F51B5", event.target.value);
+    function onTermsStartChange(date) {
+        setFormValues({ ...form, termsStart: date });
+        console.log("%cAddLoyalty terms start change", "color: #3F51B5", date);
+    }
+
+    function onTermsEndChange(date) {
+        setFormValues({ ...form, termsEnd: date });
+        console.log("%cAddLoyalty terms end change", "color: #3F51B5", date);
     }
 
     function onPropertyChange(event) {
@@ -98,6 +106,8 @@ export default function AddLoyalty({ type }) {
             status: 2,
             property: `${form.points || 345} баллов за каждые ${form.distance || 600} км`,
             trains: "116C, 858A, 032A-Лев Толстой",
+            termsStart: "",
+            termsEnd: "",
         });
         navigate(BASE_PATH + `/loyalty/${form.loyaltyType}`);
     }
@@ -293,15 +303,31 @@ export default function AddLoyalty({ type }) {
                                             </Select>
                                         </FormControl>
                                         <FormControl margin="normal" required fullWidth>
-                                            <InputLabel htmlFor="terms">
-                                                Срок действия, периодичность
-                                            </InputLabel>
-                                            <Input
-                                                id="terms"
-                                                name="terms"
-                                                autoComplete="terms"
-                                                onChange={onTermsChange}
-                                            />
+                                            <MuiPickersUtilsProvider
+                                                utils={MomentUtils}
+                                                css={css`
+                                                    width: 40%;
+                                                `}
+                                            >
+                                                <DatePicker
+                                                    id="terms"
+                                                    margin="normal"
+                                                    label="Срок действия, начало"
+                                                    value={form.termsStart}
+                                                    onChange={onTermsStartChange}
+                                                    format="DD MMM YYYY"
+                                                />
+                                            </MuiPickersUtilsProvider>
+                                            <MuiPickersUtilsProvider utils={MomentUtils}>
+                                                <DatePicker
+                                                    id="terms"
+                                                    margin="normal"
+                                                    label="Срок действия, конец"
+                                                    value={form.termsEnd}
+                                                    onChange={onTermsEndChange}
+                                                    format="DD MMM YYYY"
+                                                />
+                                            </MuiPickersUtilsProvider>
                                         </FormControl>
                                     </Fragment>
                                 )}
