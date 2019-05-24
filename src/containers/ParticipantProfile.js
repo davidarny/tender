@@ -268,7 +268,7 @@ function BonusCardInfo({ type }) {
                         <TableBody>
                             <TableRow>
                                 <TableCell>
-                                    <img src={AlphaBankIcon} alt="" />
+                                    <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
                                 <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
                                     00240441222
@@ -280,7 +280,7 @@ function BonusCardInfo({ type }) {
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <img src={AlphaBankIcon} alt="" />
+                                    <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
                                 <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
                                     00240441222
@@ -292,7 +292,7 @@ function BonusCardInfo({ type }) {
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <img src={AlphaBankIcon} alt="" />
+                                    <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
                                 <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
                                     00240441222
@@ -304,7 +304,7 @@ function BonusCardInfo({ type }) {
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <img src={TreeIcon} alt="" />
+                                    <img src={TreeIcon} alt='логотип "RADISSON HOTEL GROUP"' />
                                 </TableCell>
                                 <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
                                     00240441222
@@ -316,7 +316,7 @@ function BonusCardInfo({ type }) {
                             </TableRow>
                             <TableRow>
                                 <TableCell>
-                                    <img src={AlphaBankIcon} alt="" />
+                                    <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
                                 <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
                                     00240441222

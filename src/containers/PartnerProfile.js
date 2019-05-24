@@ -95,7 +95,10 @@ export default function PartnerProfile({ id }) {
 
 function MainInfo({ component: PartnerItem, icon }) {
     const partnerIconsMap = {
-        alpha: AlphaBankBigIcon,
+        alpha: {
+            src: AlphaBankBigIcon,
+            alt: 'логотип АО "Альфа-Банк"',
+        },
     };
 
     return (
@@ -116,7 +119,7 @@ function MainInfo({ component: PartnerItem, icon }) {
                 </Grid>
             </Grid>
             <Grid item xs={6}>
-                {icon && (
+                {icon && partnerIconsMap[icon] && (
                     <div
                         css={css`
                             border: 1px dashed #ccc;
@@ -124,7 +127,7 @@ function MainInfo({ component: PartnerItem, icon }) {
                             padding: 10px;
                         `}
                     >
-                        <img src={partnerIconsMap[icon]} alt="" />
+                        <img src={partnerIconsMap[icon].src} alt={partnerIconsMap[icon].alt} />
                     </div>
                 )}
             </Grid>

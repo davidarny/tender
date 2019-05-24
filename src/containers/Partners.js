@@ -34,7 +34,10 @@ function Partners() {
     }
 
     const partnerIconsMap = {
-        alpha: AlphaBankIcon,
+        alpha: {
+            src: AlphaBankIcon,
+            alt: 'логотип АО "Альфа-Банк"',
+        },
     };
 
     return (
@@ -68,10 +71,10 @@ function Partners() {
                                     return (
                                         <TableRow key={partner.id}>
                                             <TableCell width={20}>
-                                                {partner.icon && (
+                                                {partner.icon && partnerIconsMap[partner.icon] && (
                                                     <img
-                                                        src={partnerIconsMap[partner.icon]}
-                                                        alt=""
+                                                        src={partnerIconsMap[partner.icon].src}
+                                                        alt={partnerIconsMap[partner.icon].alt}
                                                     />
                                                 )}
                                             </TableCell>
