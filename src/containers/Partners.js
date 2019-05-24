@@ -18,6 +18,7 @@ import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
+import AlphaBankIcon from "assets/alpha-bank.png";
 
 function Partners() {
     const store = useContext(StoreContext);
@@ -31,6 +32,13 @@ function Partners() {
     function onFabClick() {
         navigate(BASE_PATH + "/partners/add");
     }
+
+    const partnerIconsMap = {
+        alpha: {
+            src: AlphaBankIcon,
+            alt: 'логотип АО "Альфа-Банк"',
+        },
+    };
 
     return (
         <Layout>
@@ -52,6 +60,7 @@ function Partners() {
                         <Table>
                             <StyledTableHead>
                                 <TableRow>
+                                    <HeaderTableCell />
                                     <HeaderTableCell>Партнер</HeaderTableCell>
                                     <HeaderTableCell>Категория</HeaderTableCell>
                                     <HeaderTableCell align="right" />
@@ -61,6 +70,14 @@ function Partners() {
                                 {store.partner.partners.map(partner => {
                                     return (
                                         <TableRow key={partner.id}>
+                                            <TableCell width={20}>
+                                                {partner.icon && partnerIconsMap[partner.icon] && (
+                                                    <img
+                                                        src={partnerIconsMap[partner.icon].src}
+                                                        alt={partnerIconsMap[partner.icon].alt}
+                                                    />
+                                                )}
+                                            </TableCell>
                                             <LinkTableCell
                                                 to={BASE_PATH + `/partners/${partner.id}`}
                                             >
