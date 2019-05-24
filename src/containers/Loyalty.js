@@ -39,11 +39,11 @@ function Loyalty() {
             <RouteMatcher
                 routes={[
                     {
-                        paths: ["", "tab/base"],
+                        paths: ["", "base"],
                         render: () => setTabIndex(0),
                     },
                     {
-                        path: "tab/extra",
+                        path: "extra",
                         render: () => setTabIndex(1),
                     },
                 ]}
@@ -62,18 +62,18 @@ function Loyalty() {
             </Grid>
             <AppBar position="static">
                 <Tabs value={tabIndex} onChange={onTabChange}>
-                    <Tab component={Link} to="tab/base" label="Базовые правила" />
-                    <Tab component={Link} to="tab/extra" label="Дополнительные правила" />
+                    <Tab component={Link} to="base" label="Базовые правила" />
+                    <Tab component={Link} to="extra" label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
             <Router>
                 <BaseRolesInfo
-                    path="tab/base"
+                    path="base"
                     default
                     loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "base" })}
                 />
                 <ExtraRolesInfo
-                    path="tab/extra"
+                    path="extra"
                     loyalties={store.loyalty[GET_LOYALTY_BY_TYPE]({ type: "extra" })}
                 />
             </Router>
@@ -116,7 +116,9 @@ function BaseRolesInfo({ loyalties }) {
                         <TableBody>
                             {loyalties.map(loyalty => (
                                 <TableRow key={loyalty.id}>
-                                    <LinkTableCell to={BASE_PATH + `/loyalty/${loyalty.id}`}>
+                                    <LinkTableCell
+                                        to={BASE_PATH + `/loyalty/profile/${loyalty.id}`}
+                                    >
                                         {loyalty.title}
                                     </LinkTableCell>
                                     <TableCell>
@@ -172,7 +174,9 @@ function ExtraRolesInfo({ loyalties }) {
                         <TableBody>
                             {loyalties.map(loyalty => (
                                 <TableRow key={loyalty.id}>
-                                    <LinkTableCell to={BASE_PATH + `/loyalty/${loyalty.id}`}>
+                                    <LinkTableCell
+                                        to={BASE_PATH + `/loyalty/profile/${loyalty.id}`}
+                                    >
                                         {loyalty.title}
                                     </LinkTableCell>
                                     <TableCell>
