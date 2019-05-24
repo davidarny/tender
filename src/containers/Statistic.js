@@ -82,8 +82,7 @@ function Statistic() {
                                 <TableRow>
                                     <HeaderTableCell>Маршрут</HeaderTableCell>
                                     <HeaderTableCell>Дата</HeaderTableCell>
-                                    <HeaderTableCell>Стоимость</HeaderTableCell>
-                                    <HeaderTableCell>Баллы</HeaderTableCell>
+                                    <HeaderTableCell>Кол-во поездок</HeaderTableCell>
                                     <HeaderTableCell align="right" />
                                 </TableRow>
                             </StyledTableHead>
@@ -93,8 +92,7 @@ function Statistic() {
                                         Казань - Санкт-Петербург
                                     </LinkTableCell>
                                     <TableCell>28 мая 19</TableCell>
-                                    <TableCell>2544 р</TableCell>
-                                    <TableCell>+350</TableCell>
+                                    <TableCell>2502</TableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
@@ -102,8 +100,7 @@ function Statistic() {
                                         Владивосток - Казань
                                     </LinkTableCell>
                                     <TableCell>19 мая 19</TableCell>
-                                    <TableCell>6922 р</TableCell>
-                                    <TableCell>+700</TableCell>
+                                    <TableCell>8457</TableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
@@ -111,8 +108,7 @@ function Statistic() {
                                         Екатеринбург - Владивосток
                                     </LinkTableCell>
                                     <TableCell>15 мая 19</TableCell>
-                                    <TableCell>8974 р</TableCell>
-                                    <TableCell>+89</TableCell>
+                                    <TableCell>578</TableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
@@ -120,8 +116,7 @@ function Statistic() {
                                         Санкт-Петербург - Екатеринбург
                                     </LinkTableCell>
                                     <TableCell>12 мая 19</TableCell>
-                                    <TableCell>7899 р</TableCell>
-                                    <TableCell>+777</TableCell>
+                                    <TableCell>899</TableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
                             </TableBody>

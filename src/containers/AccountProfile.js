@@ -65,8 +65,15 @@ export default function AccountProfile({ id }) {
                                             <Table>
                                                 <StyledTableHead>
                                                     <TableRow>
+                                                        <HeaderTableCell />
                                                         <HeaderTableCell>
-                                                            Дата и время
+                                                            № транзакции
+                                                        </HeaderTableCell>
+                                                        <HeaderTableCell>
+                                                            Дата транзакции
+                                                        </HeaderTableCell>
+                                                        <HeaderTableCell>
+                                                            Сумма транзакции
                                                         </HeaderTableCell>
                                                         <HeaderTableCell>Баллы</HeaderTableCell>
                                                         <HeaderTableCell>
@@ -76,28 +83,40 @@ export default function AccountProfile({ id }) {
                                                 </StyledTableHead>
                                                 <TableBody>
                                                     <TableRow>
-                                                        <TableCell>28 мая 2019, 15:30</TableCell>
+                                                        <TableCell />
+                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>28 май, 15:30</TableCell>
+                                                        <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell add>+ 350</PointsTableCell>
                                                         <TableCell>
                                                             Начисление при покупке билета №124578
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell>19 мая 2019, 15:30</TableCell>
+                                                        <TableCell />
+                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>19 май, 15:30</TableCell>
+                                                        <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell>- 350</PointsTableCell>
                                                         <TableCell>
                                                             Списание при покупке билета №124578
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell>15 мая 2019, 15:30</TableCell>
+                                                        <TableCell />
+                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>15 май, 15:30</TableCell>
+                                                        <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell add>+ 80</PointsTableCell>
                                                         <TableCell>
                                                             По акции "На майские в Питер"
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell>12 мая 2019, 15:30</TableCell>
+                                                        <TableCell />
+                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>12 май, 15:30</TableCell>
+                                                        <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell add>+ 700</PointsTableCell>
                                                         <TableCell>Трансфер баллов</TableCell>
                                                     </TableRow>

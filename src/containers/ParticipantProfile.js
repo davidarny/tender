@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, css } from "@emotion/core";
-import { useEffect, useState, useContext, useRef } from "react";
+import { useEffect, useState, useContext } from "react";
 import { StoreContext, BASE_PATH } from "context";
 import { GET_PARTICIPANT_BY_ID } from "actions/participant";
 import Grid from "@material-ui/core/Grid";
@@ -22,16 +22,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import CreditCard from "assets/credit-card.png";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Input from "@material-ui/core/Input";
 import shortid from "shortid";
 import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import { GET_PARTNER_BY_ID } from "actions/partner";
 import { getUniqueIdOfLength } from "utils";
-import first from "lodash/first";
 import AlphaBankIcon from "assets/alpha-bank.png";
 import TreeIcon from "assets/tree-icon.png";
 
@@ -120,8 +116,6 @@ function MainInfo({ component: ParticipantItem, type }) {
                     `}
                 >
                     <ParticipantItem name="number" title="Номер участника ПЛ" />
-                    <ParticipantItem name="email" title="Эл. адрес" />
-                    <ParticipantItem name="phone" title="Телефон" />
                     {type === "individual" && (
                         <Fragment>
                             <ParticipantItem
@@ -140,6 +134,8 @@ function MainInfo({ component: ParticipantItem, type }) {
                             <ParticipantItem name="ORGN" title="ОРГН" />
                         </Fragment>
                     )}
+                    <ParticipantItem name="email" title="Эл. адрес" />
+                    <ParticipantItem name="phone" title="Телефон" />
                 </Grid>
             </Paper>
         </Grid>
@@ -153,25 +149,14 @@ MainInfo.propTypes = {
 
 function BonusCardInfo({ type }) {
     const prefix = getAccountPrefix(type);
-    const accounts = useRef([
-        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-        prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12),
-    ]);
-    const [account, setAccount] = useState(first(accounts.current));
-
-    function onAccountChange(event) {
-        console.log("%cBonusCardInfo account change", "color: #795548", event.target.value);
-        setAccount(event.target.value);
-    }
+    const account = prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12);
 
     return (
         <Fragment>
             <div
                 css={css`
                     position: absolute;
-                    top: 50px;
+                    top: 36px;
                     width: 100%;
                     max-width: 800px;
                     display: flex;
@@ -197,24 +182,7 @@ function BonusCardInfo({ type }) {
                             padding-top: 20px;
                         `}
                     >
-                        <GridItem
-                            name="accountNumber"
-                            title="Номер счёта"
-                            render={value => (
-                                <Select
-                                    value={account}
-                                    input={<Input name="accountNumber" id="accountNumber" />}
-                                    name="accountNumber"
-                                    onChange={onAccountChange}
-                                >
-                                    {accounts.current.map(account => (
-                                        <MenuItem key={account} value={account}>
-                                            {account}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            )}
-                        />
+                        <GridItem name="accountNumber" title="Номер счёта" defaultValue={account} />
                         <GridItem
                             name="bonusCard"
                             title="Бонусная карта"
@@ -345,44 +313,44 @@ function TripsInfo() {
                 <Table>
                     <StyledTableHead>
                         <TableRow>
+                            <HeaderTableCell>№ билета</HeaderTableCell>
                             <HeaderTableCell>Маршрут</HeaderTableCell>
                             <HeaderTableCell>Дата</HeaderTableCell>
                             <HeaderTableCell>Стоимость</HeaderTableCell>
-                            <HeaderTableCell>Баллы</HeaderTableCell>
                         </TableRow>
                     </StyledTableHead>
                     <TableBody>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                Казань - Санкт-Петербург
+                                0245700
                             </LinkTableCell>
+                            <TableCell>Казань - Санкт-Петербург</TableCell>
                             <TableCell>28 мая 2019</TableCell>
                             <TableCell>2544 р</TableCell>
-                            <PointsTableCell add>+ 350</PointsTableCell>
                         </TableRow>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                Владивосток - Казань
+                                0245711
                             </LinkTableCell>
+                            <TableCell>Владивосток - Казань</TableCell>
                             <TableCell>19 мая 2019</TableCell>
                             <TableCell>6922 р</TableCell>
-                            <PointsTableCell add>+ 700</PointsTableCell>
                         </TableRow>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                Екатеринбург - Владивосток
+                                0245722
                             </LinkTableCell>
+                            <TableCell>Екатеринбург - Владивосток</TableCell>
                             <TableCell>15 мая 2019</TableCell>
                             <TableCell>8974 р</TableCell>
-                            <PointsTableCell add>+ 80</PointsTableCell>
                         </TableRow>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                Санкт-Петербург - Екатеринбург
+                                0245733
                             </LinkTableCell>
+                            <TableCell>Санкт-Петербург - Екатеринбург</TableCell>
                             <TableCell>12 мая 2019</TableCell>
                             <TableCell>7899 р</TableCell>
-                            <PointsTableCell add>+ 720</PointsTableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
