@@ -23,21 +23,19 @@ describe("wagon model", () => {
     });
 
     it("should handle ADD_WAGON", () => {
-        const type = 1;
-        const subClass = 1;
-        const { id: wagonId } = store.wagon[ADD_WAGON](getWagonPayload(type, subClass));
+        const { id: wagonId, publicId, type, class: wagonClass } = store.wagon[ADD_WAGON](
+            getWagonPayload()
+        );
 
         const addedWagon = find(store.wagon.wagons, { id: wagonId });
         expect(wagonId).to.be.a("string");
-        expect(addedWagon).to.have.property("id", wagonId);
-        expect(addedWagon).to.have.property("type", type);
-        expect(addedWagon).to.have.property("subClass", subClass);
+        expect(addedWagon.publicId).to.equal(publicId);
+        expect(addedWagon.type).to.equal(type);
+        expect(addedWagon.class).to.equal(wagonClass);
     });
 
     it("should handle GET_WAGON_BY_ID", () => {
-        const type = 1;
-        const subClass = 1;
-        const { id: wagonId } = store.wagon[ADD_WAGON](getWagonPayload(type, subClass));
+        const { id: wagonId } = store.wagon[ADD_WAGON](getWagonPayload());
         const wagon = store.wagon[GET_WAGON_BY_ID]({ id: wagonId });
         expect(wagon).to.have.property("id", wagonId);
     });

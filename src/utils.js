@@ -127,13 +127,25 @@ export function getRoutePayload() {
     };
 }
 
-export function getWagonPayload(type, subClass) {
+export function getWagonTypePayload() {
     return {
-        id: shortid(),
+        type: "L",
+        name: "Люкс",
+    };
+}
+
+export function getWagonClassPayload() {
+    return {
+        name: "1А",
+        type: "L",
+    };
+}
+
+export function getWagonPayload() {
+    return {
         publicId: getUniqueId(),
-        number: getUniqueId(),
-        type: type,
-        subClass: subClass,
+        type: "L",
+        class: "1А",
     };
 }
 

@@ -36,7 +36,7 @@ export default function AddTrain() {
         console.log("%cAddPartner submit", "color: #2E7D32", form);
         event.preventDefault();
         store.train[ADD_TRAIN]({ ...getTrainPayload(form.type), ...form });
-        navigate(BASE_PATH + "/catalog");
+        navigate(BASE_PATH + "/catalog/trains");
     }
 
     return (

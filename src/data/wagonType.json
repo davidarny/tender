@@ -1,30 +1,30 @@
 [
     {
         "type": "L",
-        "class": "1А"
+        "name": "Люкс (VIP)"
     },
     {
         "type": "SV",
-        "class": "1Б"
+        "name": "СВ"
     },
     {
         "type": "K",
-        "class": "2Э"
+        "name": "Купе"
     },
     {
         "type": "P",
-        "class": "3Э"
+        "name": "Плацкартные"
     },
     {
         "type": "C",
-        "class": "1Р"
+        "name": "Сидячий"
     },
     {
         "type": "M",
-        "class": "1С"
+        "name": "Моторвагонный"
     },
     {
         "type": "O",
-        "class": "3О"
+        "name": "Общий"
     }
 ]

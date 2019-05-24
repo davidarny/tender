@@ -23,6 +23,8 @@ import { BASE_PATH, StoreContext } from "context";
 import { navigate, Router, Link } from "@reach/router";
 import PropTypes from "prop-types";
 import RouteMatcher from "components/RouteMatcher";
+import { GET_WAGON_TYPE_BY_ID } from "actions/wagonType";
+import { GET_WAGON_CLASS_BY_ID } from "actions/wagonClass";
 
 function Catalog() {
     const store = useContext(StoreContext);
@@ -66,7 +68,7 @@ function Catalog() {
                 </Tabs>
             </AppBar>
             <Router>
-                <RoutesInfo path="routes" default routes={store.route.routes} />
+                <RoutesInfo path="" default routes={store.route.routes} />
                 <TrainsInfo path="trains" trains={store.train.trains} />
                 <WagonsInfo path="wagons" wagons={store.wagon.wagons} />
             </Router>
@@ -180,24 +182,15 @@ function WagonsInfo({ wagons }) {
         navigate(BASE_PATH + "/wagons/add");
     }
 
-    const wagonTypesMap = {
-        1: "Купейный",
-        2: "Плацкартный",
-        3: "Сидячий",
-        4: "Люкс (СВ)",
-        5: "Мягкий",
-        6: "Общий",
-        7: "«Стриж»",
-    };
-    const wagonSubClassMap = {
-        1: "2Э",
-        2: "2Т",
-        3: "1Р",
-        4: "1Э",
-        5: "1А",
-        6: "3В",
-        7: "1Е",
-    };
+    const store = useContext(StoreContext);
+    function getWagonTypeNameById (id) {
+        const wagonType = store.wagonType[GET_WAGON_TYPE_BY_ID]({id});
+        return wagonType ? wagonType.name : ''
+    }
+    function getWagonClassNameById (id) {
+        const wagonClass = store.wagonClass[GET_WAGON_CLASS_BY_ID]({id});
+        return wagonClass ? wagonClass.name : ''
+    }
 
     return (
         <Grid container>
@@ -207,8 +200,8 @@ function WagonsInfo({ wagons }) {
                         <StyledTableHead>
                             <TableRow>
                                 <HeaderTableCell>Идентификатор</HeaderTableCell>
+                                <HeaderTableCell>Тип вагона</HeaderTableCell>
                                 <HeaderTableCell>Класс</HeaderTableCell>
-                                <HeaderTableCell>Подкласс</HeaderTableCell>
                                 <HeaderTableCell align="right" />
                             </TableRow>
                         </StyledTableHead>
@@ -219,8 +212,8 @@ function WagonsInfo({ wagons }) {
                                         <TableCell to={BASE_PATH + `/wagons/${shortid()}`}>
                                             {wagon.publicId}
                                         </TableCell>
-                                        <TableCell>{wagonTypesMap[wagon.type]}</TableCell>
-                                        <TableCell>{wagonSubClassMap[wagon.subClass]}</TableCell>
+                                        <TableCell>{getWagonTypeNameById(wagon.type)}</TableCell>
+                                        <TableCell>{getWagonClassNameById(wagon.class)}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
