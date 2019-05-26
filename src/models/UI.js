@@ -10,7 +10,6 @@ const UiStore = types
     .model({
         isLoggedIn: types.optional(types.boolean, false),
         drawer: types.optional(types.array(DrawerItem), [
-            { title: "Главная", url: "/" },
             { title: "Партнеры", url: "/partners" },
             { title: "Участники ПЛ", url: "/participants" },
             { title: "Акции", url: "/deals" },

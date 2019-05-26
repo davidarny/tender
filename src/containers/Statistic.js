@@ -16,8 +16,6 @@ import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
-import shortid from "shortid";
-import { BASE_PATH } from "context";
 
 function Statistic() {
     return (
@@ -88,31 +86,25 @@ function Statistic() {
                             </StyledTableHead>
                             <TableBody>
                                 <TableRow>
-                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                        Казань - Санкт-Петербург
-                                    </LinkTableCell>
+                                    <LinkTableCell fake>Казань - Санкт-Петербург</LinkTableCell>
                                     <TableCell>28 мая 19</TableCell>
                                     <TableCell>2502</TableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                        Владивосток - Казань
-                                    </LinkTableCell>
+                                    <LinkTableCell fake>Владивосток - Казань</LinkTableCell>
                                     <TableCell>19 мая 19</TableCell>
                                     <TableCell>8457</TableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
-                                        Екатеринбург - Владивосток
-                                    </LinkTableCell>
+                                    <LinkTableCell fake>Екатеринбург - Владивосток</LinkTableCell>
                                     <TableCell>15 мая 19</TableCell>
                                     <TableCell>578</TableCell>
                                     <TableCellMoreIcon />
                                 </TableRow>
                                 <TableRow>
-                                    <LinkTableCell to={BASE_PATH + `/routes/${shortid()}`}>
+                                    <LinkTableCell fake>
                                         Санкт-Петербург - Екатеринбург
                                     </LinkTableCell>
                                     <TableCell>12 мая 19</TableCell>

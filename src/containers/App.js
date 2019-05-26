@@ -211,11 +211,7 @@ function App() {
                         >
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="/"
-                                render={() => <Fragment />}
-                            />
-                            <PrivateRoute
-                                isLoggedIn={store.ui.isLoggedIn}
+                                default
                                 path="partners"
                                 render={() => <AsyncPartners />}
                             />
