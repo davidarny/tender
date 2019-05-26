@@ -7,7 +7,7 @@ import { GET_PARTICIPANT_BY_ID } from "actions/participant";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import get from "lodash/get";
-import PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
 import Layout from "components/Layout";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -27,7 +27,7 @@ import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import { GET_PARTNER_BY_ID } from "actions/partner";
-import { getUniqueIdOfLength } from "utils";
+import { getRandomAccountNumber, getUniqueIdOfLength } from "utils";
 import AlphaBankIcon from "assets/alpha-bank.png";
 import TreeIcon from "assets/tree-icon.png";
 
@@ -148,9 +148,6 @@ MainInfo.propTypes = {
 };
 
 function BonusCardInfo({ type }) {
-    const prefix = getAccountPrefix(type);
-    const account = prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12);
-
     return (
         <Fragment>
             <div
@@ -182,7 +179,11 @@ function BonusCardInfo({ type }) {
                             padding-top: 20px;
                         `}
                     >
-                        <GridItem name="accountNumber" title="Номер счёта" defaultValue={account} />
+                        <GridItem
+                            name="accountNumber"
+                            title="Номер счёта"
+                            defaultValue={getRandomAccountNumber(type)}
+                        />
                         <GridItem
                             name="bonusCard"
                             title="Бонусная карта"
@@ -238,33 +239,31 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
-                                    00240441222
-                                </LinkTableCell>
+                                <LinkTableCell fake>00240441222</LinkTableCell>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 350</PointsTableCell>
-                                <TableCell>Начисление при покупке билета №124578</TableCell>
+                                <TableCell>
+                                    Начисление при покупке билета №{getUniqueIdOfLength(6)}
+                                </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
-                                    00240441222
-                                </LinkTableCell>
+                                <LinkTableCell fake>00240441222</LinkTableCell>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell>- 350</PointsTableCell>
-                                <TableCell>Списание при покупке билета №124578</TableCell>
+                                <TableCell>
+                                    Списание при покупке билета №{getUniqueIdOfLength(6)}
+                                </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
-                                    00240441222
-                                </LinkTableCell>
+                                <LinkTableCell fake>00240441222</LinkTableCell>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 80</PointsTableCell>
@@ -274,9 +273,7 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={TreeIcon} alt='логотип "RADISSON HOTEL GROUP"' />
                                 </TableCell>
-                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
-                                    00240441222
-                                </LinkTableCell>
+                                <LinkTableCell fake>00240441222</LinkTableCell>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 700</PointsTableCell>
@@ -286,13 +283,13 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell to={BASE_PATH + `/history/${shortid()}`}>
-                                    00240441222
-                                </LinkTableCell>
+                                <LinkTableCell fake>00240441222</LinkTableCell>
                                 <TableCell>1 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell>- 40</PointsTableCell>
-                                <TableCell>Списание при покупке билета №124578</TableCell>
+                                <TableCell>
+                                    Списание при покупке билета №{getUniqueIdOfLength(6)}
+                                </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
@@ -383,16 +380,3 @@ function withParticipant(participant) {
 ParticipantProfile.propTypes = {
     id: PropTypes.string,
 };
-
-function getAccountPrefix(type) {
-    if (type === "individual") {
-        // Префикс личного счёта
-        return "P";
-    }
-    if (type === "legalEntity") {
-        // Префикс корпоративного счёта
-        return "C";
-    }
-    // Неопределённый префикс
-    return "U";
-}

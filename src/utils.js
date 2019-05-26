@@ -8,41 +8,22 @@ export function getUniqueIdOfLength(length) {
     return Math.floor(10 ** (length - 1) + Math.random() * 9 ** (length - 1)).toString();
 }
 
-export function getRandomLetter(capital = true) {
-    const letters = [
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k",
-        "l",
-        "m",
-        "n",
-        "o",
-        "p",
-        "q",
-        "r",
-        "s",
-        "t",
-        "u",
-        "v",
-        "w",
-        "x",
-        "y",
-        "z",
-    ];
-    const letter = letters[Math.floor(Math.random() * letters.length)];
-    if (capital) {
-        return letter.toUpperCase();
-    } else {
-        return letter;
+function getAccountPrefix(type) {
+    if (type === "individual") {
+        // Префикс личного счёта
+        return "P";
     }
+    if (type === "legalEntity") {
+        // Префикс корпоративного счёта
+        return "C";
+    }
+    // Неопределённый префикс
+    return "U";
+}
+
+export function getRandomAccountNumber(type) {
+    const prefix = getAccountPrefix(type);
+    return prefix + getUniqueIdOfLength(2) + "_" + getUniqueIdOfLength(12);
 }
 
 export function getUserPayload() {

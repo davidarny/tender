@@ -21,7 +21,7 @@ import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import shortid from "shortid";
 import { BASE_PATH, StoreContext } from "context";
 import { navigate, Router, Link } from "@reach/router";
-import PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
 import RouteMatcher from "components/RouteMatcher";
 import { GET_WAGON_TYPE_BY_ID } from "actions/wagonType";
 import { GET_WAGON_CLASS_BY_ID } from "actions/wagonClass";
@@ -183,13 +183,13 @@ function WagonsInfo({ wagons }) {
     }
 
     const store = useContext(StoreContext);
-    function getWagonTypeNameById (id) {
-        const wagonType = store.wagonType[GET_WAGON_TYPE_BY_ID]({id});
-        return wagonType ? wagonType.name : ''
+    function getWagonTypeNameById(id) {
+        const wagonType = store.wagonType[GET_WAGON_TYPE_BY_ID]({ id });
+        return wagonType ? wagonType.name : "";
     }
-    function getWagonClassNameById (id) {
-        const wagonClass = store.wagonClass[GET_WAGON_CLASS_BY_ID]({id});
-        return wagonClass ? wagonClass.name : ''
+    function getWagonClassNameById(id) {
+        const wagonClass = store.wagonClass[GET_WAGON_CLASS_BY_ID]({ id });
+        return wagonClass ? wagonClass.name : "";
     }
 
     return (

@@ -8,10 +8,18 @@ export default function RouteMatcher({ routes }) {
     return routes.map(route => {
         if (route.paths) {
             return route.paths.map(path => {
-                return <Match path={path}>{props => props.match && route.render()}</Match>;
+                return (
+                    <Match key={path} path={path}>
+                        {props => props.match && route.render()}
+                    </Match>
+                );
             });
         } else if (route.path) {
-            return <Match path={route.path}>{props => props.match && route.render()}</Match>;
+            return (
+                <Match key={route.path} path={route.path}>
+                    {props => props.match && route.render()}
+                </Match>
+            );
         } else {
             return null;
         }

@@ -224,7 +224,7 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="partners/:id"
+                                path="partners/:id/*"
                                 render={props => <AsyncPartnerProfile {...props} />}
                             />
                             <PrivateRoute

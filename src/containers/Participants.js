@@ -16,10 +16,8 @@ import LinkTableCell from "components/table/LinkTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import { useContext } from "react";
 import { StoreContext, BASE_PATH } from "context";
-import { GET_PARTNER_BY_ID } from "actions/partner";
 import StyledTableHead from "components/table/StyledTableHead";
 import { navigate } from "@reach/router";
-import get from "lodash/get";
 
 function Participants() {
     const store = useContext(StoreContext);
@@ -61,9 +59,6 @@ function Participants() {
                             </StyledTableHead>
                             <TableBody>
                                 {store.participant.participants.map(participant => {
-                                    const partner = store.partner[GET_PARTNER_BY_ID]({
-                                        id: participant.partner,
-                                    });
                                     return (
                                         <TableRow key={participant.id}>
                                             <LinkTableCell
