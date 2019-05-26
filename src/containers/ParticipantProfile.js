@@ -1,8 +1,8 @@
 /** @jsx jsx */
 
-import { jsx, css } from "@emotion/core";
-import { useEffect, useState, useContext } from "react";
-import { StoreContext, BASE_PATH } from "context";
+import { css, jsx } from "@emotion/core";
+import { Fragment, useContext, useEffect, useState } from "react";
+import { BASE_PATH, StoreContext } from "context";
 import { GET_PARTICIPANT_BY_ID } from "actions/participant";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -15,7 +15,6 @@ import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 import moment from "moment";
 import { Link } from "@reach/router";
-import { Fragment } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -27,7 +26,7 @@ import GridItem from "components/GridItem";
 import StyledTableHead from "components/table/StyledTableHead";
 import LinkTableCell from "components/table/LinkTableCell";
 import { GET_PARTNER_BY_ID } from "actions/partner";
-import { getRandomAccountNumber, getUniqueIdOfLength } from "utils";
+import { getRandomAccountNumber, getUniqueId, getUniqueIdOfLength } from "utils";
 import AlphaBankIcon from "assets/alpha-bank.png";
 import TreeIcon from "assets/tree-icon.png";
 
@@ -239,7 +238,7 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 350</PointsTableCell>
@@ -251,7 +250,7 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell>- 350</PointsTableCell>
@@ -263,7 +262,7 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 80</PointsTableCell>
@@ -273,7 +272,7 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={TreeIcon} alt='логотип "RADISSON HOTEL GROUP"' />
                                 </TableCell>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 700</PointsTableCell>
@@ -283,7 +282,7 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>1 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell>- 40</PointsTableCell>
@@ -319,7 +318,7 @@ function TripsInfo() {
                     <TableBody>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                0245700
+                                {getUniqueId()}
                             </LinkTableCell>
                             <TableCell>Казань - Санкт-Петербург</TableCell>
                             <TableCell>28 мая 2019</TableCell>
@@ -327,7 +326,7 @@ function TripsInfo() {
                         </TableRow>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                0245711
+                                {getUniqueId()}
                             </LinkTableCell>
                             <TableCell>Владивосток - Казань</TableCell>
                             <TableCell>19 мая 2019</TableCell>
@@ -335,7 +334,7 @@ function TripsInfo() {
                         </TableRow>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                0245722
+                                {getUniqueId()}
                             </LinkTableCell>
                             <TableCell>Екатеринбург - Владивосток</TableCell>
                             <TableCell>15 мая 2019</TableCell>
@@ -343,7 +342,7 @@ function TripsInfo() {
                         </TableRow>
                         <TableRow>
                             <LinkTableCell to={BASE_PATH + `/trips/${shortid()}`}>
-                                0245733
+                                {getUniqueId()}
                             </LinkTableCell>
                             <TableCell>Санкт-Петербург - Екатеринбург</TableCell>
                             <TableCell>12 мая 2019</TableCell>

@@ -27,7 +27,7 @@ import { GET_PARTICIPANTS_OF_PARTNER } from "actions/partner";
 import AlphaBankBigIcon from "assets/alpha-bank-big.png";
 import RouteMatcher from "components/RouteMatcher";
 import { Router, Link } from "@reach/router";
-import { getRandomAccountNumber, getUniqueIdOfLength } from "utils";
+import { getRandomAccountNumber, getUniqueIdOfLength, getUniqueId } from "utils";
 
 export default function PartnerProfile({ id }) {
     const store = useContext(StoreContext);
@@ -146,7 +146,7 @@ function MainInfo({ component: PartnerItem, icon }) {
                         <PartnerItem
                             name="phone"
                             title="Телефон"
-                            defaultValue="+7 (111) 222-33-44"
+                            defaultValue={`+${getUniqueIdOfLength(11)}`}
                         />
                     </Grid>
                 </Grid>
@@ -235,7 +235,7 @@ function BonusCardInfo({ type }) {
                         </StyledTableHead>
                         <TableBody>
                             <TableRow>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
                                 <TableCell>{getRandomAccountNumber(type)}</TableCell>
                                 <TableCell>- 350</TableCell>
@@ -244,7 +244,7 @@ function BonusCardInfo({ type }) {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
                                 <TableCell>{getRandomAccountNumber(type)}</TableCell>
                                 <TableCell>- 350</TableCell>
@@ -253,7 +253,7 @@ function BonusCardInfo({ type }) {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
                                 <TableCell>{getRandomAccountNumber(type)}</TableCell>
                                 <TableCell>- 350</TableCell>
@@ -262,7 +262,7 @@ function BonusCardInfo({ type }) {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
                                 <TableCell>{getRandomAccountNumber(type)}</TableCell>
                                 <TableCell>- 350</TableCell>
@@ -271,7 +271,7 @@ function BonusCardInfo({ type }) {
                                 </TableCell>
                             </TableRow>
                             <TableRow>
-                                <LinkTableCell fake>00240441222</LinkTableCell>
+                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
                                 <TableCell>1 мая 2019, 15:30</TableCell>
                                 <TableCell>{getRandomAccountNumber(type)}</TableCell>
                                 <TableCell>- 350</TableCell>

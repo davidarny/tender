@@ -29,7 +29,7 @@ export function getRandomAccountNumber(type) {
 export function getUserPayload() {
     return {
         email: "john.doe@mail.com",
-        phone: "+" + getUniqueIdOfLength(12),
+        phone: "+" + getUniqueIdOfLength(11),
         password: shortid(),
         fullName: "Иванов Иван",
         birthDate: new Date(),
@@ -41,7 +41,7 @@ export function getUserPayload() {
 export function getPartnerPayload(participants = []) {
     return {
         title: 'АО "Альфа-Банк"',
-        phone: "+" + getUniqueIdOfLength(12),
+        phone: "+" + getUniqueIdOfLength(11),
         email: "john.doe@mail.com",
         INN: getUniqueId(),
         ORGN: getUniqueId(),
