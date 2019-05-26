@@ -90,23 +90,28 @@ export function getLoyaltyPayload(type) {
     const common = {
         transferType: "income",
         condition: "distance",
-        startStation: "moscow",
-        endStation: "kazan",
-        service: "vip",
-        terms: "terms",
         loyaltyType: type,
+        status: 1,
     };
     if (type === "base") {
         return {
             ...common,
             property: "property",
             trains: "trains",
+            points: "100",
+            distance: "100",
+            cost: "1000",
         };
     }
     if (type === "extra") {
         return {
             ...common,
             train: "train",
+            startStation: "moscow",
+            endStation: "kazan",
+            service: "vip",
+            termsStart: new Date(),
+            termsEnd: new Date(),
         };
     }
 }

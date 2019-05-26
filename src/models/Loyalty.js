@@ -22,6 +22,8 @@ const Loyalty = types.model({
 
     distance: types.maybe(types.string),
 
+    cost: types.maybe(types.string),
+
     points: types.maybe(types.string),
 
     trains: types.maybe(types.string),
@@ -33,16 +35,16 @@ const Loyalty = types.model({
 
     service: types.maybe(types.union(types.literal("vip"), types.literal("nonVip"))),
 
-    termsStart: types.maybe(types.string),
+    termsStart: types.maybe(types.Date),
 
-    termsEnd: types.maybe(types.string),
+    termsEnd: types.maybe(types.Date),
 
     train: types.maybe(types.string),
 });
 
 const LoyaltyStore = types
     .model({
-        loyalties: types.array(Loyalty, []),
+        loyalties: types.array(Loyalty),
     })
     .actions(self => ({
         [ADD_LOYALTY](program) {

@@ -16,11 +16,13 @@ import { navigate } from "@reach/router";
 import Layout from "components/Layout";
 import { MuiPickersUtilsProvider, DatePicker } from "material-ui-pickers";
 import MomentUtils from "@date-io/moment";
+import moment from "moment";
 
 export default function AddLoyalty({ type }) {
     const [form, setFormValues] = useState({
         title: undefined,
         distance: undefined,
+        cost: undefined,
         points: undefined,
         transferType: "income",
         condition: "distance",
@@ -30,8 +32,8 @@ export default function AddLoyalty({ type }) {
         startStation: undefined,
         endStation: undefined,
         service: "vip",
-        termsStart: undefined,
-        termsEnd: undefined,
+        termsStart: moment(),
+        termsEnd: moment(),
         loyaltyType: type,
     });
     const store = useContext(StoreContext);
@@ -67,7 +69,13 @@ export default function AddLoyalty({ type }) {
     }
 
     function onConditionChange(event) {
-        setFormValues({ ...form, condition: event.target.value });
+        const condition = event.target.value;
+        if (condition === "distance") {
+            setFormValues({ ...form, condition, cost: undefined, property: "more" });
+        }
+        if (condition === "cost") {
+            setFormValues({ ...form, condition, distance: undefined, property: "every" });
+        }
         console.log("%cAddLoyalty condition change", "color: #3F51B5", event.target.value);
     }
 
@@ -91,6 +99,11 @@ export default function AddLoyalty({ type }) {
         console.log("%cAddLoyalty distance change", "color: #3F51B5", event.target.value);
     }
 
+    function onCostChange(event) {
+        setFormValues({ ...form, cost: event.target.value });
+        console.log("%cAddLoyalty cost change", "color: #3F51B5", event.target.value);
+    }
+
     function onPointsChange(event) {
         setFormValues({ ...form, points: event.target.value });
         console.log("%cAddLoyalty points change", "color: #3F51B5", event.target.value);
@@ -106,8 +119,8 @@ export default function AddLoyalty({ type }) {
             status: 2,
             property: `${form.points || 345} баллов за каждые ${form.distance || 600} км`,
             trains: "116C, 858A, 032A-Лев Толстой",
-            termsStart: "",
-            termsEnd: "",
+            termsStart: form.termsStart.toDate(),
+            termsEnd: form.termsEnd.toDate(),
         });
         navigate(BASE_PATH + `/loyalty/${form.loyaltyType}`);
     }
@@ -156,7 +169,6 @@ export default function AddLoyalty({ type }) {
                                         onChange={onTransferTypeChange}
                                         input={<Input name="transferType" id="transferType" />}
                                         name="transferType"
-                                        defaultValue="income"
                                     >
                                         <MenuItem value="income">Начисление баллов</MenuItem>
                                         <MenuItem value="withdraw">Списание баллов</MenuItem>
@@ -173,7 +185,6 @@ export default function AddLoyalty({ type }) {
                                                 onChange={onConditionChange}
                                                 input={<Input name="condition" id="condition" />}
                                                 name="condition"
-                                                defaultValue="distance"
                                             >
                                                 <MenuItem value="distance">Расстояние</MenuItem>
                                                 <MenuItem value="cost">Стоимость</MenuItem>
@@ -188,20 +199,35 @@ export default function AddLoyalty({ type }) {
                                                 onChange={onPropertyChange}
                                                 input={<Input name="property" id="property" />}
                                                 name="property"
-                                                defaultValue="every"
                                             >
                                                 <MenuItem value="every">Каждые</MenuItem>
+                                                <MenuItem value="more">Более</MenuItem>
                                             </Select>
                                         </FormControl>
-                                        <FormControl margin="normal" required fullWidth>
-                                            <InputLabel htmlFor="distance">Расстояние</InputLabel>
-                                            <Input
-                                                id="distance"
-                                                name="distance"
-                                                autoComplete="distance"
-                                                onChange={onDistanceChange}
-                                            />
-                                        </FormControl>
+                                        {form.condition === "distance" && (
+                                            <FormControl margin="normal" required fullWidth>
+                                                <InputLabel htmlFor="distance">
+                                                    Расстояние
+                                                </InputLabel>
+                                                <Input
+                                                    id="distance"
+                                                    name="distance"
+                                                    autoComplete="distance"
+                                                    onChange={onDistanceChange}
+                                                />
+                                            </FormControl>
+                                        )}
+                                        {form.condition === "cost" && (
+                                            <FormControl margin="normal" required fullWidth>
+                                                <InputLabel htmlFor="cost">Стоимость</InputLabel>
+                                                <Input
+                                                    id="cost"
+                                                    name="cost"
+                                                    autoComplete="cost"
+                                                    onChange={onCostChange}
+                                                />
+                                            </FormControl>
+                                        )}
                                         <FormControl margin="normal" required fullWidth>
                                             <InputLabel htmlFor="points">
                                                 Количество баллов
@@ -222,7 +248,6 @@ export default function AddLoyalty({ type }) {
                                                 onChange={onTrainChange}
                                                 input={<Input name="train" id="train" />}
                                                 name="train"
-                                                defaultValue="116C-Лев Толстой"
                                             >
                                                 <MenuItem value="116C-Лев Толстой">
                                                     116C-Лев Толстой
@@ -247,7 +272,6 @@ export default function AddLoyalty({ type }) {
                                                     <Input name="startStation" id="startStation" />
                                                 }
                                                 name="startStation"
-                                                defaultValue="Москва"
                                             >
                                                 <MenuItem value="Москва">Москва</MenuItem>
                                                 <MenuItem value="Казань">Казань</MenuItem>
@@ -262,7 +286,6 @@ export default function AddLoyalty({ type }) {
                                                 onChange={onEndStationChange}
                                                 input={<Input name="endStation" id="endStation" />}
                                                 name="endStation"
-                                                defaultValue="Казань"
                                             >
                                                 <MenuItem value="Москва">Москва</MenuItem>
                                                 <MenuItem value="Казань">Казань</MenuItem>
@@ -276,7 +299,6 @@ export default function AddLoyalty({ type }) {
                                                 value={form.train || "116C-Лев Толстой"}
                                                 onChange={onTrainChange}
                                                 input={<Input name="train" id="train" />}
-                                                defaultValue="116C-Лев Толстой"
                                                 name="train"
                                             >
                                                 <MenuItem value="116C-Лев Толстой">
@@ -296,7 +318,6 @@ export default function AddLoyalty({ type }) {
                                                 onChange={onServiceChange}
                                                 input={<Input name="service" id="service" />}
                                                 name="service"
-                                                defaultValue="vip"
                                             >
                                                 <MenuItem value="vip">VIP</MenuItem>
                                                 <MenuItem value="nonVip">NO VIP</MenuItem>
