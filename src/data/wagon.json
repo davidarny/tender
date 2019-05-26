@@ -1,30 +1,146 @@
-[
-    {
-        "type": "L",
-        "class": "1А"
-    },
-    {
-        "type": "SV",
-        "class": "1Б"
-    },
-    {
-        "type": "K",
-        "class": "2Э"
-    },
-    {
-        "type": "P",
-        "class": "3Э"
-    },
-    {
-        "type": "C",
-        "class": "1Р"
-    },
-    {
-        "type": "M",
-        "class": "1С"
-    },
-    {
-        "type": "O",
-        "class": "3О"
+{
+    "wagons": [
+        {
+            "type": "L",
+            "class": "1А"
+        },
+        {
+            "type": "SV",
+            "class": "1Б"
+        },
+        {
+            "type": "K",
+            "class": "2Э"
+        },
+        {
+            "type": "P",
+            "class": "3Э"
+        },
+        {
+            "type": "C",
+            "class": "1Р"
+        },
+        {
+            "type": "M",
+            "class": "1С"
+        },
+        {
+            "type": "O",
+            "class": "3О"
+        }
+    ],
+    "props": {
+        "class": [
+            {
+                "title": "1А",
+                "abbr": "L"
+            },
+            {
+                "title": "1И",
+                "abbr": "L"
+            },
+            {
+                "title": "1М",
+                "abbr": "L"
+            },
+            {
+                "title": "1Б",
+                "abbr": "SV"
+            },
+            {
+                "title": "1Т",
+                "abbr": "SV"
+            },
+            {
+                "title": "1У",
+                "abbr": "SV"
+            },
+            {
+                "title": "2Э",
+                "abbr": "K"
+            },
+            {
+                "title": "2Т",
+                "abbr": "K"
+            },
+            {
+                "title": "2Б",
+                "abbr": "K"
+            },
+            {
+                "title": "3Э",
+                "abbr": "P"
+            },
+            {
+                "title": "3Т",
+                "abbr": "P"
+            },
+            {
+                "title": "3Д",
+                "abbr": "P"
+            },
+            {
+                "title": "1Р",
+                "abbr": "C"
+            },
+            {
+                "title": "1Ж",
+                "abbr": "C"
+            },
+            {
+                "title": "1В",
+                "abbr": "C"
+            },
+            {
+                "title": "1С",
+                "abbr": "M"
+            },
+            {
+                "title": "1Р",
+                "abbr": "M"
+            },
+            {
+                "title": "2С",
+                "abbr": "M"
+            },
+            {
+                "title": "3О",
+                "abbr": "O"
+            },
+            {
+                "title": "ЗВ",
+                "abbr": "O"
+            }
+        ],
+        "type": [
+            {
+                "abbr": "L",
+                "title": "Люкс (VIP)"
+            },
+            {
+                "abbr": "SV",
+                "title": "СВ"
+            },
+            {
+                "abbr": "K",
+                "title": "Купе"
+            },
+            {
+                "abbr": "P",
+                "title": "Плацкартные"
+            },
+            {
+                "abbr": "C",
+                "title": "Сидячий"
+            },
+            {
+                "abbr": "M",
+                "title": "Моторвагонный"
+            },
+            {
+                "abbr": "O",
+                "title": "Общий"
+            }
+        ]
     }
-]
+}

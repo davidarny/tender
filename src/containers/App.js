@@ -30,10 +30,11 @@ import moment from "moment";
 import "moment/locale/ru";
 import cloneDeep from "lodash/cloneDeep";
 import find from "lodash/find";
+import get from "lodash/get";
 import { ADD_PARTICIPANT } from "actions/participant";
 import { ADD_LOYALTY } from "actions/loyalty";
 import { ADD_ROUTE } from "actions/route";
-import { ADD_WAGON } from "actions/wagon";
+import { ADD_WAGON, ADD_WAGON_PROP } from "actions/wagon";
 import { ADD_TRAIN } from "actions/train";
 
 // stub data
@@ -44,10 +45,6 @@ import routes from "data/routes";
 import loyalties from "data/loyalty";
 import wagons from "data/wagon";
 import trains from "data/train";
-import wagonTypes from "data/wagonType";
-import wagonClasses from "data/wagonClass";
-import { ADD_WAGON_TYPE } from "actions/wagonType";
-import { ADD_WAGON_CLASS } from "actions/wagonClass";
 
 const AsyncPartners = Loadable({
     loader: () => import("containers/Partners"),
@@ -366,32 +363,34 @@ function initStubData(store) {
             store.loyalty[ADD_LOYALTY](payload);
         });
 
-        wagonTypes.forEach(wagonType => {
+        wagons.props.type.forEach(wagonType => {
             const payload = {
                 ...getWagonTypePayload(),
                 ...cloneDeep(wagonType),
+                type: "type",
             };
-            store.wagonType[ADD_WAGON_TYPE](payload);
+            store.wagon[ADD_WAGON_PROP](payload);
         });
 
-        wagonClasses.forEach(wagonClass => {
-            const wagonType = find(store.wagonType.wagonTypes, { type: wagonClass.type });
+        wagons.props.class.forEach(wagonClass => {
+            const wagonType = find(store.wagon.props, { abbr: wagonClass.abbr, type: "type" });
             const payload = {
                 ...getWagonClassPayload(),
                 ...cloneDeep(wagonClass),
-                type: wagonType ? wagonType.id : "",
+                abbr: get(wagonType, "id", ""),
+                type: "class",
             };
-            store.wagonClass[ADD_WAGON_CLASS](payload);
+            store.wagon[ADD_WAGON_PROP](payload);
         });
 
-        wagons.forEach(wagon => {
-            const wagonType = find(store.wagonType.wagonTypes, { type: wagon.type });
-            const wagonClass = find(store.wagonClass.wagonClasses, { name: wagon.class });
+        wagons.wagons.forEach(wagon => {
+            const wagonType = find(store.wagon.props, { abbr: wagon.type, type: "type" });
+            const wagonClass = find(store.wagon.props, { abbr: wagonType.id, type: "class" });
             const payload = {
                 ...getWagonPayload(),
                 ...cloneDeep(wagon),
-                type: wagonType ? wagonType.id : "",
-                class: wagonClass ? wagonClass.id : "",
+                type: get(wagonType, "id", ""),
+                class: get(wagonClass, "id", ""),
             };
             store.wagon[ADD_WAGON](payload);
         });

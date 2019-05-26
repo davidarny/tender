@@ -18,13 +18,13 @@ import Typography from "@material-ui/core/Typography";
 import StyledTableHead from "components/table/StyledTableHead";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
-import shortid from "shortid";
 import { BASE_PATH, StoreContext } from "context";
 import { navigate, Router, Link } from "@reach/router";
 import * as PropTypes from "prop-types";
 import RouteMatcher from "components/RouteMatcher";
-import { GET_WAGON_TYPE_BY_ID } from "actions/wagonType";
-import { GET_WAGON_CLASS_BY_ID } from "actions/wagonClass";
+import { GET_WAGON_CLASS_BY_ID, GET_WAGON_TYPE_BY_ID } from "actions/wagon";
+import get from "lodash/get";
+import LinkTableCell from "components/table/LinkTableCell";
 
 function Catalog() {
     const store = useContext(StoreContext);
@@ -102,9 +102,9 @@ function RoutesInfo({ routes }) {
                             <TableBody>
                                 {routes.map(route => (
                                     <TableRow key={route.id}>
-                                        <TableCell>
+                                        <LinkTableCell fake>
                                             {route.startStation} - {route.endStation}
-                                        </TableCell>
+                                        </LinkTableCell>
                                         <TableCell
                                             css={css`
                                                 color: ${route.status === 1 ? "#4CAF50" : "black"};
@@ -158,7 +158,7 @@ function TrainsInfo({ trains }) {
                             <TableBody>
                                 {trains.map(train => (
                                     <TableRow key={train.id}>
-                                        <TableCell>{train.number}</TableCell>
+                                        <LinkTableCell fake>{train.number}</LinkTableCell>
                                         <TableCell>{trainTypesMap[train.type]}</TableCell>
                                         <TableCellMoreIcon />
                                     </TableRow>
@@ -178,18 +178,20 @@ TrainsInfo.propTypes = {
 };
 
 function WagonsInfo({ wagons }) {
+    const store = useContext(StoreContext);
+
     function onFabClick() {
         navigate(BASE_PATH + "/wagons/add");
     }
 
-    const store = useContext(StoreContext);
     function getWagonTypeNameById(id) {
-        const wagonType = store.wagonType[GET_WAGON_TYPE_BY_ID]({ id });
-        return wagonType ? wagonType.name : "";
+        const wagonType = store.wagon[GET_WAGON_TYPE_BY_ID]({ id });
+        return get(wagonType, "title", "");
     }
+
     function getWagonClassNameById(id) {
-        const wagonClass = store.wagonClass[GET_WAGON_CLASS_BY_ID]({ id });
-        return wagonClass ? wagonClass.name : "";
+        const wagonClass = store.wagon[GET_WAGON_CLASS_BY_ID]({ id });
+        return get(wagonClass, "title", "");
     }
 
     return (
@@ -209,9 +211,7 @@ function WagonsInfo({ wagons }) {
                             <TableBody>
                                 {wagons.map(wagon => (
                                     <TableRow key={wagon.id}>
-                                        <TableCell to={BASE_PATH + `/wagons/${shortid()}`}>
-                                            {wagon.publicId}
-                                        </TableCell>
+                                        <LinkTableCell fake>{wagon.publicId}</LinkTableCell>
                                         <TableCell>{getWagonTypeNameById(wagon.type)}</TableCell>
                                         <TableCell>{getWagonClassNameById(wagon.class)}</TableCell>
                                     </TableRow>

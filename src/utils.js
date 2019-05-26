@@ -110,15 +110,15 @@ export function getRoutePayload() {
 
 export function getWagonTypePayload() {
     return {
-        type: "L",
-        name: "Люкс",
+        abbr: "L",
+        title: "Люкс",
     };
 }
 
 export function getWagonClassPayload() {
     return {
-        name: "1А",
-        type: "L",
+        title: "1А",
+        abbr: "L",
     };
 }
 

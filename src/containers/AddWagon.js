@@ -13,15 +13,21 @@ import { StoreContext, BASE_PATH } from "context";
 import { getWagonPayload } from "utils";
 import { navigate } from "@reach/router";
 import Layout from "components/Layout";
-import { ADD_WAGON } from "actions/wagon";
+import {
+    ADD_WAGON,
+    GET_WAGON_TYPES,
+    GET_WAGON_CLASSES,
+    GET_WAGON_CLASSES_BY_ABBR,
+} from "actions/wagon";
+import first from "lodash/first";
 
 export default function AddWagon() {
     const store = useContext(StoreContext);
     const [form, setFormValues] = useState({
         publicId: undefined,
         number: undefined,
-        type: store.wagonType.wagonTypes[0].id,
-        class: store.wagonClass.wagonClasses[0].id,
+        type: first(store.wagon[GET_WAGON_TYPES]()).id,
+        class: first(store.wagon[GET_WAGON_CLASSES]()).id,
     });
 
     function onPublicIdChange(event) {
@@ -35,12 +41,12 @@ export default function AddWagon() {
     }
 
     function onTypeChange(event) {
-        const wagonClasses = getWagonClassesByType(event.target.value);
-        const nextWagonClass = wagonClasses.length ? wagonClasses[0].id : "";
+        const wagonClasses = store.wagon[GET_WAGON_CLASSES_BY_ABBR]({ abbr: event.target.value });
+        const nextWagonClass = wagonClasses.length ? first(wagonClasses).id : "";
         setFormValues({
             ...form,
             type: event.target.value,
-            class: nextWagonClass
+            class: nextWagonClass,
         });
         console.log("%cAddWagon type change", "color: #2E7D32", event.target.value);
         console.log("%cAddWagon class change", "color: #2E7D32", nextWagonClass);
@@ -56,11 +62,6 @@ export default function AddWagon() {
         event.preventDefault();
         store.wagon[ADD_WAGON]({ ...getWagonPayload(), ...form });
         navigate(BASE_PATH + "/catalog/wagons");
-    }
-
-    function getWagonClassesByType (type) {
-        return store.wagonClass.wagonClasses
-            .filter(wagonClass => wagonClass.type === type)
     }
 
     return (
@@ -111,7 +112,7 @@ export default function AddWagon() {
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
                                     <InputLabel shrink htmlFor="wagonType">
-                                        Класс
+                                        Тип вагона
                                     </InputLabel>
                                     <Select
                                         value={form.type}
@@ -119,26 +120,30 @@ export default function AddWagon() {
                                         input={<Input name="wagonType" id="wagonType" />}
                                         name="wagonType"
                                     >
-                                        {store.wagonType.wagonTypes.map(type => (
-                                            <MenuItem key={type.id} value={type.id}>{type.name}</MenuItem>
+                                        {store.wagon[GET_WAGON_TYPES]().map(wagonType => (
+                                            <MenuItem key={wagonType.id} value={wagonType.id}>
+                                                {wagonType.title}
+                                            </MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
                                 <FormControl margin="normal" required fullWidth>
-                                    <InputLabel shrink htmlFor="wagonSubclass">
-                                        Подкласс
+                                    <InputLabel shrink htmlFor="wagonClass">
+                                        Класс обслуживания
                                     </InputLabel>
                                     <Select
                                         value={form.class}
                                         onChange={onClassChange}
-                                        input={<Input name="wagonSubclass" id="wagonSubclass" />}
-                                        name="wagonSubclass"
+                                        input={<Input name="wagonClass" id="wagonClass" />}
+                                        name="wagonClass"
                                     >
-                                        {getWagonClassesByType(form.type).map(type => (
-                                                <MenuItem key={type.id} value={type.id}>
-                                                    {type.name}
-                                                </MenuItem>
-                                            ))}
+                                        {store.wagon[GET_WAGON_CLASSES_BY_ABBR]({
+                                            abbr: form.type,
+                                        }).map(wagonClass => (
+                                            <MenuItem key={wagonClass.id} value={wagonClass.id}>
+                                                {wagonClass.title}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                             </Fragment>

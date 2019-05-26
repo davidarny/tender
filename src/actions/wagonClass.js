@@ -1,2 +1,0 @@
-export const ADD_WAGON_CLASS = "ADD_WAGON_CLASS";
-export const GET_WAGON_CLASS_BY_ID = "GET_WAGON_CLASS_BY_ID";
