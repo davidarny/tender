@@ -71,10 +71,10 @@ export default function AddLoyalty({ type }) {
     function onConditionChange(event) {
         const condition = event.target.value;
         if (condition === "distance") {
-            setFormValues({ ...form, condition, cost: undefined, property: "more" });
+            setFormValues({ ...form, condition, cost: undefined, property: "every" });
         }
         if (condition === "cost") {
-            setFormValues({ ...form, condition, distance: undefined, property: "every" });
+            setFormValues({ ...form, condition, distance: undefined, property: "more" });
         }
         console.log("%cAddLoyalty condition change", "color: #3F51B5", event.target.value);
     }
