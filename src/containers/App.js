@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { jsx, css, Global } from "@emotion/core";
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import JssProvider from "components/JssProvider";
 import { Router, Match } from "@reach/router";
 import Header from "components/Header";
@@ -125,8 +125,14 @@ const AsyncAddRoute = Loadable({
 
 function App() {
     const store = useContext(StoreContext);
+    const [isInitiated, setInitiatedState] = useState(false);
 
-    useEffect(() => initStubData(store));
+    useEffect(() => {
+        if (!isInitiated) {
+            initStubData(store);
+        }
+        setInitiatedState(true);
+    }, [isInitiated, store]);
 
     function onDrawerToggle() {
         store.ui[TOGGLE_DRAWER]();
@@ -198,6 +204,7 @@ function App() {
                         <Header
                             user={store.user.current}
                             isLoggedIn={store.ui.isLoggedIn}
+                            onLogoutClick={store.ui[LOG_OUT]}
                             onDrawerToggle={onDrawerToggle}
                         />
                         <Router

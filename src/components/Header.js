@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import { jsx, css } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 import Grid from "@material-ui/core/Grid";
 import AppBar from "@material-ui/core/AppBar";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,11 +14,27 @@ import { observer } from "mobx-react-lite";
 import noop from "lodash/noop";
 import get from "lodash/get";
 import first from "lodash/first";
-import PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
 import { BASE_PATH } from "context";
 import BackButton from "components/BackButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Fragment, useState } from "react";
+import Typography from "@material-ui/core/Typography";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import LogoutIcon from "@material-ui/icons/ExitToApp";
 
-function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
+function Header({ user, isLoggedIn = false, onDrawerToggle = noop, onLogoutClick = noop }) {
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    function onMenuClick(event) {
+        setAnchorEl(event.currentTarget);
+    }
+
+    function onCloseMenu() {
+        setAnchorEl(null);
+    }
+
     return (
         <AppBar
             position="relative"
@@ -65,21 +81,25 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
                     )}
                 </Grid>
                 <Grid item>
-                    <Button
-                        css={css`
-                            text-transform: none;
-                            margin-right: 10px;
-                        `}
-                    >
-                        <Link to={BASE_PATH + "/register"}>Регистрация</Link>
-                    </Button>
-                    <Button
-                        css={css`
-                            text-transform: none;
-                        `}
-                    >
-                        <Link to={BASE_PATH + "/login"}>Вход в личный кабинет</Link>
-                    </Button>
+                    {!isLoggedIn && (
+                        <Fragment>
+                            <Button
+                                css={css`
+                                    text-transform: none;
+                                    margin-right: 10px;
+                                `}
+                            >
+                                <Link to={BASE_PATH + "/register"}>Регистрация</Link>
+                            </Button>
+                            <Button
+                                css={css`
+                                    text-transform: none;
+                                `}
+                            >
+                                <Link to={BASE_PATH + "/login"}>Вход в личный кабинет</Link>
+                            </Button>
+                        </Fragment>
+                    )}
                     <div
                         css={css`
                             margin-left: 18px;
@@ -88,11 +108,15 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
                     >
                         {isLoggedIn ? (
                             <Chip
+                                aria-owns={anchorEl ? "profile-menu" : undefined}
+                                aria-haspopup="true"
+                                onClick={onMenuClick}
                                 avatar={
                                     <Avatar>
                                         {get(user, "fullName", "Не авторизован")
                                             .split(" ")
-                                            .map(word => first(word))
+                                            .slice(0, 2)
+                                            .map(word => first(word).toUpperCase())
                                             .join("")}
                                     </Avatar>
                                 }
@@ -104,6 +128,27 @@ function Header({ user, isLoggedIn = false, onDrawerToggle = noop }) {
                     </div>
                 </Grid>
             </Grid>
+            <Menu
+                id="profile-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={onCloseMenu}
+                getContentAnchorEl={null}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+                <MenuItem
+                    onClick={() => {
+                        onLogoutClick();
+                        onCloseMenu();
+                    }}
+                >
+                    <ListItemIcon>
+                        <LogoutIcon />
+                    </ListItemIcon>
+                    <Typography variant="inherit">Выход</Typography>
+                </MenuItem>
+            </Menu>
         </AppBar>
     );
 }
