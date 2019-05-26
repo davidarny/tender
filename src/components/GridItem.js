@@ -11,6 +11,10 @@ export default function GridItem({ name, pathToProp, data, title, defaultValue, 
     if (!pathToProp) {
         pathToProp = name;
     }
+    const value = get(data, pathToProp, defaultValue);
+    if (!value) {
+        return null;
+    }
     return (
         <Grid
             item
@@ -31,8 +35,8 @@ export default function GridItem({ name, pathToProp, data, title, defaultValue, 
                 </Grid>
                 <Grid item xs={12}>
                     <Typography id={name} component="div" name={name}>
-                        {render && render(get(data, pathToProp, defaultValue), name, title)}
-                        {!render && get(data, pathToProp, defaultValue)}
+                        {render && render(value, name, title)}
+                        {!render && value}
                     </Typography>
                 </Grid>
             </Grid>

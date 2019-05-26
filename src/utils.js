@@ -87,17 +87,28 @@ export function getParticipantPayload(partner) {
 }
 
 export function getLoyaltyPayload(type) {
-    return {
+    const common = {
         transferType: "income",
         condition: "distance",
-        property: "property",
-        trains: "trains",
         startStation: "moscow",
         endStation: "kazan",
         service: "vip",
         terms: "terms",
         loyaltyType: type,
     };
+    if (type === "base") {
+        return {
+            ...common,
+            property: "property",
+            trains: "trains",
+        };
+    }
+    if (type === "extra") {
+        return {
+            ...common,
+            train: "train",
+        };
+    }
 }
 
 export function getRoutePayload() {

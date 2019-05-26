@@ -9,7 +9,7 @@ import { useEffect, useContext, useState } from "react";
 import { StoreContext } from "context";
 import get from "lodash/get";
 import { GET_LOYALTY_BY_ID } from "actions/loyalty";
-import PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
 import GridItem from "components/GridItem";
 
 export default function LoyaltyProfile({ id }) {
@@ -55,6 +55,15 @@ export default function LoyaltyProfile({ id }) {
 }
 
 function MainInfo({ component: LoyaltyItem }) {
+    const transferTypeNamesMap = {
+        income: "Начисление баллов",
+        withdraw: "Списание баллов",
+    };
+    const conditionNamesMap = {
+        distance: "Расстояние",
+        cost: "Стоимость",
+    };
+
     return (
         <Grid
             container
@@ -63,10 +72,19 @@ function MainInfo({ component: LoyaltyItem }) {
                 padding-top: 20px;
             `}
         >
-            <LoyaltyItem name="transferType" title="Тип" />
-            <LoyaltyItem name="condition" title="Условие" />
+            <LoyaltyItem
+                name="transferType"
+                title="Тип"
+                render={transferType => transferTypeNamesMap[transferType]}
+            />
+            <LoyaltyItem
+                name="condition"
+                title="Условие"
+                render={condition => conditionNamesMap[condition]}
+            />
             <LoyaltyItem name="property" title="Свойство" />
             <LoyaltyItem name="trains" title="Список поездов" />
+            <LoyaltyItem name="train" title="Номер поезда" />
         </Grid>
     );
 }
