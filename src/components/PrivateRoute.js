@@ -2,7 +2,7 @@
 
 import { jsx } from "@emotion/core";
 import { Redirect } from "@reach/router";
-import PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
 import { BASE_PATH } from "context";
 
 export default function PrivateRoute({ isLoggedIn, noRedirect = false, render, ...rest }) {

@@ -128,15 +128,20 @@ function App() {
     const [isInitiated, setInitiatedState] = useState(false);
 
     useEffect(() => {
-        if (!isInitiated) {
+        if (!isInitiated && (process.env.NODE_ENV === "development" || !store.ui.isLoggedIn)) {
             initStubData(store);
+            setInitiatedState(true);
         }
-        setInitiatedState(true);
     }, [isInitiated, store]);
 
     function onDrawerToggle() {
         store.ui[TOGGLE_DRAWER]();
     }
+
+    const props = {
+        partners: store.ui.isLoggedIn ? { default: true } : {},
+        login: store.ui.isLoggedIn ? {} : { default: true },
+    };
 
     return (
         <JssProvider>
@@ -159,7 +164,7 @@ function App() {
                 />
                 <PrivateRoute
                     isLoggedIn={store.ui.isLoggedIn}
-                    noRedirect
+                    noRedirect={process.env.NODE_ENV === "development"}
                     render={() => (
                         <Fragment>
                             <Match path={BASE_PATH + "/login"}>
@@ -218,7 +223,7 @@ function App() {
                         >
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                default
+                                {...props.partners}
                                 path="partners"
                                 render={() => <AsyncPartners />}
                             />
@@ -303,7 +308,7 @@ function App() {
                                 render={props => <AsyncAccountProfile {...props} />}
                             />
                             <AsyncSignUp path="register" />
-                            <AsyncSignIn path="login" />
+                            <AsyncSignIn {...props.login} path="login" />
                         </Router>
                     </Grid>
                 </Grid>
@@ -313,99 +318,97 @@ function App() {
 }
 
 function initStubData(store) {
-    if (store.ui.isLoggedIn) {
-        partners.forEach(partner => {
-            const partnerPayload = {
-                ...getPartnerPayload(),
-                ...cloneDeep(partner),
-            };
-            store.partner[ADD_PARTNER](partnerPayload);
-        });
+    partners.forEach(partner => {
+        const partnerPayload = {
+            ...getPartnerPayload(),
+            ...cloneDeep(partner),
+        };
+        store.partner[ADD_PARTNER](partnerPayload);
+    });
 
-        deals.forEach(deal => {
-            const dealPayload = {
-                ...getDealPayload(),
-                ...cloneDeep(deal),
-            };
-            if (deal.activePeriod.from) {
-                dealPayload.activePeriod.from = moment(dealPayload.activePeriod.from).toDate();
-            }
-            if (deal.activePeriod.to) {
-                dealPayload.activePeriod.to = moment(dealPayload.activePeriod.to).toDate();
-            }
-            store.deal[ADD_DEAL](dealPayload);
-        });
+    deals.forEach(deal => {
+        const dealPayload = {
+            ...getDealPayload(),
+            ...cloneDeep(deal),
+        };
+        if (deal.activePeriod.from) {
+            dealPayload.activePeriod.from = moment(dealPayload.activePeriod.from).toDate();
+        }
+        if (deal.activePeriod.to) {
+            dealPayload.activePeriod.to = moment(dealPayload.activePeriod.to).toDate();
+        }
+        store.deal[ADD_DEAL](dealPayload);
+    });
 
-        participants.forEach(participant => {
-            const partner = find(store.partner.partners, { title: participant.partner });
-            const participantPayload = {
-                ...getParticipantPayload(),
-                ...cloneDeep(participant),
-                partner: partner.id,
-            };
-            const { id } = store.participant[ADD_PARTICIPANT](participantPayload);
-            store.partner[ADD_PARTICIPANT_TO_PARTNER]({
-                id: partner.id,
-                participant: id,
-            });
+    participants.forEach(participant => {
+        const partner = find(store.partner.partners, { title: participant.partner });
+        const participantPayload = {
+            ...getParticipantPayload(),
+            ...cloneDeep(participant),
+            partner: partner.id,
+        };
+        const { id } = store.participant[ADD_PARTICIPANT](participantPayload);
+        store.partner[ADD_PARTICIPANT_TO_PARTNER]({
+            id: partner.id,
+            participant: id,
         });
+    });
 
-        routes.forEach(route => {
-            const payload = {
-                ...getRoutePayload(),
-                ...cloneDeep(route),
-            };
-            store.route[ADD_ROUTE](payload);
-        });
+    routes.forEach(route => {
+        const payload = {
+            ...getRoutePayload(),
+            ...cloneDeep(route),
+        };
+        store.route[ADD_ROUTE](payload);
+    });
 
-        loyalties.forEach(loyalty => {
-            const payload = {
-                ...getLoyaltyPayload(loyalty.loyaltyType),
-                ...cloneDeep(loyalty),
-            };
-            store.loyalty[ADD_LOYALTY](payload);
-        });
+    loyalties.forEach(loyalty => {
+        const payload = {
+            ...getLoyaltyPayload(loyalty.loyaltyType),
+            ...cloneDeep(loyalty),
+        };
+        store.loyalty[ADD_LOYALTY](payload);
+    });
 
-        wagons.props.type.forEach(wagonType => {
-            const payload = {
-                ...getWagonTypePayload(),
-                ...cloneDeep(wagonType),
-                type: "type",
-            };
-            store.wagon[ADD_WAGON_PROP](payload);
-        });
+    wagons.props.type.forEach(wagonType => {
+        const payload = {
+            ...getWagonTypePayload(),
+            ...cloneDeep(wagonType),
+            type: "type",
+        };
+        store.wagon[ADD_WAGON_PROP](payload);
+    });
 
-        wagons.props.class.forEach(wagonClass => {
-            const wagonType = find(store.wagon.props, { abbr: wagonClass.abbr, type: "type" });
-            const payload = {
-                ...getWagonClassPayload(),
-                ...cloneDeep(wagonClass),
-                abbr: get(wagonType, "id", ""),
-                type: "class",
-            };
-            store.wagon[ADD_WAGON_PROP](payload);
-        });
+    wagons.props.class.forEach(wagonClass => {
+        const wagonType = find(store.wagon.props, { abbr: wagonClass.abbr, type: "type" });
+        const payload = {
+            ...getWagonClassPayload(),
+            ...cloneDeep(wagonClass),
+            abbr: get(wagonType, "id", ""),
+            type: "class",
+        };
+        store.wagon[ADD_WAGON_PROP](payload);
+    });
 
-        wagons.wagons.forEach(wagon => {
-            const wagonType = find(store.wagon.props, { abbr: wagon.type, type: "type" });
-            const wagonClass = find(store.wagon.props, { abbr: wagonType.id, type: "class" });
-            const payload = {
-                ...getWagonPayload(),
-                ...cloneDeep(wagon),
-                type: get(wagonType, "id", ""),
-                class: get(wagonClass, "id", ""),
-            };
-            store.wagon[ADD_WAGON](payload);
-        });
+    wagons.wagons.forEach(wagon => {
+        const wagonType = find(store.wagon.props, { abbr: wagon.type, type: "type" });
+        const wagonClass = find(store.wagon.props, { abbr: wagonType.id, type: "class" });
+        const payload = {
+            ...getWagonPayload(),
+            ...cloneDeep(wagon),
+            type: get(wagonType, "id", ""),
+            class: get(wagonClass, "id", ""),
+        };
+        store.wagon[ADD_WAGON](payload);
+    });
 
-        trains.forEach(train => {
-            const payload = {
-                ...getTrainPayload(train.type),
-                ...cloneDeep(train),
-            };
-            store.train[ADD_TRAIN](payload);
-        });
-    }
+    trains.forEach(train => {
+        const payload = {
+            ...getTrainPayload(train.type),
+            ...cloneDeep(train),
+        };
+        store.train[ADD_TRAIN](payload);
+    });
 }
 
 export default observer(App);
