@@ -67,7 +67,7 @@ function Catalog() {
                     <Tab component={Link} to="wagons" label="Каталог вагонов" />
                 </Tabs>
             </AppBar>
-            <Router>
+            <Router primary={false}>
                 <RoutesInfo path="" default routes={store.route.routes} />
                 <TrainsInfo path="trains" trains={store.train.trains} />
                 <WagonsInfo path="wagons" wagons={store.wagon.wagons} />

@@ -91,7 +91,7 @@ export default function PartnerProfile({ id }) {
                             </AppBar>
                         </Grid>
                         <Grid item xs={12}>
-                            <Router>
+                            <Router primary={false}>
                                 <MainInfo
                                     path=""
                                     default

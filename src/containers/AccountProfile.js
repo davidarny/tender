@@ -1,11 +1,11 @@
 /** @jsx jsx */
 
 import { jsx, css } from "@emotion/core";
-import PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
 import Grid from "@material-ui/core/Grid";
 import Layout from "components/Layout";
 import Typography from "@material-ui/core/Typography";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -18,10 +18,14 @@ import TableRow from "@material-ui/core/TableRow";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import TableCellMoreIcon from "components/table/TableCellMoreIcon";
 import StyledTableHead from "components/table/StyledTableHead";
-import { getUniqueIdOfLength } from "utils";
+import { getUniqueIdOfLength, getUniqueId } from "utils";
 
 export default function AccountProfile({ id }) {
     const [tabIndex, setTabIndex] = useState(0);
+    const data = useRef({
+        prefix: getUniqueIdOfLength(2),
+        id: getUniqueIdOfLength(12),
+    });
 
     function onTabChange(_, index) {
         setTabIndex(index);
@@ -41,9 +45,9 @@ export default function AccountProfile({ id }) {
                     >
                         <span>Счёт №</span>
                         <span>P</span>
-                        <span>{getUniqueIdOfLength(2)}</span>
+                        <span>{data.current.prefix}</span>
                         <span>_</span>
-                        <span>{getUniqueIdOfLength(12)}</span>
+                        <span>{data.current.id}</span>
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>
@@ -65,7 +69,6 @@ export default function AccountProfile({ id }) {
                                             <Table>
                                                 <StyledTableHead>
                                                     <TableRow>
-                                                        <HeaderTableCell />
                                                         <HeaderTableCell>
                                                             № транзакции
                                                         </HeaderTableCell>
@@ -83,8 +86,7 @@ export default function AccountProfile({ id }) {
                                                 </StyledTableHead>
                                                 <TableBody>
                                                     <TableRow>
-                                                        <TableCell />
-                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>{getUniqueId()}</TableCell>
                                                         <TableCell>28 май, 15:30</TableCell>
                                                         <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell add>+ 350</PointsTableCell>
@@ -93,8 +95,7 @@ export default function AccountProfile({ id }) {
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell />
-                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>{getUniqueId()}</TableCell>
                                                         <TableCell>19 май, 15:30</TableCell>
                                                         <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell>- 350</PointsTableCell>
@@ -103,8 +104,7 @@ export default function AccountProfile({ id }) {
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell />
-                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>{getUniqueId()}</TableCell>
                                                         <TableCell>15 май, 15:30</TableCell>
                                                         <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell add>+ 80</PointsTableCell>
@@ -113,8 +113,7 @@ export default function AccountProfile({ id }) {
                                                         </TableCell>
                                                     </TableRow>
                                                     <TableRow>
-                                                        <TableCell />
-                                                        <TableCell>00240441222</TableCell>
+                                                        <TableCell>{getUniqueId()}</TableCell>
                                                         <TableCell>12 май, 15:30</TableCell>
                                                         <TableCell>2500 руб.</TableCell>
                                                         <PointsTableCell add>+ 700</PointsTableCell>

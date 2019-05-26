@@ -249,7 +249,7 @@ function App() {
                             />
                             <PrivateRoute
                                 isLoggedIn={store.ui.isLoggedIn}
-                                path="participants/:id"
+                                path="participants/:id/*"
                                 render={props => <AsyncParticipantProfile {...props} />}
                             />
                             <PrivateRoute

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import { css, jsx } from "@emotion/core";
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useRef, useState } from "react";
 import { BASE_PATH, StoreContext } from "context";
 import { GET_PARTICIPANT_BY_ID } from "actions/participant";
 import Grid from "@material-ui/core/Grid";
@@ -14,11 +14,11 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Paper from "@material-ui/core/Paper";
 import moment from "moment";
-import { Link } from "@reach/router";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import Button from "@material-ui/core/Button";
 import HeaderTableCell from "components/table/HeaderTableCell";
 import CreditCard from "assets/credit-card.png";
 import shortid from "shortid";
@@ -29,6 +29,16 @@ import { GET_PARTNER_BY_ID } from "actions/partner";
 import { getRandomAccountNumber, getUniqueId, getUniqueIdOfLength } from "utils";
 import AlphaBankIcon from "assets/alpha-bank.png";
 import TreeIcon from "assets/tree-icon.png";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import nth from "lodash/nth";
+import RouteMatcher from "components/RouteMatcher";
+import { Link, Router } from "@reach/router";
 
 export default function ParticipantProfile({ id }) {
     const store = useContext(StoreContext);
@@ -51,14 +61,26 @@ export default function ParticipantProfile({ id }) {
         }
     }, [id, store.participant, store.partner]);
 
-    function onTabChange(_, index) {
-        setTabIndex(index);
-    }
-
     const ParticipantItem = withParticipant(participant);
 
     return (
         <Layout>
+            <RouteMatcher
+                routes={[
+                    {
+                        paths: ["", "info"],
+                        render: () => setTabIndex(0),
+                    },
+                    {
+                        path: "account",
+                        render: () => setTabIndex(1),
+                    },
+                    {
+                        path: "trips",
+                        render: () => setTabIndex(2),
+                    },
+                ]}
+            />
             <Grid container>
                 <Grid item xs={12}>
                     <Typography
@@ -82,21 +104,28 @@ export default function ParticipantProfile({ id }) {
                 >
                     <Grid item xs={12}>
                         <AppBar position="static">
-                            <Tabs value={tabIndex} onChange={onTabChange}>
-                                <Tab label="Информация" />
-                                <Tab label="Бонусный счёт" />
-                                <Tab label="Поездки" />
+                            <Tabs value={tabIndex}>
+                                <Tab component={Link} to="info" label="Информация" />
+                                <Tab component={Link} to="account" label="Бонусный счёт" />
+                                <Tab component={Link} to="trips" label="Поездки" />
                             </Tabs>
                         </AppBar>
                     </Grid>
-                    {tabIndex === 0 && (
+                    <Router
+                        primary={false}
+                        css={css`
+                            width: 100%;
+                        `}
+                    >
                         <MainInfo
+                            path="info"
+                            default
                             component={ParticipantItem}
                             type={get(participant, "participantType")}
                         />
-                    )}
-                    {tabIndex === 1 && <BonusCardInfo type={get(participant, "participantType")} />}
-                    {tabIndex === 2 && <TripsInfo />}
+                        <BonusCardInfo path="account" type={get(participant, "participantType")} />
+                        <TripsInfo path="trips" />
+                    </Router>
                 </Grid>
             </Grid>
         </Layout>
@@ -147,6 +176,35 @@ MainInfo.propTypes = {
 };
 
 function BonusCardInfo({ type }) {
+    const [balance, setBalance] = useState(25000);
+    const [addToBalance, setAddToBalance] = useState(0);
+    const [open, setOpen] = useState(false);
+    const data = useRef({
+        accountNumber: getRandomAccountNumber(type),
+        ids: [getUniqueId(), getUniqueId(), getUniqueId(), getUniqueId(), getUniqueId()],
+        comments: [getUniqueIdOfLength(6), getUniqueIdOfLength(6), getUniqueIdOfLength(6)],
+    });
+
+    function onClickOpen() {
+        setOpen(true);
+    }
+
+    function onClose() {
+        setOpen(false);
+        setAddToBalance(0);
+    }
+
+    function onBalanceChange(event) {
+        setAddToBalance(event.target.value);
+        console.log("%cBonusCardInfo balance change", "color: #2E7D32", event.target.value);
+    }
+
+    function onBalanceChangeSubmit() {
+        setBalance(Number(addToBalance) + Number(balance));
+        setAddToBalance(0);
+        onClose();
+    }
+
     return (
         <Fragment>
             <div
@@ -181,7 +239,7 @@ function BonusCardInfo({ type }) {
                         <GridItem
                             name="accountNumber"
                             title="Номер счёта"
-                            defaultValue={getRandomAccountNumber(type)}
+                            defaultValue={data.current.accountNumber}
                         />
                         <GridItem
                             name="bonusCard"
@@ -191,7 +249,7 @@ function BonusCardInfo({ type }) {
                         <GridItem
                             name="balance"
                             title="Баланс баллов счёта"
-                            defaultValue="25 000"
+                            defaultValue={balance.toString()}
                             render={value => (
                                 <Link
                                     css={css`
@@ -205,6 +263,16 @@ function BonusCardInfo({ type }) {
                                 </Link>
                             )}
                         />
+                        <Grid
+                            item
+                            css={css`
+                                margin-bottom: 20px;
+                            `}
+                        >
+                            <Button variant="contained" color="secondary" onClick={onClickOpen}>
+                                Пополнить
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Paper>
             </Grid>
@@ -238,31 +306,31 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
+                                <LinkTableCell fake>{nth(data.current.ids, 0)}</LinkTableCell>
                                 <TableCell>28 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 350</PointsTableCell>
                                 <TableCell>
-                                    Начисление при покупке билета №{getUniqueIdOfLength(6)}
+                                    Начисление при покупке билета №{nth(data.current.comments, 0)}
                                 </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
+                                <LinkTableCell fake>{nth(data.current.ids, 1)}</LinkTableCell>
                                 <TableCell>19 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell>- 350</PointsTableCell>
                                 <TableCell>
-                                    Списание при покупке билета №{getUniqueIdOfLength(6)}
+                                    Списание при покупке билета №{nth(data.current.comments, 1)}
                                 </TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
+                                <LinkTableCell fake>{nth(data.current.ids, 2)}</LinkTableCell>
                                 <TableCell>15 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 80</PointsTableCell>
@@ -272,7 +340,7 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={TreeIcon} alt='логотип "RADISSON HOTEL GROUP"' />
                                 </TableCell>
-                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
+                                <LinkTableCell fake>{nth(data.current.ids, 3)}</LinkTableCell>
                                 <TableCell>12 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell add>+ 700</PointsTableCell>
@@ -282,18 +350,47 @@ function BonusCardInfo({ type }) {
                                 <TableCell>
                                     <img src={AlphaBankIcon} alt='логотип АО "Альфа-Банк"' />
                                 </TableCell>
-                                <LinkTableCell fake>{getUniqueId()}</LinkTableCell>
+                                <LinkTableCell fake>{nth(data.current.ids, 4)}</LinkTableCell>
                                 <TableCell>1 мая 2019, 15:30</TableCell>
                                 <TableCell>2 500 руб.</TableCell>
                                 <PointsTableCell>- 40</PointsTableCell>
                                 <TableCell>
-                                    Списание при покупке билета №{getUniqueIdOfLength(6)}
+                                    Списание при покупке билета №{nth(data.current.comments, 2)}
                                 </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>
                 </Paper>
             </Grid>
+            <Dialog
+                open={open}
+                onClose={onClose}
+                aria-labelledby="alertDialogTitle"
+                aria-describedby="alertDialogDescription"
+            >
+                <DialogTitle id="alertDialogTitle">Пополнение баланса</DialogTitle>
+                <DialogContent>
+                    <FormControl margin="normal" required fullWidth>
+                        <InputLabel htmlFor="balance">Сумма пополнения</InputLabel>
+                        <Input
+                            id="balance"
+                            name="balance"
+                            autoComplete="balance"
+                            autoFocus
+                            type="number"
+                            onChange={onBalanceChange}
+                        />
+                    </FormControl>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={onClose} color="primary">
+                        Отменить
+                    </Button>
+                    <Button onClick={onBalanceChangeSubmit} color="primary" autoFocus>
+                        Пополнить
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Fragment>
     );
 }

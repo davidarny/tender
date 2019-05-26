@@ -66,7 +66,7 @@ function Loyalty() {
                     <Tab component={Link} to="extra" label="Дополнительные правила" />
                 </Tabs>
             </AppBar>
-            <Router>
+            <Router primary={false}>
                 <BaseRolesInfo
                     path="base"
                     default
