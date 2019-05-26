@@ -1,4 +1,4 @@
-export const BASE_PATH = process.env.NODE_ENV === "development" ? "" : "/tender";
+export const BASE_PATH = "";
 
 let StoreContext = null;
 
