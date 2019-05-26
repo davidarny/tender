@@ -52,7 +52,6 @@ function Participants() {
                             <StyledTableHead>
                                 <TableRow>
                                     <HeaderTableCell>ФИО</HeaderTableCell>
-                                    <HeaderTableCell>Партнёр</HeaderTableCell>
                                     <HeaderTableCell>Тип</HeaderTableCell>
                                     <HeaderTableCell align="right" />
                                 </TableRow>
