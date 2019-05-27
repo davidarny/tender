@@ -52,10 +52,13 @@ export default function ParticipantProfile({ id }) {
         if (id) {
             const document = { ...store.participant[GET_PARTICIPANT_BY_ID]({ id }) };
             if ("citizenship" in document) {
-                document.citizenship = get(translations, document.citizenship);
+                document.citizenship = get(translations, "citizenship");
             }
             if ("partner" in document) {
-                document.partner = store.partner[GET_PARTNER_BY_ID]({ id: document.partner }).title;
+                document.partner = get(
+                    store.partner[GET_PARTNER_BY_ID]({ id: document.partner }),
+                    "title"
+                );
             }
             setParticipant(document);
         }

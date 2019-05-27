@@ -71,6 +71,7 @@ export function getDealPayload() {
 
 export function getParticipantPayload(partner) {
     return {
+        title: 'АО "Альфа-Банк"',
         number: getUniqueId(),
         fullName: "Иванов Иван",
         partner,
